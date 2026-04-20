@@ -135,13 +135,13 @@ const submitFinal = () => {
             </div>
 
             <form @submit.prevent="saveStep">
-                <StepOne v-if="form.step === 1" v-model:name="form.name" v-model:email="form.email"
-                    v-model:phone=form.phone v-model:service_id="form.service_id" :services="services"
-                    :errors="form.errors" />
+                <StepOne v-if="form.step === 1" v-model:name="form.name" v-model:topic="form.topic"
+                    v-model:email="form.email" v-model:phone=form.phone v-model:service_id="form.service_id"
+                    v-model:description="form.description" :services="services" :errors="form.errors" />
 
-                <StepTwo v-if="form.step === 2" v-model:topic="form.topic" v-model:output="form.output"
-                    v-model:field="form.field" v-model:level="form.level" v-model:institution="form.institution"
-                    v-model:description="form.description" v-model:files="form.files" :errors="form.errors" />
+                <StepTwo v-if="form.step === 2" v-model:output="form.output" v-model:field="form.field"
+                    v-model:level="form.level" v-model:institution="form.institution" v-model:files="form.files"
+                    :errors="form.errors" />
 
                 <StepThree v-if="form.step === 3" v-model:deadline="form.deadline" v-model:budget="form.budget"
                     v-model:willing_dp="form.willing_dp" v-model:address="form.address" v-model:city="form.city"

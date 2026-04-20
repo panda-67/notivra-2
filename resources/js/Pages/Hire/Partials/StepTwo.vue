@@ -3,12 +3,10 @@ const props = defineProps({
     errors: Object
 })
 
-const topic = defineModel('topic');
 const output = defineModel('output');
 const field = defineModel('field');
 const level = defineModel('level');
 const institution = defineModel('institution');
-const description = defineModel('description');
 const files = defineModel('files');
 
 const handleFileChange = (e) => {
@@ -22,16 +20,6 @@ const handleFileChange = (e) => {
 <template>
     <div class="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="col-span-2">
-                <label class="block text-sm font-semibold text-slate-700 mb-2">Topik Utama <span
-                        class="text-red-500">*</span></label>
-                <input v-model="topic" type="text"
-                    :class="{ 'border-red-300 bg-red-50/30': errors.topic, 'border-slate-200': !errors.topic }"
-                    class="w-full rounded-xl border px-2 focus:ring-4 focus:ring-blue-100 focus:border-blue-500 py-3 transition-all">
-                <p v-if="errors.topic" class="text-red-500 text-xs mt-1.5 font-medium flex items-center gap-1 italic">
-                    {{ errors.topic }}</p>
-            </div>
-
             <div class="col-span-2">
                 <label class="block text-sm font-semibold text-slate-700 mb-2">Luaran <span
                         class="text-red-500">*</span></label>
@@ -89,17 +77,6 @@ const handleFileChange = (e) => {
                 <p v-if="errors.institution"
                     class="text-red-500 text-xs mt-1.5 font-medium flex items-center gap-1 italic">
                     {{ errors.institution }}</p>
-            </div>
-
-            <div class="col-span-2">
-                <label class="block text-sm font-semibold text-slate-700 mb-2">Deskripsi Proyek</label>
-                <textarea v-model="description" rows="3"
-                    class="w-full border-slate-200 rounded-xl border px-2 focus:ring-4 focus:ring-blue-100 py-3 transition-all"
-                    :class="{ 'border-red-300 bg-red-50/30': errors.description, 'border-slate-200': !errors.description }"
-                    placeholder="Jelaskan kebutuhan Anda secara detail..."></textarea>
-                <p v-if="errors.description"
-                    class="text-red-500 text-xs mt-1.5 font-medium flex items-center gap-1 italic">
-                    {{ errors.description }}</p>
             </div>
 
             <div class="col-span-2">

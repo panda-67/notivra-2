@@ -28,18 +28,18 @@ class StoreProjectRequest extends FormRequest
             1 => [
                 'step' => 'required|integer',
                 'service_id' => 'required|uuid|exists:services,id',
+                'topic' => 'required|string|max:500',
                 'name' => 'required|string|max:255',
                 'email' => 'required|email|max:255',
                 'phone' => 'nullable|string|max:20',
+                'description' => 'nullable|string',
             ],
             2 => [
                 'step' => 'required|integer',
-                'topic' => 'required|string|max:500',
                 'output' => 'required|string|max:125',
                 'field' => 'nullable|string|max:255',
                 'level' => 'nullable|string|max:100',
                 'institution' => 'nullable|string|max:255',
-                'description' => 'nullable|string',
                 'files' => 'nullable|file|mimes:pdf,xlsx,csv,zip|max:2024', // Max 2MB
             ],
             3 => [

@@ -49,10 +49,19 @@ class HireDraftController extends Controller
         unset($validated['step']);
 
         $draft = HireDraft::create([
+            'user_id' => Auth::id(),
             'step' => 2,
             'data' => $validated,
             'status' => 'draft'
         ]);
+
+        if (!Auth::check()) {
+            // Simpan tujuan akhir ke session agar setelah login balik lagi ke form
+            session(['url.intended' => route('hire.apply', ['d' => $draft->id])]);
+
+            return redirect()->route('login', ['d' => $draft->id])
+                ->with('message', 'Data awal disimpan! Silakan login untuk melanjutkan ke detail proyek.');
+        }
 
         return redirect()->route('hire.apply', ['d' => $draft->id])->with('message', 'Draft disimpan.');
     }
@@ -62,20 +71,19 @@ class HireDraftController extends Controller
      */
     public function update(StoreProjectRequest $request, HireDraft $draft)
     {
-        /* dd($request->all()); */
-
         $validated = $request->validated();
         $currentData = $draft->data;
         unset($validated['step']);
 
         if ($request->hasFile('files')) {
-            // Hapus file lama jika user mengupload ulang
             if (isset($currentData['files'])) {
                 Storage::disk('public')->delete($currentData['files']);
             }
 
-            // Simpan file baru
-            $path = $request->file('files')->store('drafts/attachments', 'public');
+            $file = $request->file('files');
+            $fileName = $draft->id . '_' . time() . '.' . $file->getClientOriginalExtension();
+
+            $path = $file->storeAs('drafts/attachments', $fileName, 'public');
             $validated['files'] = $path;
         }
 
@@ -101,7 +109,6 @@ class HireDraftController extends Controller
 
         try {
             DB::transaction(function () use ($draft, $validated) {
-                // Update status draft
                 $draft->update([
                     'data' => array_merge($draft->data ?? [], $validated),
                     'status' => 'submitted'
