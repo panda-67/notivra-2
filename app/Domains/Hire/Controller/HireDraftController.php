@@ -118,8 +118,8 @@ class HireDraftController extends Controller
 
                 $project = Project::create([
                     'service_id'    => $data['service_id'],
-                    'name'          => $data['name'],
-                    'email'         => $data['email'] ?? Auth::user()->email,
+                    'name'          => Auth::user()->name ?? $data['name'],
+                    'email'         => Auth::user()->email ?? $data['email'],
                     'phone'         => $data['phone'] ?? null,
                     'institution'   => $data['institution'] ?? null,
                     'level'         => $data['level'] ?? null,
