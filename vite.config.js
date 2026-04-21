@@ -8,8 +8,12 @@ import vue from '@vitejs/plugin-vue';
 export default defineConfig({
     plugins: [
         laravel({
-            input: ['resources/css/app.css', 'resources/js/app.js'],
+            input: ['resources/css/app.css', 'resources/js/app.js', 'resources/js/blog.js'],
             refresh: true,
+            refresh: [
+                'resources/views/**/*.blade.php',
+                'routes/**/*.php',
+            ],
         }),
         tailwindcss(),
         inertia({
@@ -25,7 +29,11 @@ export default defineConfig({
         }),
     ],
     server: {
+        hmr: {
+            host: 'localhost',
+        },
         watch: {
+            usePolling: true,
             ignored: ['**/storage/framework/views/**'],
         },
     },

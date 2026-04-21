@@ -18,13 +18,13 @@ const navigation = [
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
-                    <Link href="/" class="shrink-0 flex items-center gap-2">
+                    <a href="/" class="shrink-0 flex items-center gap-2">
                         <div
                             class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold shadow-blue-200 shadow-lg">
                             N
                         </div>
                         <span class="text-xl font-bold tracking-tight text-slate-900 uppercase">Notivra</span>
-                    </Link>
+                    </a>
 
                     <div class="hidden sm:ml-8 sm:flex sm:space-x-4">
                         <Link v-for="item in navigation" :key="item.name" :href="item.href"

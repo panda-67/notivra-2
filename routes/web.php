@@ -4,21 +4,18 @@ use App\Domains\Hire\Controller\HireDraftController;
 use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\BlogController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::get('/app', function () {
-    return Inertia::render('Dashboard');
+Route::get('/', [BlogController::class, 'index'])->name('blog.index');
+Route::get('/{slug}/insight', [BlogController::class, 'show'])->name('blog.show');
+
+Route::get('/dashboard', function () {
+    return inertia('Dashboard');
 })->name('dashboard');
 
-Route::get('/blog', fn() => 'blog index');
-Route::get('/blog/{slug}', fn($slug) => "post: $slug");
-
-Route::prefix('app/hire')->controller(HireDraftController::class)->group(function () {
+Route::prefix('hire')->controller(HireDraftController::class)->group(function () {
     Route::get('/apply', 'create')->name('hire.apply');
     Route::post('/draft', 'store')->name('hire.draft.store');
     Route::put('/draft/{draft}',  'update')->middleware(['auth'])->name('hire.draft.update');
