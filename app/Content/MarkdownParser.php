@@ -2,7 +2,10 @@
 
 namespace App\Content;
 
-use League\CommonMark\CommonMarkConverter;
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\Extension\Table\TableExtension;
+use League\CommonMark\MarkdownConverter;
 use Symfony\Component\Yaml\Yaml;
 
 class MarkdownParser
@@ -14,6 +17,15 @@ class MarkdownParser
         }
 
         $raw = file_get_contents($path);
+
+        $config = [];
+        $environment = new Environment($config);
+        $environment->addExtension(new CommonMarkCoreExtension());
+
+        // 2. Tambahkan TableExtension di sini
+        $environment->addExtension(new TableExtension());
+
+        $converter = new MarkdownConverter($environment);
 
         /**
          * Penjelasan Regex:
@@ -28,14 +40,14 @@ class MarkdownParser
         if (!preg_match($pattern, $raw, $matches)) {
             return [
                 'meta' => [],
-                'html' => app(CommonMarkConverter::class)->convert($raw)->getContent()
+                'html' => $converter->convert($raw)->getContent()
             ];
         }
 
         $meta = Yaml::parse(trim($matches[1]));
         $content = trim($matches[2]);
 
-        $html = app(CommonMarkConverter::class)->convert($content)->getContent();
+        $html = $converter->convert($content)->getContent();
 
         return compact('meta', 'html');
     }
