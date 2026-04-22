@@ -30,6 +30,10 @@ class BlogController extends Controller
     {
         $post = $this->blogRepository->find($slug);
 
-        return view('blog.show', $post);
+        $related = $this->blogRepository->getRelated(
+            $slug,
+            $post['meta']['tags'] ?? []
+        );
+        return view('blog.show', compact('post', 'related'));
     }
 }

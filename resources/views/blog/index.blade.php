@@ -4,15 +4,15 @@
 
 @section('content')
 <div class="px-4 sm:px-0">
-    <header class="mb-8 md:mb-16">
+    <header class="mb-4 md:mb-6">
         <h1 class="text-2xl md:text-4xl font-black text-slate-900 mb-3 md:mb-4">Wawasan Riset Nusantara</h1>
         <p class="text-base md:text-lg text-slate-600">Panduan dan update terbaru untuk mendukung perjalanan akademik Anda.</p>
     </header>
 
     @if(request('search'))
-        <div class="mb-6 text-sm text-slate-500 bg-slate-50 p-3 rounded-lg border border-slate-100">
+        <div class="mb-4 text-sm text-slate-500 bg-slate-100 p-3 rounded-lg border border-slate-200">
             Menampilkan hasil pencarian untuk: <span class="font-bold text-blue-600">"{{ request('search') }}"</span>
-            <a href="{{ route('blog.index') }}" class="ml-2 text-xs text-red-500 underline block mt-1 sm:inline sm:mt-0">Hapus</a>
+            <a href="{{ route('blog.index') }}" class="ml-2 text-xs text-red-500 underline block mt-1 sm:inline sm:mt-0">Clear</a>
         </div>
     @endif
 
@@ -45,6 +45,10 @@
                             {{ $blog['meta']['title'] }}
                         </a>
                     </h2>
+
+                    <span class="text-xs font-bold text-blue-500 uppercase">
+                        {{ $blog['meta']['source'] }}
+                    </span>
 
                     <p class="text-slate-600 line-clamp-2 text-sm md:text-base">
                         {{ $blog['meta']['description'] ?? 'Klik untuk membaca lebih lanjut...' }}

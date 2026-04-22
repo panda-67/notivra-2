@@ -28,28 +28,9 @@
                             @yield('content')
                         </div>
 
-                        <aside class="lg:col-span-4 space-y-6">
-                            <div class="min-h-32">
-                                <div id="search-root">
-                                    <blog-search initial-value="{{ request('search') }}"></blog-search>
-                                </div>
-                            </div>
-
-                            <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
-                                <h3 class="font-bold text-slate-800 mb-4">Kategori Populer</h3>
-                                <ul class="space-y-2 text-sm text-slate-600">
-                                    <li><a href="#" class="hover:text-blue-600 transition flex justify-between"><span>Akademik</span> <span class="bg-slate-100 px-2 rounded text-xs py-0.5">12</span></a></li>
-                                    <li><a href="#" class="hover:text-blue-600 transition flex justify-between"><span>Tips Menulis</span> <span class="bg-slate-100 px-2 rounded text-xs py-0.5">8</span></a></li>
-                                    <li><a href="#" class="hover:text-blue-600 transition flex justify-between"><span>Teknologi AI</span> <span class="bg-slate-100 px-2 rounded text-xs py-0.5">5</span></a></li>
-                                </ul>
-                            </div>
-
-                            <div class="bg-blue-600 p-6 rounded-2xl shadow-lg shadow-blue-200 text-white">
-                                <h3 class="font-bold mb-2">Langganan Insight</h3>
-                                <p class="text-xs text-blue-100 mb-4">Dapatkan update akademik terbaru langsung di email Anda.</p>
-                                <button class="w-full bg-white text-blue-600 font-semibold py-2 rounded-xl text-sm hover:bg-blue-50 transition">Gabung Sekarang</button>
-                            </div>
-                        </aside>
+                        <aside class="lg:col-span-4">
+                            @include('partials.sidebar')
+                       </aside>
 
                     </div>
                 </div>
