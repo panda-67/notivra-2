@@ -28,11 +28,10 @@
                             @yield('content')
                         </div>
 
-                        <aside class="lg:col-span-4 space-y-8">
-                            <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
-                                <h3 class="font-bold text-slate-800 mb-4">Pencarian</h3>
-                                <div class="relative">
-                                    <input type="text" placeholder="Cari artikel..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition">
+                        <aside class="lg:col-span-4 space-y-6">
+                            <div class="min-h-32">
+                                <div id="search-root">
+                                    <blog-search initial-value="{{ request('search') }}"></blog-search>
                                 </div>
                             </div>
 

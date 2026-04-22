@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Content\Repository\BlogRepository;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class BlogController extends Controller
 {
@@ -13,9 +15,10 @@ class BlogController extends Controller
     /**
      * Menampilkan daftar blog
      */
-    public function index()
+    public function index(Request $request): View
     {
-        $blogs = $this->blogRepository->all();
+        $search = $request->input('search');
+        $blogs = $this->blogRepository->paginate(6, $search);
 
         return view('blog.index', compact('blogs'));
     }
@@ -23,7 +26,7 @@ class BlogController extends Controller
     /**
      * Menampilkan isi blog berdasarkan slug
      */
-    public function show($slug)
+    public function show($slug): View
     {
         $post = $this->blogRepository->find($slug);
 
