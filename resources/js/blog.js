@@ -1,9 +1,20 @@
 import '../css/app.css'; // Kita tetap pakai Tailwind yang sama
 import { createApp } from 'vue';
 import BlogSearch from './Components/BlogSearch.vue';
+import ShareFooter from './Components/ShareFooter.vue';
+import NewsletterCard from './Components/NewsletterCard.vue';
 
-const app = createApp({});
+// Instance untuk Search
+const searchApp = createApp({});
+searchApp.component('blog-search', BlogSearch);
+searchApp.mount('#search-root');
 
-app.component('blog-search', BlogSearch);
+// Instance untuk Share Footer
+const shareApp = createApp({});
+shareApp.component('share-footer', ShareFooter);
+shareApp.mount('#share-root'); // Gunakan ID unik di sini
 
-app.mount('#search-root');
+// Instance untuk Newsletter
+const newsApp = createApp({});
+newsApp.component('newsletter-card', NewsletterCard);
+newsApp.mount('#newsletter-root');

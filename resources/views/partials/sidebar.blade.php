@@ -35,11 +35,7 @@
         </ul>
     </div>
 
-    <div class="bg-blue-600 p-6 rounded-2xl shadow-lg shadow-blue-200 text-white">
-        <h3 class="font-bold mb-2">Langganan Insight</h3>
-        <p class="text-xs text-blue-100 mb-4">Dapatkan update akademik terbaru langsung di email Anda.</p>
-        <button class="w-full bg-white text-blue-600 font-semibold py-2 rounded-xl text-sm hover:bg-blue-50 transition">
-            Gabung Sekarang
-        </button>
+    <div id="newsletter-root">
+        <newsletter-card></newsletter-card>
     </div>
 </div>

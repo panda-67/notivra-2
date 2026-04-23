@@ -97,14 +97,9 @@
         </div>
     </section>
 
-    <footer class="mt-16 pt-8 border-t border-slate-100">
-        <div class="bg-slate-50 p-8 rounded-2xl text-center">
-            <h3 class="font-bold text-lg text-slate-800">Suka dengan tulisan ini?</h3>
-            <p class="text-slate-600 mb-6">Bagikan ke teman sejawat atau berlangganan newsletter kami.</p>
-            <div class="flex justify-center gap-4">
-                <button class="bg-blue-600 text-white px-6 py-2 rounded-xl font-semibold shadow-md shadow-blue-200 hover:bg-blue-700 transition">Bagikan Artikel</button>
-            </div>
-        </div>
-    </footer>
+    <div id="share-root">
+        <share-footer></share-footer>
+    </div>
+
 </article>
 @endsection

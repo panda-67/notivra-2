@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\NewsletterController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -14,6 +15,9 @@ Route::get('/{slug}/insight', [BlogController::class, 'show'])->name('blog.show'
 Route::get('/dashboard', function () {
     return inertia('Dashboard');
 })->name('dashboard');
+
+Route::post('/newsletter/subscribe', [NewsletterController::class, 'store'])
+    ->name('newsletter.subscribe');
 
 Route::prefix('hire')->controller(HireDraftController::class)->group(function () {
     Route::get('/apply', 'create')->name('hire.apply');
