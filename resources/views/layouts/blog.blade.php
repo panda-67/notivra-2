@@ -12,7 +12,7 @@
     <body class="bg-slate-50 text-slate-900 antialiased">
         <div>
             <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-100">
-                <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">
                     <a href="/" class="flex items-center gap-2">
                         <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold shadow-lg shadow-blue-200">N</div>
                         <span class="text-xl font-bold tracking-tight uppercase">Notivra <span class="text-blue-600">Insight</span></span>
