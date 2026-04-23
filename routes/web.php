@@ -1,6 +1,7 @@
 <?php
 
 use App\Domains\Hire\Controller\HireDraftController;
+use App\Domains\Hire\Controller\ProjectController;
 use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -12,9 +13,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/{slug}/insight', [BlogController::class, 'show'])->name('blog.show');
 
-Route::get('/dashboard', function () {
-    return inertia('Dashboard');
-})->name('dashboard');
+Route::prefix('dashboard')->controller(ProjectController::class)->group(function () {
+    Route::get('/', 'dashboard')->name('dashboard');
+    Route::get('/{project}/edit', 'edit')->name('projects.edit');
+    Route::put('/{project}/update', 'update')->name('projects.update');
+});
+
+Route::get('/user/profile', function () {
+    return 'this is profile';
+})->name('profile.edit');
 
 Route::post('/newsletter/subscribe', [NewsletterController::class, 'store'])
     ->name('newsletter.subscribe');

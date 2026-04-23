@@ -1,11 +1,15 @@
 <script setup>
-import { watch } from 'vue';
-import { useForm } from '@inertiajs/vue3';
+import { computed, watch } from 'vue';
+import { useForm, usePage } from '@inertiajs/vue3';
 import { route } from '../../../../vendor/tightenco/ziggy/src/js';
 import AppLayout from '../../Layouts/AppLayout.vue';
 import StepOne from './Partials/StepOne.vue';
 import StepTwo from './Partials/StepTwo.vue';
 import StepThree from './Partials/StepThree.vue';
+
+const page = usePage();
+const user = computed(() => page.props.auth.user);
+console.log(user.value);
 
 const props = defineProps({
     draft: { type: Object, default: null },
@@ -16,8 +20,8 @@ const form = useForm({
     step: props.draft?.step || 1,
     // Step 1: Identitas
     service_id: props.draft?.data?.service_id || '',
-    name: props.draft?.data?.name || '',
-    email: props.draft?.data?.email || '',
+    name: user.value?.name || props.draft?.data?.name || '',
+    email: user.value?.email || props.draft?.data?.email || '',
     phone: props.draft?.data?.phone || '',
 
     // Step 2: Detail Proyek
@@ -43,8 +47,8 @@ watch(() => props.draft, (newDraft) => {
         form.step = newDraft.step;
 
         form.service_id = newDraft.data.service_id || '';
-        form.name = newDraft.data?.name || '';
-        form.email = newDraft.data?.email || '';
+        form.name = user.value?.name || newDraft.data?.name || '';
+        form.email = user.value?.email || newDraft.data?.email || '';
         form.phone = newDraft.data?.phone || '';
 
         form.institution = newDraft.data?.institution || '';
@@ -137,7 +141,7 @@ const submitFinal = () => {
             <form @submit.prevent="saveStep">
                 <StepOne v-if="form.step === 1" v-model:name="form.name" v-model:topic="form.topic"
                     v-model:email="form.email" v-model:phone=form.phone v-model:service_id="form.service_id"
-                    v-model:description="form.description" :services="services" :errors="form.errors" />
+                    v-model:description="form.description" :services="services" :user="user" :errors="form.errors" />
 
                 <StepTwo v-if="form.step === 2" v-model:output="form.output" v-model:field="form.field"
                     v-model:level="form.level" v-model:institution="form.institution" v-model:files="form.files"

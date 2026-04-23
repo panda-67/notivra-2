@@ -1,7 +1,8 @@
 <script setup>
 const props = defineProps({
     services: Array,
-    errors: Object
+    errors: Object,
+    user: Object
 });
 
 const name = defineModel('name');
@@ -34,7 +35,7 @@ const description = defineModel('description');
             <div class="col-span-2">
                 <label class="block text-sm font-semibold text-slate-700 mb-2">Topik Utama <span
                         class="text-red-500">*</span></label>
-                <input v-model="topic" type="text"
+                <input v-model="topic" type="text" placeholder="Distribusi lebah di ekosistem ..."
                     :class="{ 'border-red-300 bg-red-50/30': errors.topic, 'border-slate-200': !errors.topic }"
                     class="w-full rounded-xl border px-2 focus:ring-4 focus:ring-blue-100 focus:border-blue-500 py-3 transition-all">
                 <p v-if="errors.topic" class="text-red-500 text-xs mt-1.5 font-medium flex items-center gap-1 italic">
@@ -44,8 +45,8 @@ const description = defineModel('description');
             <div class="col-span-2">
                 <label class="block text-sm font-semibold text-slate-700 mb-2">Nama Lengkap <span
                         class="text-red-500">*</span></label>
-                <input v-model="name" type="text"
-                    :class="{ 'border-red-300 bg-red-50/30 focus:ring-red-100': errors.name, 'border-slate-200': !errors.name }"
+                <input v-model="name" type="text" :readonly="!!user"
+                    :class="{ 'border-red-300 bg-red-50/30 focus:ring-red-100': errors.name, 'border-slate-200': !errors.name, 'bg-slate-100 text-slate-500 cursor-not-allowed': user }"
                     class="w-full rounded-xl border px-2 focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all py-3"
                     placeholder="Masukkan nama lengkap">
                 <p v-if="errors.name" class="text-red-500 text-xs mt-1.5 font-medium flex items-center gap-1 italic">{{
@@ -55,8 +56,8 @@ const description = defineModel('description');
             <div>
                 <label class="block text-sm font-semibold text-slate-700 mb-2">Alamat Email <span
                         class="text-red-500">*</span></label>
-                <input v-model="email" type="email"
-                    :class="{ 'border-red-300 bg-red-50/30': errors.email, 'border-slate-200': !errors.email }"
+                <input v-model="email" type="email" :readonly="!!user"
+                    :class="{ 'border-red-300 bg-red-50/30': errors.email, 'border-slate-200': !errors.email, 'bg-slate-100 text-slate-500 cursor-not-allowed': user }"
                     class="w-full rounded-xl border px-2 focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all py-3"
                     placeholder="email@contoh.com">
                 <p v-if="errors.email" class="text-red-500 text-xs mt-1.5 font-medium flex items-center gap-1 italic">
