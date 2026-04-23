@@ -100,7 +100,7 @@ class LoginController extends Controller
             $draft->update(['user_id' => $user->id]);
 
             return redirect()->route('hire.apply', ['d' => $draft->id])
-                ->with('message', 'Login berhasil, silakan lanjutkan proyek Anda.');
+                ->with('success', 'Login berhasil, silakan lanjutkan proyek Anda.');
         }
 
         return redirect()->intended(route('dashboard'));
@@ -111,6 +111,6 @@ class LoginController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/');
+        return to_route('dashboard');
     }
 }

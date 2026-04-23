@@ -75,7 +75,7 @@ class GoogleAuthController extends Controller
 
                 // Redirect kembali ke form aplikasi proyek
                 return redirect()->route('hire.apply', ['d' => $draft->id])
-                    ->with('message', 'Berhasil masuk dengan Google!');
+                    ->with('success', 'Berhasil masuk dengan Google!');
             }
         }
 

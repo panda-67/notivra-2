@@ -23,7 +23,7 @@ class NewsletterController extends Controller
 
             Log::info("User berlangganan: " . $request->email);
 
-            return response()->json(['message' => 'Terima kasih telah berlangganan!'], 200);
+            return response()->json(['success' => 'Terima kasih telah berlangganan!'], 200);
         } catch (\Exception $e) {
             return response()->json(['errors' => ['email' => ['Gagal menyimpan data.']]], 500);
         }

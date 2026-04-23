@@ -3,7 +3,7 @@
 namespace App\Domains\Hire\Controller;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreProjectRequest;
+use App\Http\Requests\ProjectRequest;
 use App\Models\HireDraft;
 use App\Models\Project;
 use App\Models\Service;
@@ -43,7 +43,7 @@ class HireDraftController extends Controller
     /**
      * Membuat draft baru di database (Inisialisasi)
      */
-    public function store(StoreProjectRequest $request)
+    public function store(ProjectRequest $request)
     {
         $validated = $request->validated();
         unset($validated['step']);
@@ -60,16 +60,16 @@ class HireDraftController extends Controller
             session(['url.intended' => route('hire.apply', ['d' => $draft->id])]);
 
             return redirect()->route('login', ['d' => $draft->id])
-                ->with('message', 'Data awal disimpan! Silakan login untuk melanjutkan ke detail proyek.');
+                ->with('success', 'Data awal disimpan! Silakan login untuk melanjutkan ke detail proyek.');
         }
 
-        return redirect()->route('hire.apply', ['d' => $draft->id])->with('message', 'Draft disimpan.');
+        return redirect()->route('hire.apply', ['d' => $draft->id])->with('success', 'Draft disimpan.');
     }
 
     /**
      * Update data per step
      */
-    public function update(StoreProjectRequest $request, HireDraft $draft)
+    public function update(ProjectRequest $request, HireDraft $draft)
     {
         $validated = $request->validated();
         $currentData = $draft->data;
@@ -92,13 +92,13 @@ class HireDraftController extends Controller
             'step' => (int) $request->input('next_step', $draft->step),
         ]);
 
-        return redirect()->back()->with('message', 'Progres disimpan.');
+        return redirect()->back()->with('success', 'Progres disimpan.');
     }
 
     /**
      * Submit akhir: Memindahkan data draft ke tabel utama (hire_requests)
      */
-    public function submit(StoreProjectRequest $request, HireDraft $draft)
+    public function submit(ProjectRequest $request, HireDraft $draft)
     {
         $validated = $request->validated();
         unset($validated['step']);
@@ -146,10 +146,10 @@ class HireDraftController extends Controller
             });
 
             // Redirect ke halaman sukses atau dashboard
-            return redirect()->route('dashboard')->with('message', 'Permintaan berhasil dikirim!');
+            return redirect()->route('dashboard')->with('success', 'Permintaan berhasil dikirim!');
         } catch (\Exception $e) {
             return redirect()->back()->withErrors([
-                'message' => 'Terjadi kesalahan sistem.',
+                'error' => 'Terjadi kesalahan sistem.',
                 'debug' => config('app.debug') ? $e->getMessage() : null
             ]);
         }

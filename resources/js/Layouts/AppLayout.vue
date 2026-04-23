@@ -10,7 +10,7 @@ const props = defineProps({
 const page = usePage();
 const show = ref(false);
 
-watch(() => page.props.flash.message, (msg) => {
+watch(() => page.props.flash, (msg) => {
     if (msg) {
         show.value = true;
         // Sembunyikan otomatis setelah 3 detik
@@ -51,7 +51,7 @@ watch(() => page.props.flash.message, (msg) => {
             enter-to-class="translate-y-0 opacity-100 sm:translate-x-0"
             leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100"
             leave-to-class="opacity-0">
-            <div v-if="show && (page.props.flash.message || page.props.flash.error)"
+            <div v-if="show && (page.props.flash.success || page.props.flash.error)"
                 class="fixed top-5 right-5 z-100 bg-white border border-slate-200 shadow-2xl rounded-2xl p-4 flex items-center gap-3 min-w-[320px]">
 
                 <div :class="[
@@ -74,7 +74,7 @@ watch(() => page.props.flash.message, (msg) => {
                         {{ page.props.flash.error ? 'Terjadi Kesalahan' : 'Berhasil!' }}
                     </p>
                     <p class="text-xs text-slate-500 leading-relaxed">
-                        {{ page.props.flash.error || page.props.flash.message }}
+                        {{ page.props.flash.error || page.props.flash.success }}
                     </p>
                 </div>
 
