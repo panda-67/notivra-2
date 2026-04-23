@@ -74,22 +74,24 @@
             @endif
 
             <div class="hidden md:flex items-center gap-1">
-                @if($blogs->lastPage() <= 3)
+                @if($blogs->lastPage() <= 7)
                     @foreach ($blogs->getUrlRange(1, $blogs->lastPage()) as $page => $url)
                         @include('partials.pagination-link', ['page' => $page, 'url' => $url, 'active' => $page == $blogs->currentPage()])
                     @endforeach
                 @else
                     @include('partials.pagination-link', ['page' => 1, 'url' => $blogs->url(1), 'active' => $blogs->currentPage() == 1])
 
-                    @if($blogs->currentPage() > 2)
+                    @if($blogs->currentPage() > 4)
                         <span class="px-2 text-slate-400">...</span>
                     @endif
 
-                    @if($blogs->currentPage() > 1 && $blogs->currentPage() < $blogs->lastPage())
-                        @include('partials.pagination-link', ['page' => $blogs->currentPage(), 'url' => $blogs->url($blogs->currentPage()), 'active' => true])
-                    @endif
+                    @foreach ($blogs->getUrlRange(max(2, $blogs->currentPage() - 1), min($blogs->lastPage() - 1, $blogs->currentPage() + 1)) as $page => $url)
+                        @if($page > 1 && $page < $blogs->lastPage())
+                            @include('partials.pagination-link', ['page' => $page, 'url' => $url, 'active' => $page == $blogs->currentPage()])
+                        @endif
+                    @endforeach
 
-                    @if($blogs->currentPage() < $blogs->lastPage() - 1)
+                    @if($blogs->currentPage() < $blogs->lastPage() - 3)
                         <span class="px-2 text-slate-400">...</span>
                     @endif
 
