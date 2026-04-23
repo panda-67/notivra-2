@@ -73,7 +73,31 @@
                 <a href="{{ $blogs->previousPageUrl() }}" class="text-blue-600 hover:text-blue-700 text-sm font-bold">← Prev</a>
             @endif
 
-            <span class="text-xs md:text-sm text-slate-500 font-medium">
+            <div class="hidden md:flex items-center gap-1">
+                @if($blogs->lastPage() <= 3)
+                    @foreach ($blogs->getUrlRange(1, $blogs->lastPage()) as $page => $url)
+                        @include('partials.pagination-link', ['page' => $page, 'url' => $url, 'active' => $page == $blogs->currentPage()])
+                    @endforeach
+                @else
+                    @include('partials.pagination-link', ['page' => 1, 'url' => $blogs->url(1), 'active' => $blogs->currentPage() == 1])
+
+                    @if($blogs->currentPage() > 2)
+                        <span class="px-2 text-slate-400">...</span>
+                    @endif
+
+                    @if($blogs->currentPage() > 1 && $blogs->currentPage() < $blogs->lastPage())
+                        @include('partials.pagination-link', ['page' => $blogs->currentPage(), 'url' => $blogs->url($blogs->currentPage()), 'active' => true])
+                    @endif
+
+                    @if($blogs->currentPage() < $blogs->lastPage() - 1)
+                        <span class="px-2 text-slate-400">...</span>
+                    @endif
+
+                    @include('partials.pagination-link', ['page' => $blogs->lastPage(), 'url' => $blogs->url($blogs->lastPage()), 'active' => $blogs->currentPage() == $blogs->lastPage()])
+                @endif
+            </div>
+
+            <span class="md:hidden text-xs text-slate-500 font-medium">
                 {{ $blogs->currentPage() }} / {{ $blogs->lastPage() }}
             </span>
 
@@ -85,8 +109,8 @@
         </div>
 
         <p class="text-xs text-slate-400 order-1 sm:order-2">
-            Showing {{ $blogs->count() }} articles
+            Showing {{ $blogs->firstItem() }} - {{ $blogs->lastItem() }} of {{ $blogs->total() }} article(s)
         </p>
-    </div>
+   </div>
 </div>
 @endsection
