@@ -14,10 +14,11 @@ return new class extends Migration
     {
         Schema::create('hire_drafts', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignIdFor(User::class)->nullable()->constrained();
+            $table->foreignIdFor(User::class)->nullable()->constrained()->cascadeOnDelete();
             $table->json('data')->nullable();
             $table->unsignedTinyInteger('step')->default(1);
             $table->string('status')->default('draft'); // draft, submitted
+            $table->index('user_id');
             $table->timestamps();
         });
     }

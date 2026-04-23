@@ -34,6 +34,7 @@ return new class extends Migration
             $table->enum('status', ['pending', 'processing', 'final'])->default('pending');
             $table->foreignIdFor(User::class)->nullable()->constrained()->restrictOnDelete();
             $table->string('files')->nullable();
+            $table->index('user_id');
             $table->timestamps();
         });
     }
