@@ -1,14 +1,17 @@
 <script setup>
 import { Head, usePage } from '@inertiajs/vue3';
 import Navbar from '../Components/Navbar.vue';
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
+import Footer from '../Components/Footer.vue';
 
 const props = defineProps({
     title: String,
 });
 
+
 const page = usePage();
 const show = ref(false);
+const isAuth = computed(() => page.props.auth.user !== null);
 
 watch(() => page.props.flash, (msg) => {
     if (msg) {
@@ -40,8 +43,9 @@ watch(() => page.props.flash, (msg) => {
             </div>
         </main>
 
-        <footer class="py-6 text-center text-slate-400 text-xs">
-            &copy; 2026 Notivra App. All rights reserved.
+        <Footer v-if="!isAuth" />
+        <footer v-else class="py-6 text-center text-slate-400 text-xs">
+            &copy; 2026 Notivra. All rights reserved.
         </footer>
     </div>
 

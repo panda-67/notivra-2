@@ -56,11 +56,20 @@
         @endif
     </header>
 
-    <div class="prose prose-slate prose-lg max-w-none
-                prose-headings:text-slate-900 prose-headings:font-bold
-                prose-a:text-blue-600 hover:prose-a:text-blue-500
-                prose-img:rounded-2xl prose-img:shadow-lg">
-        {!! $post['html'] !!}
+    <div class="prose prose-slate prose-lg max-w-none prose-headings:text-slate-900 prose-headings:font-bold
+                prose-a:text-blue-600 hover:prose-a:text-blue-500 prose-img:rounded-2xl prose-img:shadow-lg">
+        @php
+            $content = $post['html'];
+            $paragraphs = explode('</p>', $content);
+            $insertAfter = 6;
+        @endphp
+        @foreach($paragraphs as $index => $paragraph)
+            {!! $paragraph . '</p>' !!}
+
+            @if($index + 1 == $insertAfter && count($paragraphs) > $insertAfter)
+                @include('partials.cta-hire')
+            @endif
+        @endforeach
     </div>
 
     <hr class="my-12 border-slate-100">

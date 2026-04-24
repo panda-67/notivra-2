@@ -7,7 +7,6 @@ use App\Http\Requests\UpdateProjectRequest;
 use App\Models\HireDraft;
 use App\Models\Project;
 use App\Models\Service;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;

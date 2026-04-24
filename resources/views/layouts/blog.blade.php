@@ -34,12 +34,11 @@
                        </aside>
 
                     </div>
+                    @include('partials.cta-hire')
                 </div>
             </main>
 
-            <footer class="py-12 border-t border-slate-200 mt-20 text-center text-sm text-slate-400">
-                &copy; 2026 Notivra Academic Support.
-            </footer>
-        </div>
+            @include('partials.footer')
+       </div>
     </body>
 </html>
