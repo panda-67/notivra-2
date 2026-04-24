@@ -140,11 +140,14 @@ const submit = () => {
                         </button>
                     </form>
 
-                    <div class="relative my-8">
-                        <div class="absolute inset-0 flex items-center"><span
-                                class="w-full border-t border-slate-100"></span></div>
-                        <div class="relative flex justify-center text-xs uppercase font-mono"><span
-                                class="px-3 bg-white text-slate-400 font-medium tracking-tighter">Atau melalui</span>
+                    <div class="relative my-6">
+                        <div class="absolute inset-0 flex items-center">
+                            <span class="w-full border-t border-slate-100"></span>
+                        </div>
+                        <div class="relative flex justify-center text-xs uppercase font-mono">
+                            <span class="px-3 bg-white text-slate-400 font-medium tracking-tighter">
+                                Atau {{ !draft ? 'melalui' : '' }}
+                            </span>
                         </div>
                     </div>
 
@@ -158,8 +161,8 @@ const submit = () => {
                     <p class="mt-8 text-center text-sm text-slate-500">
                         Belum memiliki akses?
                         <Link :href="route('register')"
-                            class="text-blue-600 font-bold hover:text-blue-700 underline underline-offset-4 ml-1">Daftar
-                            sekarang</Link>
+                            class="text-blue-600 font-bold hover:text-blue-700 underline underline-offset-4 ml-1">
+                            Daftar sekarang</Link>
                     </p>
                 </div>
             </div>

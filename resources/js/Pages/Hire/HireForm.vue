@@ -1,7 +1,6 @@
 <script setup>
 import { computed, watch } from 'vue';
 import { useForm, usePage } from '@inertiajs/vue3';
-import { route } from '../../../../vendor/tightenco/ziggy/src/js';
 import AppLayout from '../../Layouts/AppLayout.vue';
 import StepOne from './Partials/StepOne.vue';
 import StepTwo from './Partials/StepTwo.vue';
@@ -9,7 +8,6 @@ import StepThree from './Partials/StepThree.vue';
 
 const page = usePage();
 const user = computed(() => page.props.auth.user);
-console.log(user.value);
 
 const props = defineProps({
     draft: { type: Object, default: null },
@@ -81,10 +79,6 @@ const saveStep = () => {
         })).put(route('hire.draft.update', { draft: props.draft.id }), {
             forceFormData: true,
             preserveScroll: false,
-            onBefore: (request) => {
-                // Kita intip isi FormData yang akan dikirim
-                console.log('File yang dikirim:', request.data.get('files'));
-            },
             onSuccess: () => {
                 form.step = props.draft.step;
                 console.log('Step updated');
@@ -108,21 +102,25 @@ const submitFinal = () => {
 <template>
     <AppLayout title="Create Project Brief">
         <template #header>
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div>
-                    <h1 class="text-2xl font-bold text-slate-900 tracking-tight">Hire Our Service</h1>
-                    <p class="text-slate-500 text-sm mt-1">Lengkapi detail untuk memulai project baru Anda.</p>
-                </div>
-                <div class="flex items-center gap-2">
-                    <div v-for="i in 3" :key="i" class="flex items-center">
-                        <div :class="[
-                            'w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300',
-                            form.step >= i ? 'bg-blue-600 text-white shadow-lg shadow-blue-100' : 'bg-slate-100 text-slate-400'
-                        ]">
-                            {{ i }}
+            <div class="mx-auto max-w-7xl px-4 py-2 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+
+                    <div>
+                        <h1 class="text-2xl font-bold text-slate-900 tracking-tight">Hire Our Service</h1>
+                        <p class="text-slate-500 text-sm mt-1">Lengkapi detail untuk memulai project baru Anda.</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div v-for="i in 3" :key="i" class="flex items-center">
+                            <div :class="[
+                                'w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300',
+                                form.step >= i ? 'bg-blue-600 text-white shadow-lg shadow-blue-100' : 'bg-slate-100 text-slate-400'
+                            ]">
+                                {{ i }}
+                            </div>
+                            <div v-if="i < 3"
+                                :class="['w-8 h-0.5 ml-2 rounded', form.step > i ? 'bg-blue-600' : 'bg-slate-100']">
+                            </div>
                         </div>
-                        <div v-if="i < 3"
-                            :class="['w-8 h-0.5 ml-2 rounded', form.step > i ? 'bg-blue-600' : 'bg-slate-100']"></div>
                     </div>
                 </div>
             </div>

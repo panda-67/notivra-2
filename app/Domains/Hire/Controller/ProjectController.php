@@ -3,6 +3,7 @@
 namespace App\Domains\Hire\Controller;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateProjectRequest;
 use App\Models\HireDraft;
 use App\Models\Project;
 use App\Models\Service;
@@ -23,7 +24,7 @@ class ProjectController extends Controller
             $drafts = HireDraft::where('user_id', $userId)->latest()->get();
         }
 
-        return inertia('Dashboard', compact('projects', 'drafts'));
+        return inertia('Dashboard/Main', compact('projects', 'drafts'));
     }
 
     #[Middleware('auth')]
@@ -44,30 +45,36 @@ class ProjectController extends Controller
     }
 
     #[Middleware('auth')]
-    public function update(Request $request, Project $project)
+    public function update(UpdateProjectRequest $request, Project $project)
     {
-        $validated = $request->validate([
-            'service_id'    => 'required|exists:services,id',
-            'name'          => 'required|string|max:255',
-            'email'         => 'required|email|max:255',
-            'topic'         => 'required|string|max:255',
-            'output'        => 'required|string|max:255',
-            'deadline'      => 'required|date',
-            'budget'        => 'required|numeric|min:0',
-            'phone'         => 'nullable|string|max:20',
-            'institution'   => 'nullable|string|max:255',
-            'level'         => 'nullable|string|max:255',
-            'field'         => 'nullable|string|max:255',
-            'description'   => 'nullable|string',
-            'address'       => 'nullable|string|max:255',
-            'city'          => 'nullable|string|max:255',
-            'postal_code'   => 'nullable|string|max:10',
-            'willing_dp'    => 'nullable|boolean',
-            /* 'status'        => 'required|in:pending,processing,final', */
-        ]);
+        $alwaysEditable = [
+            'name',
+            'email',
+            'phone',
+            'institution',
+            'city',
+            'address',
+            'description',
+            'postal_code'
+        ];
+
+        $validated = $request->validated();
+
+        if (in_array($project->status, ['processing', 'final'])) {
+            $dataToUpdate = $request->only($alwaysEditable);
+
+            if ($request->has('status')) {
+                $dataToUpdate['status'] = $request->status;
+            }
+
+            $project->update($dataToUpdate);
+
+            return redirect()->route('dashboard')
+                ->with('success', 'Hanya data kontak & alamat yang diperbarui karena project sedang diproses.');
+        }
 
         $project->update($validated);
 
-        return redirect()->route('dashboard')->with('success', 'Project updated successfully.');
+        return redirect()->route('dashboard')->with('success', 'Projek berhasil diperbarui.');
     }
 }
