@@ -31,7 +31,7 @@ class UpdateProjectRequest extends FormRequest
             'deadline'      => 'required|date|after:today',
             'budget'        => 'required|numeric|min:300000',
             'field'         => 'required|string|max:255',
-            'phone'         => 'nullable|string|max:20',
+            'phone'         => 'nullable|numeric|max:20',
             'institution'   => 'nullable|string|max:255',
             'level'         => 'nullable|string|max:255',
             'description'   => 'nullable|string',

@@ -31,7 +31,7 @@ class ProjectRequest extends FormRequest
                 'topic' => 'required|string|max:500',
                 'name' => 'required|string|max:255',
                 'email' => 'required|email|max:255',
-                'phone' => 'nullable|string|max:20',
+                'phone' => 'nullable|numeric|max:20',
                 'description' => 'nullable|string',
             ],
             2 => [

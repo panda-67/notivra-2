@@ -66,7 +66,7 @@ const description = defineModel('description');
 
             <div>
                 <label class="block text-sm font-semibold text-slate-700 mb-2">Nomor Handphone </label>
-                <input v-model="phone" type="number"
+                <input v-model="phone" type="text"
                     :class="{ 'border-red-300 bg-red-50/30': errors.phone, 'border-slate-200': !errors.phone }"
                     class="w-full rounded-xl border px-2 focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all py-3"
                     placeholder="0812........">
