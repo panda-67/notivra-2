@@ -8,6 +8,7 @@ use App\Models\HireDraft;
 use App\Models\Project;
 use App\Models\Service;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -69,6 +70,7 @@ class HireDraftController extends Controller
     /**
      * Update data per step
      */
+    #[Middleware('auth')]
     public function update(ProjectRequest $request, HireDraft $draft)
     {
         $validated = $request->validated();
@@ -98,6 +100,7 @@ class HireDraftController extends Controller
     /**
      * Submit akhir: Memindahkan data draft ke tabel utama (hire_requests)
      */
+    #[Middleware('auth')]
     public function submit(ProjectRequest $request, HireDraft $draft)
     {
         $validated = $request->validated();

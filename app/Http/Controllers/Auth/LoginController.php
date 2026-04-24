@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\HireDraft;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
@@ -106,6 +107,7 @@ class LoginController extends Controller
         return redirect()->intended(route('dashboard'));
     }
 
+    #[Middleware('auth')]
     public function destroy(Request $request)
     {
         Auth::logout();

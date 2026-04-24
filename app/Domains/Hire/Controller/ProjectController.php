@@ -7,6 +7,7 @@ use App\Models\HireDraft;
 use App\Models\Project;
 use App\Models\Service;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,6 +26,7 @@ class ProjectController extends Controller
         return inertia('Dashboard', compact('projects', 'drafts'));
     }
 
+    #[Middleware('auth')]
     public function edit(Project $project)
     {
         $locale = App::getLocale();
@@ -41,26 +43,27 @@ class ProjectController extends Controller
         ]);
     }
 
+    #[Middleware('auth')]
     public function update(Request $request, Project $project)
     {
         $validated = $request->validate([
             'service_id'    => 'required|exists:services,id',
             'name'          => 'required|string|max:255',
             'email'         => 'required|email|max:255',
+            'topic'         => 'required|string|max:255',
+            'output'        => 'required|string|max:255',
+            'deadline'      => 'required|date',
+            'budget'        => 'required|numeric|min:0',
             'phone'         => 'nullable|string|max:20',
             'institution'   => 'nullable|string|max:255',
             'level'         => 'nullable|string|max:255',
             'field'         => 'nullable|string|max:255',
-            'topic'         => 'nullable|string|max:255',
             'description'   => 'nullable|string',
-            'output'        => 'nullable|string|max:255',
-            'deadline'      => 'required|date',
             'address'       => 'nullable|string|max:255',
             'city'          => 'nullable|string|max:255',
             'postal_code'   => 'nullable|string|max:10',
             'willing_dp'    => 'nullable|boolean',
-            'budget'        => 'nullable|numeric|min:0',
-            'status'        => 'required|in:pending,processing,final',
+            /* 'status'        => 'required|in:pending,processing,final', */
         ]);
 
         $project->update($validated);

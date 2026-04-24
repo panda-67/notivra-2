@@ -29,8 +29,8 @@ Route::post('/newsletter/subscribe', [NewsletterController::class, 'store'])
 Route::prefix('hire')->controller(HireDraftController::class)->group(function () {
     Route::get('/apply', 'create')->name('hire.apply');
     Route::post('/draft', 'store')->name('hire.draft.store');
-    Route::put('/draft/{draft}',  'update')->middleware(['auth'])->name('hire.draft.update');
-    Route::post('/draft/{draft}/submit',  'submit')->middleware(['auth'])->name('hire.draft.submit');
+    Route::put('/draft/{draft}',  'update')->name('hire.draft.update');
+    Route::post('/draft/{draft}/submit',  'submit')->name('hire.draft.submit');
 });
 
 
@@ -42,7 +42,7 @@ Route::middleware('guest')->group(function () {
     Route::post('register', [RegisterController::class, 'store']);
 });
 
-Route::post('logout', [LoginController::class, 'destroy'])->name('logout')->middleware('auth');
+Route::post('logout', [LoginController::class, 'destroy'])->name('logout');
 
 Route::get('auth/google', [GoogleAuthController::class, 'redirect'])->name('auth.google');
 Route::get('auth/google/callback', [GoogleAuthController::class, 'callback']);
