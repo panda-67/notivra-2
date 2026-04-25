@@ -1,3 +1,13 @@
+<script setup>
+import { Link, usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
+import { useLanguage } from '@/Composables/useLanguage';
+
+const { locale } = useLanguage();
+const services = computed(() => usePage().props.footerServices);
+
+</script>
+
 <template>
     <footer class="bg-[#0f172a] text-slate-300 pt-16 pb-8 border-t border-slate-800">
         <div class="container mx-auto px-6">
@@ -14,10 +24,11 @@
                 <div>
                     <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Layanan Kami</h4>
                     <ul class="space-y-2 text-sm">
-                        <li><a href="#" class="hover:text-blue-400 transition">Bimbingan Skripsi/Tesis</a></li>
-                        <li><a href="#" class="hover:text-blue-400 transition">Olah Data Statistik</a></li>
-                        <li><a href="#" class="hover:text-blue-400 transition">Publikasi Jurnal</a></li>
-                        <li><a href="#" class="hover:text-blue-400 transition">Proofreading & Translate</a></li>
+                        <li v-for="service in services" :key="service.id">
+                            <Link :href="route('services.show', service.id)" class="hover:text-blue-400 transition">
+                                {{ service.title[locale] }}
+                            </Link>
+                        </li>
                     </ul>
                 </div>
 
@@ -37,7 +48,7 @@
 
                 <div class="col-span-1">
                     <div
-                        class="rounded-xl overflow-hidden grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition duration-500 border border-slate-700 h-32 md:h-full min-h-[150px]">
+                        class="rounded-xl overflow-hidden grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition duration-500 border border-slate-700 h-32 md:h-full min-h-37.5">
                         <iframe
                             src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d236.87715177648644!2d95.3672409208843!3d5.566319442422837!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sid!2sid!4v1750846935057!5m2!1sid!2sid"
                             width="100%" height="100%" style="border:0;" allowfullscreen="true" loading="lazy">
@@ -51,12 +62,12 @@
                 <p>&copy; 2026 Notivra. All rights reserved.</p>
                 <div class="flex gap-6">
                     <a href="/" class="hover:text-white">Home</a>
-                    <a href="/services" class="hover:text-white">Services</a>
-                    <a href="/about" class="hover:text-white">About Us</a>
-                    <a href="/contact" class="hover:text-white">Contact</a>
+                    <Link href="/dashboard" class="hover:text-white">Dashboard</Link>
+                    <Link href="/services" class="hover:text-white">Services</Link>
+                    <Link href="/about" class="hover:text-white">About Us</Link>
+                    <a href="mailto:info@notivra.com" class="hover:text-white">Contact</a>
                 </div>
             </div>
         </div>
     </footer>
-
 </template>

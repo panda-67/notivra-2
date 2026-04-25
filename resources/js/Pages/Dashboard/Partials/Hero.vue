@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { Link } from '@inertiajs/vue3';
 
 </script>
@@ -16,18 +16,17 @@ import { Link } from '@inertiajs/vue3';
                     <span class="text-indigo-600">Wujudkan Riset.</span>
                 </h1>
                 <p class="mt-6 text-lg leading-8 text-slate-600">
-                    Notivra hadir sebagai jembatan kolaborasi riset di Indonesia. Temukan mitra ahli,
-                    kelola draf penelitian, dan publikasikan wawasan akademik Anda dalam satu ekosistem
-                    terpadu.
+                    Notivra hadir sebagai jembatan kolaborasi riset di Indonesia. Temukan mitra ahli, kelola draf
+                    penelitian, dan publikasikan wawasan akademik Anda dalam satu ekosistem terpadu.
                 </p>
                 <div class="mt-10 flex items-center gap-x-6">
                     <Link :href="route('hire.apply')"
-                        class="rounded-md bg-indigo-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 transition-all">
+                        class="rounded-md bg-indigo-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 transition-all">
                         Mulai Meneliti
                     </Link>
                     <a href="/" class="text-sm font-semibold leading-6 text-slate-900 group">
-                        Eksplorasi Insight <span
-                            class="inline-block transition-transform group-hover:translate-x-1">→</span>
+                        Eksplorasi Insight
+                        <span class="inline-block transition-transform group-hover:translate-x-1">→</span>
                     </a>
                 </div>
             </div>

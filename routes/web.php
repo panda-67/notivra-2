@@ -7,11 +7,23 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/about', function () {
+    return inertia('About');
+})->name('about');
 
 Route::get('/', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/{slug}/insight', [BlogController::class, 'show'])->name('blog.show');
+
+Route::post('/newsletter/subscribe', [NewsletterController::class, 'store'])
+    ->name('newsletter.subscribe');
+
+Route::prefix('services')->controller(ServiceController::class)->group(function () {
+    Route::get('/', 'index')->name('services.index');
+    Route::get('/{service}', 'show')->name('services.show');
+});
 
 Route::prefix('dashboard')->controller(ProjectController::class)->group(function () {
     Route::get('/', 'dashboard')->name('dashboard');
@@ -22,9 +34,6 @@ Route::prefix('dashboard')->controller(ProjectController::class)->group(function
 Route::get('/user/profile', function () {
     return 'this is profile';
 })->name('profile.edit');
-
-Route::post('/newsletter/subscribe', [NewsletterController::class, 'store'])
-    ->name('newsletter.subscribe');
 
 Route::prefix('hire')->controller(HireDraftController::class)->group(function () {
     Route::get('/apply', 'create')->name('hire.apply');

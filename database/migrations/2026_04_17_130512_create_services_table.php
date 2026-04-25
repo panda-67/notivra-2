@@ -18,6 +18,7 @@ return new class extends Migration
             $table->json('title');       // store both EN + ID
             $table->json('summary');     // multilingual
             $table->json('description'); // multilingual
+            $table->json('features');    // multilingual
             $table->timestamps();
         });
     }

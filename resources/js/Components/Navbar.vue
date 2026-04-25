@@ -1,6 +1,7 @@
 <script setup>
 import { computed, ref } from 'vue';
 import { Link, usePage } from '@inertiajs/vue3';
+import LangSwitcher from './LangSwitcher.vue';
 
 const page = usePage();
 const user = computed(() => page.props.auth.user);
@@ -14,14 +15,16 @@ defineProps({
 
 const navigation = [
     { name: 'Dashboard', href: route('dashboard'), active: usePage().url.startsWith('/dashboard') },
+    { name: 'Services', href: route('services.index'), active: route().current('services.*') },
     { name: 'Hire Service', href: route('hire.apply'), active: route().current('hire.apply') },
-    {
-        name: 'Resources',
-        children: [
-            { name: 'Documentation', href: '/docs' },
-            { name: 'API Reference', href: '/api' }
-        ]
-    }
+    { name: 'About Us', href: route('about'), active: route().current('about') },
+    // {
+    //     name: 'Resources',
+    //     children: [
+    //         { name: 'Documentation', href: '/docs' },
+    //         { name: 'API Reference', href: '/api' }
+    //     ]
+    // }
 ]
 
 </script>
@@ -70,6 +73,8 @@ const navigation = [
                 </div>
 
                 <div class="flex items-center gap-3">
+                    <LangSwitcher />
+
                     <template v-if="!user">
                         <Link :href="route('login')"
                             class="hidden sm:block text-sm font-medium text-slate-600 hover:text-blue-600">
@@ -85,7 +90,7 @@ const navigation = [
                         <button @click="isDropdownOpen = !isDropdownOpen"
                             class="flex items-center gap-3 bg-slate-50 py-1.5 px-3 rounded-full border border-slate-200 hover:bg-slate-100 transition">
                             <span class="hidden sm:inline text-sm font-medium text-slate-700">{{ user.name
-                                }}</span>
+                            }}</span>
                             <div
                                 class="w-7 h-7 bg-blue-100 rounded-full flex items-center justify-center text-[10px] font-bold text-blue-600">
                                 {{ user.name.charAt(0).toUpperCase() }}

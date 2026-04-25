@@ -2,8 +2,8 @@
 
 namespace App\Domains\Hire\Controller;
 
+use App\Domains\Hire\Requests\UpdateProjectRequest;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UpdateProjectRequest;
 use App\Models\HireDraft;
 use App\Models\Project;
 use App\Models\Service;

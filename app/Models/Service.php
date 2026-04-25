@@ -16,6 +16,7 @@ class Service extends Model
         'title' => 'array',
         'summary' => 'array',
         'description' => 'array',
+        'features' => 'array',
     ];
 
     /* public function hires(): HasMany */

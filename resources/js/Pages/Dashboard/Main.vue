@@ -1,5 +1,5 @@
 <script setup>
-import AppLayout from '../../Layouts/AppLayout.vue'
+import AppLayout from '@/Layouts/AppLayout.vue'
 import { Link, usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
 import Hero from './Partials/Hero.vue';
@@ -44,13 +44,15 @@ const props = defineProps({
         </div>
 
         <div v-else class="py-24 text-center">
-            <div class="max-w-md mx-auto px-6">
+            <div class="max-w-md prose mx-auto px-6">
                 <h3 class="text-slate-900 font-bold text-xl">Siap berkontribusi bagi Nusantara?</h3>
-                <p class="text-slate-500 text-sm mt-2">Masuk ke akun Anda untuk mengakses fitur kolaborasi riset dan
-                    publikasi insight.</p>
+                <p class="text-slate-500 text-sm mt-2">
+                    Masuk ke akun Anda untuk mengakses fitur kolaborasi riset dan publikasi insight.
+                </p>
                 <Link :href="route('login')" as="button"
                     class="mt-6 bg-indigo-600 text-white px-6 py-2 rounded-lg font-bold text-sm hover:cursor-pointer">
-                    Masuk Sekarang</Link>
+                    Masuk Sekarang
+                </Link>
             </div>
         </div>
     </AppLayout>

@@ -12,11 +12,12 @@
             <div>
                 <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Layanan Kami</h4>
                 <ul class="space-y-2 text-sm">
-                    <li><a href="#" class="hover:text-blue-400 transition">Bimbingan Skripsi/Tesis</a></li>
-                    <li><a href="#" class="hover:text-blue-400 transition">Olah Data Statistik</a></li>
-                    <li><a href="#" class="hover:text-blue-400 transition">Publikasi Jurnal</a></li>
-                    <li><a href="#" class="hover:text-blue-400 transition">Proofreading & Translate</a></li>
-                </ul>
+                    @foreach ($services  as $service)
+                        <li><a href="{{ route('services.show', $service['id']) }}" class="hover:text-blue-400 transition">
+                            {{$service['title']}}
+                        </a></li>
+                    @endforeach
+               </ul>
             </div>
 
             <div>
@@ -47,9 +48,10 @@
             <p>&copy; 2026 Notivra. All rights reserved.</p>
             <div class="flex gap-6">
                 <a href="/" class="hover:text-white">Home</a>
+                <a href="/dashboard" class="hover:text-white">Dashboard</a>
                 <a href="/services" class="hover:text-white">Services</a>
                 <a href="/about" class="hover:text-white">About Us</a>
-                <a href="/contact" class="hover:text-white">Contact</a>
+                <a href="mailto:info@notivra.com" class="hover:text-white">Contact</a>
             </div>
         </div>
     </div>

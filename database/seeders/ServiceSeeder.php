@@ -31,6 +31,10 @@ class ServiceSeeder extends Seeder
                     'en' => 'We provide statistical analysis using R, Python, or SPSS. Our visuals speak science—clear, relevant, and publication-ready.',
                     'id' => 'Kami menyediakan analisis statistik menggunakan R, Python, atau SPSS. Visualisasi kami berbicara sains — jelas, relevan, dan siap publikasi.',
                 ]),
+                'features' => json_encode([
+                    'en' => ['Descriptive & Inferential Statistics', 'Predictive Modeling', 'High-Resolution Export (TIFF/SVG)'],
+                    'id' => ['Statistik Deskriptif & Inferensial', 'Pemodelan Prediktif', 'Ekspor Resolusi Tinggi (TIFF/SVG)'],
+                ]),
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -49,6 +53,10 @@ class ServiceSeeder extends Seeder
                 'description' => json_encode([
                     'en' => 'We help you plan your research—from hypothesis to instruments—ensuring sound methodology and real-world relevance.',
                     'id' => 'Kami membantu merancang penelitian Anda—dari hipotesis hingga instrumen—dengan metodologi yang kuat dan relevansi nyata.',
+                ]),
+                'features' => json_encode([
+                    'en' => ['Hypothesis Development', 'Sampling Strategy', 'Instrument Validation', 'Experimental Protocol Design'],
+                    'id' => ['Pengembangan Hipotesis', 'Strategi Sampling', 'Validasi Instrumen', 'Desain Protokol Eksperimen'],
                 ]),
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -69,6 +77,10 @@ class ServiceSeeder extends Seeder
                     'en' => 'Leverage GIS tools to map, analyze, and present spatial data. Ideal for ecology, geography, conservation, and more.',
                     'id' => 'Manfaatkan alat GIS untuk memetakan, menganalisis, dan menyajikan data spasial. Cocok untuk ekologi, geografi, konservasi, dan lainnya.',
                 ]),
+                'features' => json_encode([
+                    'en' => ['Spatial Distribution Mapping', 'Remote Sensing Data Processing', 'Custom Cartography'],
+                    'id' => ['Pemetaan Distribusi Spasial', 'Pengolahan Data Penginderaan Jauh', 'Kartografi Kustom'],
+                ]),
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -87,6 +99,10 @@ class ServiceSeeder extends Seeder
                 'description' => json_encode([
                     'en' => 'We offer one-on-one academic support, including publishing strategy, data interpretation, and thesis mentoring.',
                     'id' => 'Kami menyediakan dukungan akademik personal, termasuk strategi publikasi, interpretasi data, dan pendampingan skripsi/tesis.',
+                ]),
+                'features' => json_encode([
+                    'en' => ['Journal Submission Strategy', 'Peer-Review Response Coaching', 'One-on-One Mentoring Sessions', 'Literature Review Assistance'],
+                    'id' => ['Strategi Submit Jurnal', 'Pendampingan Balasan Reviewer', 'Sesi Mentoring One-on-One', 'Bantuan Tinjauan Pustaka'],
                 ]),
                 'created_at' => now(),
                 'updated_at' => now(),

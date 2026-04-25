@@ -1,7 +1,7 @@
 <script setup>
 import { computed, watch } from 'vue';
 import { useForm, usePage } from '@inertiajs/vue3';
-import AppLayout from '../../Layouts/AppLayout.vue';
+import AppLayout from '@/Layouts/AppLayout.vue';
 import StepOne from './Partials/StepOne.vue';
 import StepTwo from './Partials/StepTwo.vue';
 import StepThree from './Partials/StepThree.vue';

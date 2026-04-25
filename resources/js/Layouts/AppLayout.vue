@@ -1,13 +1,19 @@
 <script setup>
 import { Head, usePage } from '@inertiajs/vue3';
-import Navbar from '../Components/Navbar.vue';
+import Navbar from '@/Components/Navbar.vue';
 import { computed, ref, watch } from 'vue';
-import Footer from '../Components/Footer.vue';
+import Footer from '@/Components/Footer.vue';
 
 const props = defineProps({
     title: String,
+    margin: {
+        type: String,
+        default: 'narrow',
+        validator(value) {
+            return ['wide', 'narrow'].includes(value)
+        }
+    }
 });
-
 
 const page = usePage();
 const show = ref(false);
@@ -16,10 +22,10 @@ const isAuth = computed(() => page.props.auth.user !== null);
 watch(() => page.props.flash, (msg) => {
     if (msg) {
         show.value = true;
-        // Sembunyikan otomatis setelah 3 detik
         setTimeout(() => show.value = false, 4000);
     }
 }, { immediate: true });
+
 </script>
 
 <template>
@@ -36,7 +42,11 @@ watch(() => page.props.flash, (msg) => {
         </header>
 
         <main class="py-10">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div v-if="margin === 'wide'" class="max-w-full w-full">
+                <slot />
+            </div>
+
+            <div v-else class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="bg-white border border-slate-200 shadow-sm rounded-2xl overflow-hidden">
                     <slot />
                 </div>

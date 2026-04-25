@@ -17,7 +17,13 @@
                         <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold shadow-lg shadow-blue-200">N</div>
                         <span class="text-xl font-bold tracking-tight uppercase">Notivra <span class="text-blue-600">Insight</span></span>
                     </a>
-                    <a href="{{ route('dashboard') }}" class="text-sm font-semibold text-slate-600 hover:text-blue-600 transition">Dashboard →</a>
+                    <div class="flex items-center space-x-4">
+                        <div id="lang-switcher-root">
+                            <lang-switcher initial-locale="{{ App::getLocale() }}"></lang-switcher>
+                        </div>
+                        <div><a href="{{ route('about') }}" class="text-sm font-semibold text-slate-600 hover:text-blue-600 transition">About Us</a></div>
+                        <div><a href="{{ route('dashboard') }}" class="text-sm font-semibold text-slate-600 hover:text-blue-600 transition">Dashboard →</a></div>
+                    </div>
                 </div>
             </nav>
 
