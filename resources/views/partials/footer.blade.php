@@ -5,12 +5,22 @@
             <div class="col-span-1">
                 <h3 class="text-white text-xl font-bold mb-4">Notivra<span class="text-blue-500">.</span></h3>
                 <p class="text-sm leading-relaxed">
-                    Penyedia layanan pendukung akademik terpercaya di Banda Aceh. Kami membantu mahasiswa dan peneliti mencapai standar akademik tertinggi.
+                    @if ($locale === 'id')
+                        Penyedia layanan pendukung akademik terpercaya di Banda Aceh. Kami membantu mahasiswa dan peneliti mencapai standar akademik tertinggi.
+                    @else
+                        Trusted academic support service provider in Banda Aceh. We assist students and researchers in achieving the highest academic standards.
+                    @endif
                 </p>
             </div>
 
             <div>
-                <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Layanan Kami</h4>
+                <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">
+                    @if ($locale === 'id')
+                        Layanan Kami
+                    @else
+                       Our Services
+                    @endif
+                </h4>
                 <ul class="space-y-2 text-sm">
                     @foreach ($services  as $service)
                         <li><a href="{{ route('services.show', $service['id']) }}" class="hover:text-blue-400 transition">
@@ -21,7 +31,13 @@
             </div>
 
             <div>
-                <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Kontak</h4>
+                <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">
+                    @if ($locale === 'id')
+                       Kontak
+                    @else
+                       Contact
+                    @endif
+                </h4>
                 <div class="space-y-4 text-sm">
                     <p class="flex items-start gap-3">
                         <span class="text-blue-400">📧</span>
@@ -35,7 +51,7 @@
             </div>
 
             <div class="col-span-1">
-                <div class="rounded-xl overflow-hidden grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition duration-500 border border-slate-700 h-32 md:h-full min-h-[150px]">
+                <div class="rounded-xl overflow-hidden grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition duration-500 border border-slate-700 h-32 md:h-full min-h-37.5">
                     <iframe
                         src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d236.87715177648644!2d95.3672409208843!3d5.566319442422837!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sid!2sid!4v1750846935057!5m2!1sid!2sid"
                         width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">

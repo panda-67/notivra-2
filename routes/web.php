@@ -14,6 +14,21 @@ Route::get('/about', function () {
     return inertia('About');
 })->name('about');
 
+Route::get('/gallery', function () {
+    $path = resource_path('js/Data/outputs.json');
+    $outputs = collect(json_decode(file_get_contents($path), true));
+
+    return inertia('Gallery/Index', compact('outputs'));
+})->name('gallery.index');
+
+Route::get('/gallery/{slug}', function ($slug) {
+    $path = resource_path('js/Data/outputs.json');
+    $outputs = collect(json_decode(file_get_contents($path), true));
+    $output = $outputs->firstWhere('slug', $slug);
+
+    return inertia('Gallery/Show', compact('output'));
+})->name('gallery.show');
+
 Route::get('/', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/{slug}/insight', [BlogController::class, 'show'])->name('blog.show');
 

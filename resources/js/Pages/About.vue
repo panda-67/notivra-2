@@ -128,7 +128,7 @@ const result = locale === 'id'
         </div>
 
         <div class="py-20 bg-white">
-            <div class="max-w-4xl mx-auto px-6">
+            <div class="max-w-5xl mx-auto px-6">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
                     <div v-for="value in values" :key="value.title.en" class="text-center">
                         <div
@@ -155,10 +155,15 @@ const result = locale === 'id'
                         <div class="flex flex-wrap gap-4">
                             <span
                                 class="px-4 py-2 bg-slate-800 rounded-lg text-sm border border-slate-700">Taxonomy</span>
-                            <span class="px-4 py-2 bg-slate-800 rounded-lg text-sm border border-slate-200">GLMM
-                                Statistics</span>
-                            <span class="px-4 py-2 bg-slate-800 rounded-lg text-sm border border-slate-700">CFA
-                                Analysis</span>
+                            <span class="px-4 py-2 bg-slate-800 rounded-lg text-sm border border-slate-500">
+                                GLMM Statistics</span>
+                            <span class="px-4 py-2 bg-slate-800 rounded-lg text-sm border border-slate-700">
+                                CFA Analysis</span>
+                            <Link :href="route('hire.apply')" class="inline-flex items-center px-3 py-1.5 bg-slate-800 border border-slate-400 text-white font-bold
+                            rounded-xl hover:bg-slate-600 transition-all shadow-md shadow-slate-600">
+                                {{ locale === 'id' ? 'Kunjungi Galeri' : 'Our Gallery' }}
+                                <ArrowRightIcon class="w-4 h-4 ml-2" />
+                            </Link>
                         </div>
                     </div>
                     <div class="mt-12 md:mt-0 md:w-1/3 flex justify-center">

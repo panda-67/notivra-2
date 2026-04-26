@@ -1,0 +1,175 @@
+[
+    {
+        "id": 1,
+        "date": "2019-05-29",
+        "slug": "taxonomy-of-the-genus-longipeditermes",
+        "title": {
+            "en": "Taxonomy of the genus <i>Longipeditermes</i> Holmgren (Termitidae, Nasutitermitinae) from the Greater Sundas, Southeast Asia",
+            "id": "Taxonomy of the genus <i>Longipeditermes</i> Holmgren (Termitidae, Nasutitermitinae) from the Greater Sundas, Southeast Asia"
+        },
+        "type": "paper",
+        "link": "https://zse.pensoft.net/article/31636/element/2/11/",
+        "figures": [
+            "https://binary.pensoft.net/fig/305612/singlefigAOF/file.jpg"
+        ],
+        "methods": [
+            "species richness",
+            "morphology",
+            "GIS mapping"
+        ],
+        "description": {
+            "en": "Taxonomic revision of <i>Longipeditermes</i> termites in Sundaland based on 200+ field collections, highlighting morphological diagnostics and altitudinal niche differentiation.",
+            "id": "Revisi taksonomi rayap <i>Longipeditermes</i> di wilayah Sundaland berdasarkan lebih dari 200 koleksi lapangan, dengan penekanan pada karakter morfologi dan perbedaan relung ketinggian."
+        }
+    },
+    {
+        "id": 2,
+        "date": "2022-02-02",
+        "slug": "taxonomic-and-ecological-notes-on-termes-propinquus",
+        "title": {
+            "en": "Taxonomic and Ecological Notes on <i>Termes propinquus</i> Holmgren, 1914 Known from Sumatra (Blattodea: Termitoidae: Termitidae)",
+            "id": "Taxonomic and Ecological Notes on <i>Termes propinquus</i> Holmgren, 1914 Known from Sumatra (Blattodea: Termitoidae: Termitidae)"
+        },
+        "type": "paper",
+        "link": "https://onlinelibrary.wiley.com/doi/full/10.1155/2022/9475722",
+        "figures": [
+            "https://onlinelibrary.wiley.com/cms/asset/cadcdd86-156c-4ab1-87af-2bb0399c88dc/tswj9475722-fig-0001b-m.png",
+            "https://onlinelibrary.wiley.com/cms/asset/107060a6-6594-49da-b2fa-380115cd31fa/tswj9475722-fig-0002d-m.png"
+        ],
+        "methods": [
+            "taxonomy",
+            "morphology",
+            "systematics"
+        ],
+        "description": {
+            "en": "Taxonomic clarification of <i>Termes propinquus</i> using soldier caste morphology, resolving species confusion and providing an identification key for Termes in Sundaland.",
+            "id": "Klarifikasi taksonomi <i>Termes propinquus</i> berdasarkan morfologi kasta prajurit, menyelesaikan kebingungan spesies dan menyediakan kunci identifikasi untuk Termes di wilayah Sundaland."
+        }
+    },
+    {
+        "id": 3,
+        "date": "2023-12-11",
+        "slug": "description-of-the-termite-genus-prohamitermes",
+        "title": {
+            "en": "Description of the termite genus <i>Prohamitermes</i> (Termitinae) with new characters from the Leuser Ecosystem, Sumatra, Indonesia",
+            "id": "Description of the termite genus <i>Prohamitermes</i> (Termitinae) with new characters from the Leuser Ecosystem, Sumatra, Indonesia"
+        },
+        "type": "paper",
+        "link": "https://doi.org/10.13057/biodiv/d241133",
+        "figures": [
+            "/images/outputs/biodiv1.png",
+            "/images/outputs/biodiv2.png"
+        ],
+        "methods": [
+            "taxonomy",
+            "morphology",
+            "systematics"
+        ],
+        "description": {
+            "en": "Morphological redescription of the termite genus <i>Prohamitermes</i> from Sumatra using new head capsule characters to refine taxonomic identification.",
+            "id": "Redeskripsi morfologi genus rayap <i>Prohamitermes</i> dari Sumatra menggunakan karakter baru pada kapsul kepala untuk memperbaiki identifikasi taksonomi."
+        }
+    },
+    {
+        "id": 4,
+        "date": "2026-01-06",
+        "slug": "first-baseline-study-on-polymetallic-passive-biomonitoring-of-polycarpa-aurata",
+        "title": {
+            "en": "First baseline study on polymetallic passive biomonitoring of <i>Polycarpa aurata</i> in coral reef ecosystems in Southeast Sulawesi, Indonesia",
+            "id": "First baseline study on polymetallic passive biomonitoring of <i>Polycarpa aurata</i> in coral reef ecosystems in Southeast Sulawesi, Indonesia"
+        },
+        "type": "paper",
+        "link": "https://www.sciencedirect.com/science/article/pii/S2352485525007315",
+        "figures": [
+            "https://ars.els-cdn.com/content/image/1-s2.0-S2352485525007315-gr3.jpg",
+            "https://ars.els-cdn.com/content/image/1-s2.0-S2352485525007315-gr4b.jpg"
+        ],
+        "methods": [
+            "biomonitoring",
+            "environmental quality",
+            "GLM",
+            "PCA"
+        ],
+        "description": {
+            "en": "Evaluation of the ascidian <i>Polycarpa aurata</i> as a biomonitor for metal pollution in Southeast Sulawesi, demonstrating tissue-specific bioaccumulation and strong correlations with sediment contamination.",
+            "id": "Evaluasi ascidia <i>Polycarpa aurata</i> sebagai biomonitor pencemaran logam di Sulawesi Tenggara, menunjukkan pola bioakumulasi spesifik jaringan dan korelasi kuat dengan kontaminasi sedimen."
+        }
+    },
+    {
+        "id": 5,
+        "date": "2025-06-02",
+        "slug": "determinants-of-complete-basic-immunization",
+        "title": {
+            "en": "Determinants of Complete Basic Immunization (IDL) in Aceh: A GLMM Analysis",
+            "id": "Determinan Kelengkapan Imunisasi Dasar Lengkap (IDL) di Aceh: Analisis GLMM"
+        },
+        "type": "statistics",
+        "code": {
+            "platform": "github",
+            "url": "https://github.com/panda-67/idl_aceh_analysis"
+        },
+        "figures": [
+            "/images/outputs/idl1.png",
+            "/images/outputs/idl2.png"
+        ],
+        "methods": [
+            "GLMM",
+            "R",
+            "Descriptive"
+        ],
+        "description": {
+            "en": "Statistical analysis of longitudinal immunization data in Aceh using Generalized Linear Mixed Models (GLMM). Results show persistently low rates of complete basic immunization, with progressive drop-out across vaccine sequences. Vaccine type and order emerge as primary determinants of completion, while regional and district effects act as contextual modifiers. The findings highlight retention and continuity between doses as the main structural weaknesses in the immunization program.",
+            "id": "Analisis statistik data imunisasi longitudinal di Aceh menggunakan Generalized Linear Mixed Models (GLMM). Hasil menunjukkan bahwa capaian Imunisasi Dasar Lengkap masih rendah dengan pola drop-out progresif sepanjang urutan vaksin. Jenis dan urutan vaksin merupakan determinan utama kelengkapan imunisasi, sementara faktor wilayah dan distrik berperan sebagai faktor kontekstual. Temuan ini menegaskan bahwa permasalahan utama terletak pada kegagalan retensi dan keberlanjutan antar dosis."
+        }
+    },
+    {
+        "id": 6,
+        "date": "2025-12-12",
+        "slug": "comprehensive-cfa-analysis-with-model-fit",
+        "title": {
+            "en": "Comprehensive CFA analysis with model fit, reliability, factor structure, and advanced psychometric diagnostics.",
+            "id": "Analisis CFA komprehensif dengan evaluasi model, reliabilitas, struktur faktor, dan diagnostik psikometrik lanjutan."
+        },
+        "type": "statistics",
+        "code": {
+            "platform": "github",
+            "url": "https://github.com/panda-67/cfa-dichotomous"
+        },
+        "figures": [
+            "/images/outputs/cfa1.png",
+            "/images/outputs/cfa2.png"
+        ],
+        "methods": [
+            "CFA",
+            "R"
+        ],
+        "description": {
+            "en": "A comprehensive Confirmatory Factor Analysis (CFA) report including model fit evaluation, factor loadings, internal reliability, and modification indices. The analysis is complemented by detailed model diagnostics, covering tetrachoric cell issues, item correlations, latent covariance structure, and fit index patterns, providing a full psychometric assessment of construct validity and measurement quality.",
+            "id": "Laporan lengkap Confirmatory Factor Analysis (CFA) yang mencakup evaluasi kesesuaian model, factor loading, reliabilitas internal, dan modification indices. Analisis dilengkapi dengan diagnostik model yang mencakup masalah sel tetrachoric, korelasi antar item, struktur kovarians laten, serta pola indeks kecocokan, untuk menilai validitas konstruk dan kualitas pengukuran secara menyeluruh."
+        }
+    },
+    {
+        "id": 7,
+        "date": "2024-07-01",
+        "slug": "canopy-cover-elephant-habitat-statistics-sumatra",
+        "title": {
+            "en": "Statistical Summary of Canopy Cover and Elephant Presence in Sumatran Forests Aceh Indonesia",
+            "id": "Ringkasan Statistik Tutupan Kanopi dan Kehadiran Gajah di Hutan Sumatra Aceh Indonesia"
+        },
+        "type": "statistics",
+        "figures": [
+            "/images/outputs/scatter.webp",
+            "/images/outputs/kruskal.webp"
+        ],
+        "methods": [
+            "Descriptive statistics",
+            "Frequency distribution analysis",
+            "Quartile-based canopy classification",
+            "Indirect presence indicator assessment"
+        ],
+        "description": {
+            "en": "Statistical analysis of 543 ecological observations from 15 forest plots assessing canopy cover distribution and indicators of Sumatran elephant presence. Canopy cover values ranged from 20 to 95 percent with a mean of 51.29, and the upper quartile (~65 percent) represented the most frequent structural condition. Elephant presence indicators were rare, with 537 observations showing zero feces and only three plots classified as high presence. Environmental quality classes were dominated by degraded and moderate canopy conditions, indicating low-frequency elephant use and providing quantitative context for subsequent habitat preference modeling in fragmented Sumatran landscapes.",
+            "id": "Analisis statistik terhadap 543 observasi ekologi dari 15 plot hutan untuk mengevaluasi distribusi tutupan kanopi dan indikasi kehadiran gajah Sumatra. Nilai tutupan kanopi berkisar antara 20 hingga 95 persen dengan rata-rata 51,29, dan kuartil atas (~65 persen) merupakan kondisi struktural yang paling sering dijumpai. Indikasi kehadiran gajah sangat jarang, dengan 537 observasi tanpa temuan feses dan hanya tiga plot yang dikategorikan sebagai kehadiran tinggi. Kelas kualitas lingkungan didominasi oleh kondisi kanopi terdegradasi dan sedang, yang mencerminkan rendahnya frekuensi penggunaan habitat serta memberikan konteks kuantitatif untuk pemodelan preferensi habitat lanjutan pada lanskap Sumatra yang terfragmentasi."
+        }
+    }
+]

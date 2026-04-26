@@ -17,6 +17,7 @@ const navigation = [
     { name: 'Dashboard', href: route('dashboard'), active: usePage().url.startsWith('/dashboard') },
     { name: 'Services', href: route('services.index'), active: route().current('services.*') },
     { name: 'Hire Service', href: route('hire.apply'), active: route().current('hire.apply') },
+    { name: 'Gallery', href: route('gallery.index'), active: route().current('gallery.*') },
     { name: 'About Us', href: route('about'), active: route().current('about') },
     // {
     //     name: 'Resources',
@@ -90,7 +91,7 @@ const navigation = [
                         <button @click="isDropdownOpen = !isDropdownOpen"
                             class="flex items-center gap-3 bg-slate-50 py-1.5 px-3 rounded-full border border-slate-200 hover:bg-slate-100 transition">
                             <span class="hidden sm:inline text-sm font-medium text-slate-700">{{ user.name
-                            }}</span>
+                                }}</span>
                             <div
                                 class="w-7 h-7 bg-blue-100 rounded-full flex items-center justify-center text-[10px] font-bold text-blue-600">
                                 {{ user.name.charAt(0).toUpperCase() }}

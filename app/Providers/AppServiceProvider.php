@@ -29,14 +29,17 @@ class AppServiceProvider extends ServiceProvider
         });
 
         View::composer('partials.footer', function ($view) {
-            $services = Service::all()->map(function ($service) {
-                $locale = App::getLocale();
+            $locale = App::getLocale();
+            $services = Service::all()->map(function ($service) use ($locale) {
                 return [
                     'id' => $service->id,
                     'title' => $service->title[$locale] ?? $service->title['id'] ?? 'No Title'
                 ];
             });
-            $view->with('services', $services);
+            $view->with([
+                'services' => $services,
+                'locale' => $locale
+            ]);
         });
     }
 }

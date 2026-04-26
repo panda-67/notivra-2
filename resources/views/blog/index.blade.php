@@ -4,16 +4,31 @@
 
 @section('content')
 <div class="px-4 sm:px-0">
+    @php
+        $locale = App::getLocale();
+    @endphp
     <header class="mb-4 md:mb-6">
-        <h1 class="text-2xl md:text-4xl font-black text-slate-900 mb-3 md:mb-4">Wawasan Riset Nusantara</h1>
-        <p class="text-base md:text-lg text-slate-600">Panduan dan update terbaru untuk mendukung perjalanan akademik Anda.</p>
+        @if ($locale === 'id')
+            <h1 class="text-2xl md:text-4xl font-black text-slate-900 mb-3 md:mb-4">Wawasan Riset Nusantara</h1>
+            <p class="text-base md:text-lg text-slate-600">Panduan dan update terbaru untuk mendukung perjalanan akademik Anda.</p>
+        @else
+            <h1 class="text-2xl md:text-4xl font-black text-slate-900 mb-3 md:mb-4">Nusantara Research Insight</h1>
+            <p class="text-base md:text-lg text-slate-600">Guides and new update for supporting your academic journey.</p>
+        @endif
     </header>
 
     @if(request('search'))
-        <div class="mb-4 text-sm text-slate-500 bg-slate-100 p-3 rounded-lg border border-slate-200">
-            Menampilkan hasil pencarian untuk: <span class="font-bold text-blue-600">"{{ request('search') }}"</span>
-            <a href="{{ route('blog.index') }}" class="ml-2 text-xs text-red-500 underline block mt-1 sm:inline sm:mt-0">Clear</a>
-        </div>
+        @if($locale === 'id')
+            <div class="mb-4 text-sm text-slate-500 bg-slate-100 p-3 rounded-lg border border-slate-200">
+                Menampilkan hasil pencarian untuk: <span class="font-bold text-blue-600">"{{ request('search') }}"</span>
+                <a href="{{ route('blog.index') }}" class="ml-2 text-xs text-red-500 underline block mt-1 sm:inline sm:mt-0">Hapus</a>
+            </div>
+        @else
+            <div class="mb-4 text-sm text-slate-500 bg-slate-100 p-3 rounded-lg border border-slate-200">
+                Show search result for: <span class="font-bold text-blue-600">"{{ request('search') }}"</span>
+                <a href="{{ route('blog.index') }}" class="ml-2 text-xs text-red-500 underline block mt-1 sm:inline sm:mt-0">Clear</a>
+            </div>
+        @endif
     @endif
 
     <div class="grid gap-y-4 md:gap-y-6">
@@ -55,7 +70,11 @@
                     </p>
 
                     <div class="mt-2 md:mt-4 flex items-center gap-2 text-sm font-bold text-blue-600">
-                        Baca Selengkapnya
+                        @if ($locale === 'id')
+                            Baca Selengkapnya
+                        @else
+                           Read More
+                        @endif
                         <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
                         </svg>

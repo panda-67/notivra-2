@@ -16,13 +16,22 @@ const services = computed(() => usePage().props.footerServices);
                 <div class="col-span-1">
                     <h3 class="text-white text-xl font-bold mb-4">Notivra<span class="text-blue-500">.</span></h3>
                     <p class="text-sm leading-relaxed">
-                        Penyedia layanan pendukung akademik terpercaya di Banda Aceh. Kami membantu mahasiswa dan
-                        peneliti mencapai standar akademik tertinggi.
+                        <template v-if="locale === 'id'">
+                            Penyedia layanan pendukung akademik terpercaya di Banda Aceh.
+                            Kami membantu mahasiswa dan peneliti mencapai standar akademik tertinggi.
+                        </template>
+                        <template v-else>
+                            Trusted academic support service provider in Banda Aceh.
+                            We assist students and researchers in achieving the highest academic standards.
+                        </template>
                     </p>
                 </div>
 
                 <div>
-                    <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Layanan Kami</h4>
+                    <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">
+                        <span v-if="locale === 'id'">Layanan Kami</span>
+                        <span v-else>Our Services</span>
+                    </h4>
                     <ul class="space-y-2 text-sm">
                         <li v-for="service in services" :key="service.id">
                             <Link :href="route('services.show', service.id)" class="hover:text-blue-400 transition">
@@ -33,7 +42,10 @@ const services = computed(() => usePage().props.footerServices);
                 </div>
 
                 <div>
-                    <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Kontak</h4>
+                    <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">
+                        <span v-if="locale === 'id'">Kontak</span>
+                        <span v-else>Contact</span>
+                    </h4>
                     <div class="space-y-4 text-sm">
                         <p class="flex items-start gap-3">
                             <span class="text-blue-400">📧</span>

@@ -6,7 +6,14 @@
 <article>
     <header class="mb-10">
         <a href="{{ route('blog.index') }}" class="text-sm font-semibold text-blue-600 hover:text-blue-700 inline-flex items-center gap-1 mb-6">
-            ← Kembali ke Blog
+            @php
+            $locale = App::getLocale();
+            @endphp
+            @if ($locale === 'id')
+                ← Kembali ke Blog
+            @else
+                ← Back to Blog
+            @endif
         </a>
 
         <div class="sm:flex items-center gap-x-3 text-sm text-slate-500 mb-4">

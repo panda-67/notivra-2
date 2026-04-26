@@ -1,12 +1,21 @@
 <div class="space-y-6">
+    @php
+        $locale = App::getLocale();
+    @endphp
     <div class="min-h-34">
         <div id="search-root" v-cloak>
-            <blog-search initial-value="{{ request('search') }}"></blog-search>
+            <blog-search initial-value="{{ request('search') }}" locale="{{ $locale }}"></blog-search>
         </div>
     </div>
 
     <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
-        <h3 class="font-bold text-slate-800 mb-4">Kategori Populer</h3>
+        <h3 class="font-bold text-slate-800 mb-4">
+            @if ($locale === 'id')
+                Kategori Populer
+            @else
+               Populer Categories
+            @endif
+        </h3>
         <ul class="space-y-2 text-sm text-slate-600">
             <li>
                 <a href="{{ route('blog.index', ['search' => '']) }}"
@@ -30,7 +39,13 @@
                     </a>
                 </li>
             @empty
-                <li class="text-slate-400 italic text-xs">Belum ada kategori</li>
+                <li class="text-slate-400 italic text-xs">
+                    @if ($locale === 'id')
+                        Belum ada kategori
+                    @else
+                       No categories yet
+                    @endif
+                </li>
             @endforelse
         </ul>
     </div>

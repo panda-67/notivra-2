@@ -3,7 +3,8 @@ import { ref, watch } from 'vue';
 import debounce from 'lodash/debounce';
 
 const props = defineProps({
-    initialValue: String
+    initialValue: String,
+    locale: String
 });
 
 const searchQuery = ref(props.initialValue || '');
@@ -34,9 +35,10 @@ watch(searchQuery, (newVal) => {
 
 <template>
     <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
-        <h3 class="font-bold text-slate-800 mb-4">Pencarian</h3>
+        <h3 v-if="locale === 'id'" class="font-bold text-slate-800 mb-4">Pencarian</h3>
+        <h3 v-else class="font-bold text-slate-800 mb-4">Searching</h3>
         <div class="relative">
-            <input v-model="searchQuery" type="text" placeholder="Cari artikel..."
+            <input v-model="searchQuery" type="text" placeholder="..."
                 class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition">
             <div v-if="isTyping" class="absolute right-3 top-2.5">
                 <svg class="animate-spin h-4 w-4 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none"

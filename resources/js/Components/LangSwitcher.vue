@@ -14,17 +14,12 @@ const currentLang = computed(() => {
 const switchLocale = (lang) => {
     if (lang === currentLang.value) return;
 
-    // Simpan di cookie (1 tahun) agar dibaca oleh Middleware Laravel
     document.cookie = `locale=${lang}; path=/; max-age=31536000; SameSite=Lax`;
 
-    // Reload halaman untuk mengaplikasikan perubahan bahasa di sisi server
-    if (router.page) {
-        router.reload({
-            preserveScroll: true, // Opsional: menjaga posisi scroll
-            onSuccess: () => {
-                // Logika tambahan jika diperlukan setelah reload
-            }
-        });
+    const isInertia = document.getElementById('app') !== null;
+
+    if (isInertia) {
+        router.reload({ preserveScroll: true });
     } else {
         window.location.reload();
     }
