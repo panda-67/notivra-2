@@ -9,6 +9,7 @@ export default defineConfig({
     plugins: [
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.js', 'resources/js/blog.js'],
+            hotFile: '../public_html/hot',
             refresh: true,
             refresh: [
                 'resources/views/**/*.blade.php',

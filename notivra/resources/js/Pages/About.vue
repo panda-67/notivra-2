@@ -159,7 +159,7 @@ const result = locale === 'id'
                                 GLMM Statistics</span>
                             <span class="px-4 py-2 bg-slate-800 rounded-lg text-sm border border-slate-700">
                                 CFA Analysis</span>
-                            <Link :href="route('hire.apply')" class="inline-flex items-center px-3 py-1.5 bg-slate-800 border border-slate-400 text-white font-bold
+                            <Link :href="route('gallery.index')" class="inline-flex items-center px-3 py-1.5 bg-slate-800 border border-slate-400 text-white font-bold
                             rounded-xl hover:bg-slate-600 transition-all shadow-md shadow-slate-600">
                                 {{ locale === 'id' ? 'Kunjungi Galeri' : 'Our Gallery' }}
                                 <ArrowRightIcon class="w-4 h-4 ml-2" />
