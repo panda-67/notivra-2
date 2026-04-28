@@ -15,7 +15,7 @@
         "laravel/socialite": "^5.26",
         "laravel/tinker": "^3.0",
         "league/commonmark": "^2.8",
-        "symfony/yaml": "^8.0",
+        "symfony/yaml": "^6.0",
         "tightenco/ziggy": "^2.6"
     },
     "require-dev": {
@@ -91,7 +91,7 @@
             "php-http/discovery": true
         },
         "platform": {
-            "php": "8.4.0"
+            "php": "8.3.0"
         }
     },
     "minimum-stability": "stable",

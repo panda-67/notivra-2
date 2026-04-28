@@ -1,8 +1,10 @@
 <script setup>
 import { Link } from '@inertiajs/vue3';
+import { useLanguage } from '@/Composables/useLanguage';
 import { ref } from 'vue';
 
 const activeTab = ref('projects');
+const { locale } = useLanguage();
 
 const props = defineProps({
     projects: Array,
@@ -19,7 +21,7 @@ const props = defineProps({
                 <button @click="activeTab = 'projects'"
                     :class="[activeTab === 'projects' ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300']"
                     class="pb-4 px-2 border-b-2 font-bold text-sm transition-all flex items-center gap-2">
-                    Project Riset
+                    {{ locale === 'id' ? ' Project Riset ' : 'Research Project' }}
                     <span
                         :class="activeTab === 'projects' ? 'bg-indigo-100 text-indigo-700' : 'bg-slate-100 text-slate-600'"
                         class="px-2 py-0.5 rounded-full text-[10px]">
@@ -29,7 +31,7 @@ const props = defineProps({
                 <button @click="activeTab = 'drafts'"
                     :class="[activeTab === 'drafts' ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300']"
                     class="pb-4 px-2 border-b-2 font-bold text-sm transition-all flex items-center gap-2">
-                    Draf Kolaborasi
+                    {{ locale === 'id' ? ' Draf Kolaborasi ' : 'Collaboration Drafts' }}
                     <span
                         :class="activeTab === 'drafts' ? 'bg-indigo-100 text-indigo-700' : 'bg-slate-100 text-slate-600'"
                         class="px-2 py-0.5 rounded-full text-[10px]">
@@ -44,14 +46,16 @@ const props = defineProps({
                 <table class="w-full text-left text-sm">
                     <thead class="bg-slate-50/50">
                         <tr class="text-slate-500 border-b border-slate-100">
-                            <th class="px-6 py-4 font-semibold uppercase text-[11px] tracking-wider">Topik /
-                                Proyek</th>
+                            <th class="px-6 py-4 font-semibold uppercase text-[11px] tracking-wider">
+                                {{ locale === 'id' ? 'Topik / Proyek' : 'Topic / Project' }}</th>
                             <th class="px-6 py-4 font-semibold uppercase text-[11px] tracking-wider">Status</th>
                             <th class="px-6 py-4 font-semibold uppercase text-[11px] tracking-wider">
-                                {{ activeTab === 'projects' ? 'Tanggal Mulai' : 'Update Terakhir' }}
+                                {{ activeTab === 'projects'
+                                    ? (locale === 'id' ? 'Tanggal Mulai' : 'Start Date')
+                                    : (locale === 'id' ? 'Update Terakhir' : 'Last Update') }}
                             </th>
                             <th class="px-6 py-4 font-semibold uppercase text-[11px] tracking-wider text-right">
-                                Tindakan
+                                {{ locale === 'id' ? 'Tindakan' : 'Action' }}
                             </th>
                         </tr>
                     </thead>
@@ -76,8 +80,8 @@ const props = defineProps({
                                 </td>
                             </tr>
                             <tr v-if="projects.length === 0">
-                                <td colspan="4" class="py-20 text-center text-slate-400">Belum ada project
-                                    berjalan.</td>
+                                <td colspan="4" class="py-20 text-center text-slate-400">
+                                    {{ locale === 'id' ? 'Belum ada project berjalan.' : 'No project yet.' }}</td>
                             </tr>
                         </template>
 
@@ -96,15 +100,15 @@ const props = defineProps({
                                     <div v-if="draft.status === 'draft'">
                                         <Link :href="route('hire.apply', { d: draft.id })"
                                             class="text-indigo-600 hover:text-indigo-800 font-bold text-xs">
-                                            Lanjutkan →
+                                            {{ locale === 'id' ? ' Lanjutkan' : 'Continue' }} →
                                         </Link>
                                     </div>
                                     <div v-else class="text-slate-500 font-bold text-xs">Sudah Final</div>
                                 </td>
                             </tr>
                             <tr v-if="drafts.length === 0">
-                                <td colspan="4" class="py-20 text-center text-slate-400">Tidak ada draf
-                                    tersimpan.</td>
+                                <td colspan="4" class="py-20 text-center text-slate-400">
+                                    {{ locale === 'id' ? 'Tidak ada draf tersimpan.' : 'No drafts.' }}</td>
                             </tr>
                         </template>
                     </tbody>

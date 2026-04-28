@@ -62,9 +62,9 @@ const services = computed(() => usePage().props.footerServices);
                     <div
                         class="rounded-xl overflow-hidden grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition duration-500 border border-slate-700 h-32 md:h-full min-h-37.5">
                         <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d236.87715177648644!2d95.3672409208843!3d5.566319442422837!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sid!2sid!4v1750846935057!5m2!1sid!2sid"
-                            width="100%" height="100%" style="border:0;" allowfullscreen="true" loading="lazy">
-                        </iframe>
+                            src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d1001.7996876667295!2d95.367241!3d5.566319!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sid!2sid!4v1777295534609!5m2!1sid!2sid"
+                            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                 </div>
             </div>

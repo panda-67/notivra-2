@@ -3,6 +3,7 @@ import laravel from 'laravel-vite-plugin';
 import tailwindcss from '@tailwindcss/vite';
 import inertia from '@inertiajs/vite';
 import vue from '@vitejs/plugin-vue';
+import { resolve } from 'node:path';
 
 
 export default defineConfig({
@@ -10,7 +11,7 @@ export default defineConfig({
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.js', 'resources/js/blog.js'],
             hotFile: '../public_html/hot',
-            refresh: true,
+            publicDirectory: '../public_html',
             refresh: [
                 'resources/views/**/*.blade.php',
                 'routes/**/*.php',
@@ -31,8 +32,14 @@ export default defineConfig({
     ],
     resolve: {
         alias: {
+            'ziggy-js': resolve(__dirname, 'vendor/tightenco/ziggy'),
             'vue': 'vue/dist/vue.esm-bundler.js',
-        }
+        },
+    },
+    build: {
+        outDir: resolve(__dirname, '../public_html/build'),
+        manifest: 'manifest.json',
+        emptyOutDir: true,
     },
     server: {
         hmr: {
