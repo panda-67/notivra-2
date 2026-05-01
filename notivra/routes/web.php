@@ -1,49 +1,48 @@
 <?php
 
+use App\Content\Controllers\BlogController;
+use App\Content\Controllers\NewsletterController;
+use App\Domains\Hire\Controller\FileManagerController;
 use App\Domains\Hire\Controller\HireDraftController;
 use App\Domains\Hire\Controller\ProjectController;
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\BlogController;
-use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/about', function () {
-    return inertia('About');
-})->name('about');
 
-Route::get('/gallery', function () {
-    $path = resource_path('js/Data/outputs.json');
-    $outputs = collect(json_decode(file_get_contents($path), true));
+Route::get('/about', AboutController::class)->name('about');
+Route::post('/newsletter/subscribe', NewsletterController::class)->name('newsletter.subscribe');
 
-    return inertia('Gallery/Index', compact('outputs'));
-})->name('gallery.index');
+Route::controller(BlogController::class)->group(function () {
+    Route::get('/', 'index')->name('blog.index');
+    Route::get('/{slug}/insight', 'show')->name('blog.show');
+});
 
-Route::get('/gallery/{slug}', function ($slug) {
-    $path = resource_path('js/Data/outputs.json');
-    $outputs = collect(json_decode(file_get_contents($path), true));
-    $output = $outputs->firstWhere('slug', $slug);
-
-    return inertia('Gallery/Show', compact('output'));
-})->name('gallery.show');
-
-Route::get('/', [BlogController::class, 'index'])->name('blog.index');
-Route::get('/{slug}/insight', [BlogController::class, 'show'])->name('blog.show');
-
-Route::post('/newsletter/subscribe', [NewsletterController::class, 'store'])
-    ->name('newsletter.subscribe');
+Route::prefix('gallery')->controller(GalleryController::class)->group(function () {
+    Route::get('/', 'index')->name('gallery.index');
+    Route::get('/{slug}', 'show')->name('gallery.show');
+});
 
 Route::prefix('services')->controller(ServiceController::class)->group(function () {
     Route::get('/', 'index')->name('services.index');
     Route::get('/{service}', 'show')->name('services.show');
 });
 
-Route::prefix('dashboard')->controller(ProjectController::class)->group(function () {
-    Route::get('/', 'dashboard')->name('dashboard');
-    Route::get('/{project}/edit', 'edit')->name('projects.edit');
-    Route::put('/{project}/update', 'update')->name('projects.update');
+Route::prefix('dashboard')->group(function () {
+    Route::controller(ProjectController::class)->group(function () {
+        Route::get('/', 'dashboard')->name('dashboard');
+        Route::get('/{project}/edit', 'edit')->name('projects.edit');
+        Route::put('/{project}/update', 'update')->name('projects.update');
+    });
+
+    Route::controller(FileManagerController::class)->group(function () {
+        Route::get('/file-manager', 'show')->name('file-manager.index');
+        Route::post('/file-manager', 'store')->name('file.store');
+    });
 });
 
 Route::get('/user/profile', function () {
@@ -57,16 +56,18 @@ Route::prefix('hire')->controller(HireDraftController::class)->group(function ()
     Route::post('/draft/{draft}/submit',  'submit')->name('hire.draft.submit');
 });
 
-
-Route::middleware('guest')->group(function () {
-    Route::get('login', [LoginController::class, 'show'])->name('login');
-    Route::post('login', [LoginController::class, 'store']);
-
-    Route::get('register', [RegisterController::class, 'show'])->name('register');
-    Route::post('register', [RegisterController::class, 'store']);
+Route::controller(RegisterController::class)->group(function () {
+    Route::get('register', 'show')->name('register');
+    Route::post('register', 'store');
 });
 
-Route::post('logout', [LoginController::class, 'destroy'])->name('logout');
+Route::controller(LoginController::class)->group(function () {
+    Route::get('login', 'show')->name('login');
+    Route::post('login', 'store');
+    Route::post('logout', 'destroy')->name('logout');
+});
 
-Route::get('auth/google', [GoogleAuthController::class, 'redirect'])->name('auth.google');
-Route::get('auth/google/callback', [GoogleAuthController::class, 'callback']);
+Route::controller(GoogleAuthController::class)->group(function () {
+    Route::get('auth/google', 'redirect')->name('auth.google');
+    Route::get('auth/google/callback', 'callback');
+});

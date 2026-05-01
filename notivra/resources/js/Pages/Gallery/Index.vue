@@ -98,7 +98,7 @@ const formatDate = (dateStr) => {
 
                             <div class="mt-auto pt-6 flex flex-wrap gap-1.5">
                                 <span v-for="(method, i) in item.methods.slice(0, 3)" :key="i"
-                                    class="text-[10px] uppercase tracking-tighter text-slate-500 bg-slate-50 px-2 py-0.5 rounded border border-slate-100">
+                                    class="text-[10px] uppercase italic tracking-tighter text-slate-500 bg-slate-50 px-2 py-0.5 rounded border border-slate-100">
                                     #{{ method }}
                                 </span>
                             </div>

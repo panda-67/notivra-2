@@ -14,6 +14,7 @@ use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
+    #[Middleware('guest')]
     public function show(Request $request)
     {
         $d = $request->query('d');
@@ -43,6 +44,7 @@ class LoginController extends Controller
         ]);
     }
 
+    #[Middleware('guest')]
     public function store(Request $request)
     {
         // 1. Validasi dasar

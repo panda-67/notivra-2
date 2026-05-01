@@ -38,13 +38,11 @@ const { locale } = useLanguage();
                 </div>
             </div>
             <div class="relative">
-                <div
-                    class="aspect-16/10 rounded-2xl bg-slate-50 border-2 border-dashed border-slate-200 flex flex-col items-center justify-center shadow-inner">
-                    <svg class="h-12 w-12 text-slate-300 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                            d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                    </svg>
-                    <p class="text-slate-400 font-medium text-sm">Notivra Research Framework</p>
+                <div class="aspect-16/10 flex flex-col items-center justify-center">
+                    <div className="flex justify-center md:justify-end">
+                        <img src="/images/illustration.webp" alt="Illustration"
+                            className="max-w-md md:max-w-lg w-125 h-80 animate-float" />
+                    </div>
                 </div>
             </div>
         </div>

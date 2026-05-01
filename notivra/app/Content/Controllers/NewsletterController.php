@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Content\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\Subscriber;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class NewsletterController extends Controller
 {
-    public function store(Request $request)
+    public function __invoke(Request $request)
     {
         $validated = $request->validate([
             'email' => 'required|email|unique:subscribers,email',

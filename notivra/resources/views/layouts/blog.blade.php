@@ -9,6 +9,16 @@
         @vite(['resources/css/app.css', 'resources/js/blog.js'])
     </head>
 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7HH51EJGZJ"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-7HH51EJGZJ');
+    </script>
+
     <body class="bg-slate-50 text-slate-900 antialiased">
         <div>
             <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-100">

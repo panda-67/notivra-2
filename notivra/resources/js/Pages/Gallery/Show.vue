@@ -6,7 +6,7 @@ import DefaultLayout from '@/Layouts/AppLayout.vue';
 const { locale } = useLanguage();
 const props = defineProps({
     output: {
-        type: Array,
+        type: Object,
         required: true
     }
 })
@@ -21,7 +21,7 @@ const formatDate = (dateStr) => {
 <template>
     <DefaultLayout :title="output ? output.title[locale] : 'Loading...'" margin="wide">
         <div class="relative isolate min-h-screen bg-white pb-24">
-            <div v-if="!output">
+            <div v-if="output">
                 <div class="absolute inset-0 -z-10 bg-[url('/images/noise.webp')] opacity-20"></div>
                 <div class="absolute inset-x-0 top-0 -z-10 h-96 bg-linear-to-b from-sky-100/50 to-transparent"></div>
 
@@ -77,7 +77,7 @@ const formatDate = (dateStr) => {
                         </div>
 
                         <aside class="lg:col-span-4">
-                            <div class="sticky top-8 space-y-10">
+                            <div class="sticky top-24 space-y-10">
                                 <div v-if="output.methods && output.methods.length">
                                     <h3 class="text-sm font-bold mb-4 text-slate-900 border-b pb-2 tracking-tight">
                                         {{ locale === 'id' ? 'Metodologi' : 'Methods' }}

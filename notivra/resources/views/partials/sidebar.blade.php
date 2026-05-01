@@ -51,6 +51,6 @@
     </div>
 
     <div id="newsletter-root">
-        <newsletter-card></newsletter-card>
+        <newsletter-card locale="{{ $locale }}"></newsletter-card>
     </div>
 </div>
