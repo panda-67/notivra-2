@@ -44,7 +44,7 @@ const submit = () => {
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center gap-3">
-                            <h1 class="text-2xl font-bold text-slate-900 tracking-tight">Edit Project</h1>
+                            <h1 class="text-2xl font-bold text-slate-900 tracking-tight">Edit Project Details</h1>
                             <span :class="[
                                 'px-2.5 py-0.5 mb-3 rounded-full text-xs font-semibold uppercase',
                                 form.status === 'final' ? 'bg-green-100 text-green-700' :

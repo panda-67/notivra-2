@@ -54,7 +54,7 @@ const props = defineProps({
                                     ? (locale === 'id' ? 'Tanggal Mulai' : 'Start Date')
                                     : (locale === 'id' ? 'Update Terakhir' : 'Last Update') }}
                             </th>
-                            <th class="px-6 py-4 font-semibold uppercase text-[11px] tracking-wider text-right">
+                            <th class="px-6 py-4 font-semibold uppercase text-[11px] tracking-wider text-center">
                                 {{ locale === 'id' ? 'Tindakan' : 'Action' }}
                             </th>
                         </tr>
@@ -72,10 +72,14 @@ const props = defineProps({
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 text-slate-500 tabular-nums">{{ project.human_date }}</td>
-                                <td class="px-6 py-4 text-right">
+                                <td class="px-6 py-4 space-x-3 text-right">
                                     <Link :href="route('projects.edit', project.id)"
-                                        class="text-indigo-600 hover:text-indigo-800 font-bold text-xs">
+                                        class="bg-indigo-600 hover:bg-indigo-800 font-bold rounded-md py-1.5 px-2 text-xs text-white">
                                         Edit →
+                                    </Link>
+                                    <Link :href="route('file-manager', project.id)"
+                                        class="bg-emerald-600 hover:bg-emerald-800 font-bold rounded-md py-1.5 px-2 text-xs text-white">
+                                        Files →
                                     </Link>
                                 </td>
                             </tr>

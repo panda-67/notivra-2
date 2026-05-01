@@ -40,8 +40,9 @@ Route::prefix('dashboard')->group(function () {
     });
 
     Route::controller(FileManagerController::class)->group(function () {
-        Route::get('/file-manager', 'show')->name('file-manager.index');
-        Route::post('/file-manager', 'store')->name('file.store');
+        Route::get('/{project}/file-manager', 'show')->name('file-manager');
+        Route::post('/{project}/file-manager', 'store')->name('file-manager.store');
+        Route::delete('/{file}/file-manager', 'destroy')->name('file-manager.destroy');
     });
 });
 

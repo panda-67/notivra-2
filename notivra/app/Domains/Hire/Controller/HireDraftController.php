@@ -4,6 +4,7 @@ namespace App\Domains\Hire\Controller;
 
 use App\Domains\Hire\Requests\ProjectRequest;
 use App\Http\Controllers\Controller;
+use App\Models\File;
 use App\Models\HireDraft;
 use App\Models\Project;
 use App\Models\Service;
@@ -79,13 +80,13 @@ class HireDraftController extends Controller
 
         if ($request->hasFile('files')) {
             if (isset($currentData['files'])) {
-                Storage::disk('public')->delete($currentData['files']);
+                Storage::disk('local')->delete($currentData['files']);
             }
 
             $file = $request->file('files');
             $fileName = $draft->id . '_' . time() . '.' . $file->getClientOriginalExtension();
 
-            $path = $file->storeAs('drafts/attachments', $fileName, 'public');
+            $path = $file->storeAs('drafts/attachments', $fileName, 'local');
             $validated['files'] = $path;
         }
 
@@ -142,9 +143,18 @@ class HireDraftController extends Controller
                 ]);
 
                 if ($project->files) {
-                    $newPath = str_replace('drafts/', 'projects/', $project->files);
-                    Storage::disk('public')->move($project->files, $newPath);
+                    $newPath = str_replace('drafts/attachments', "research_drafts/$project->id", $project->files);
+                    Storage::disk('local')->move($project->files, $newPath);
                     $project->update(['files' => $newPath]);
+
+                    File::create([
+                        'project_id'    => $project->id,
+                        'user_id'       => Auth::id(),
+                        'name'          => str_replace('drafts/attachments', '', $project->files),
+                        'path'          => $newPath,
+                        'mime_type'     => Storage::disk('local')->mimeType($newPath),
+                        'size'          => Storage::disk('local')->size($newPath),
+                    ]);
                 }
             });
 

@@ -4,33 +4,50 @@ namespace App\Domains\Hire\Controller;
 
 use App\Http\Controllers\Controller;
 use App\Models\File;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class FileManagerController extends Controller
 {
-    public function show()
+    public function show(Project $project)
     {
-        $files = File::where('user_id', Auth::id())->get();
-        return inertia('Hire/FileManager', compact('files'));
+        $data = $project->load(['files']);
+
+        return inertia('Hire/FileManager', compact('data'));
     }
 
-    public function store(Request $request)
+    public function store(Project $project, Request $request)
     {
         $request->validate([
             'file' => 'required|mimes:pdf,docx,xlsx,png,jpg|max:10240', // Maks 10MB
         ]);
 
-        $path = $request->file('file')->store('research_drafts', 'local');
+        $file = $request->file('files');
+        $fileName = time() . '.' . $file->getClientOriginalExtension();
+        $path = $file->storeAs("research_draft/$project->id", $fileName, 'local');
 
-        $file = File::create([
-            'user_id' => Auth::id(),
-            'name' => $request->file('file')->getClientOriginalName(),
-            'path' => $path,
-            'mime_type' => $request->file('file')->getMimeType(),
-            'size' => $request->file('file')->getSize(),
+        File::create([
+            'project_id'    => $project->id,
+            'user_id'       => Auth::id(),
+            'name'          => $request->file('file')->getClientOriginalName(),
+            'path'          => $path,
+            'mime_type'     => $request->file('file')->getMimeType(),
+            'size'          => $request->file('file')->getSize(),
         ]);
 
-        return back()->with('message', 'File berhasil diunggah.');
+        return back()->with('success', 'File berhasil diunggah.');
+    }
+
+    public function destroy(File $file)
+    {
+        if (Storage::disk('local')->exists($file->path)) {
+            Storage::disk('local')->delete($file->path);
+        }
+
+        $file->delete();
+
+        return back()->with('success', 'File berhasil dihapus.');
     }
 }
