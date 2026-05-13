@@ -12,7 +12,7 @@ class GalleryController extends Controller
         return inertia('Gallery/Index', compact('outputs'));
     }
 
-    public function show($slug)
+    public function show(string $slug)
     {
         $path = resource_path('js/Data/outputs.json');
         $outputs = collect(json_decode(file_get_contents($path), true));

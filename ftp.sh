@@ -149,7 +149,7 @@ case "$choice" in
   ask_password FTP_PUBLIC_PASS "$FTP_PUBLIC_USER"
   mkdir -p "$DEPLOY_PUBLIC"
   echo "📦 Buliding frontend."
-  cd "$DIR_LARAVEL"
+  cd "$DIR_NOTIVRA"
   npm run build
   cd - >/dev/null
   echo "📦 Syncing public_html file to deploy folder."

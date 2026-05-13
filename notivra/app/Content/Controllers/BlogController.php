@@ -27,7 +27,7 @@ class BlogController extends Controller
     /**
      * Menampilkan isi blog berdasarkan slug
      */
-    public function show($slug): View
+    public function show(string $slug): View
     {
         $post = $this->blogRepository->find($slug);
 
