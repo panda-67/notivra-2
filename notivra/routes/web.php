@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 
@@ -46,9 +47,10 @@ Route::prefix('dashboard')->group(function () {
     });
 });
 
-Route::get('/user/profile', function () {
-    return 'this is profile';
-})->name('profile.edit');
+Route::prefix('user')->controller(ProfileController::class)->group(function () {
+    Route::get('/profile', 'edit')->name('profile.edit');
+    Route::patch('/profile', 'update')->name('profile.update');
+});
 
 Route::prefix('hire')->controller(HireDraftController::class)->group(function () {
     Route::get('/apply', 'create')->name('hire.apply');
