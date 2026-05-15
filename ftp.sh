@@ -123,7 +123,7 @@ case "$choice" in
     --exclude="public"
   cd "$DEPLOY_NOTIVRA"
   composer install --no-dev --optimize-autoloader
-  php artisan config:clear
+  php artisan optimize:clear
   cd - >/dev/null
   echo "🚀 Uploading notivra..."
   ftp_mirror "$DEPLOY_NOTIVRA" "$FTP_HOST" "$FTP_NOTIVRA_USER" "$FTP_NOTIVRA_PASS" "$FTP_DIR"

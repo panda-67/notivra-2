@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Content\Repository\BlogRepository;
+use App\Content\Repositories\BlogRepository;
 use App\Models\Service;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\View;

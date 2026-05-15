@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 
 class ProfileController extends Controller
 {
+    #[Middleware('auth')]
     public function edit()
     {
         return inertia('Profile', [
@@ -14,7 +15,8 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function update(Request $request): RedirectResponse
+    #[Middleware('auth')]
+    public function update(Request $request)
     {
         // 1. Validasi Input
         $request->validate([
@@ -41,6 +43,6 @@ class ProfileController extends Controller
         $request->user()->save();
 
         // 5. Redirect kembali dengan flash message
-        return to_route('profile.edit')->with('success', 'Profile diperbarui.');
+        return redirect()->back()->with('success', 'Profile diperbarui.');
     }
 }

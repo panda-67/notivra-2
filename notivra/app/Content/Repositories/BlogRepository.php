@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Content\Repository;
+namespace App\Content\Repositories;
 
 use App\Content\MarkdownParser;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -12,7 +12,7 @@ use SplFileInfo;
 
 class BlogRepository
 {
-    public function find($slug): array
+    public function find(string $slug): array
     {
         $blog = collect($this->all())->first(function ($item) use ($slug) {
             return $item['slug'] === $slug;
@@ -33,7 +33,7 @@ class BlogRepository
         });
     }
 
-    public function getRelated($currentSlug, array $tags, $limit = 3): array
+    public function getRelated(string $currentSlug, array $tags, $limit = 3): array
     {
         return collect($this->all())
             ->filter(fn($blog) => $blog['slug'] !== $currentSlug)

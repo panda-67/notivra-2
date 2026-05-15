@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Content\Repository\BlogRepository;
+use App\Content\Repositories\BlogRepository;
 use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
