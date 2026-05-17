@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Hire\Controller;
+namespace App\Domains\Hire\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\File;

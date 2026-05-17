@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Hire\Controller;
+namespace App\Domains\Hire\Controllers;
 
 use App\Domains\Hire\Requests\UpdateProjectRequest;
 use App\Http\Controllers\Controller;
