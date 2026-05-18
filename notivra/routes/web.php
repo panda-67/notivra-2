@@ -2,9 +2,11 @@
 
 use App\Content\Controllers\BlogController;
 use App\Content\Controllers\NewsletterController;
-use App\Domains\Hire\Controller\FileManagerController;
-use App\Domains\Hire\Controller\HireDraftController;
-use App\Domains\Hire\Controller\ProjectController;
+use App\Domains\Admin\Controllers\DashboardController;
+use App\Domains\Admin\Controllers\ProjectRequestController;
+use App\Domains\Hire\Controllers\FileManagerController;
+use App\Domains\Hire\Controllers\HireDraftController;
+use App\Domains\Hire\Controllers\ProjectController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Auth\LoginController;
@@ -73,4 +75,12 @@ Route::controller(LoginController::class)->group(function () {
 Route::controller(GoogleAuthController::class)->group(function () {
     Route::get('auth/google', 'redirect')->name('auth.google');
     Route::get('auth/google/callback', 'callback');
+});
+
+
+Route::prefix('admin')->as('admin.')->middleware('role:super_admin,admin_staff')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('/projects', [ProjectRequestController::class, 'index'])->name('projects.index');
+    Route::patch('/projects/{id}/update-status', [ProjectRequestController::class, 'updateStatus'])->name('projects.updateStatus');
 });

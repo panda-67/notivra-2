@@ -31,7 +31,8 @@ class ProjectSubmittedMail extends Mailable
         return new Envelope(
             from: new Address('info@notivra.com', 'Info Notivra'),
             cc: new Address('admin@notivra.com', 'Admin Notivra'),
-            subject: 'Project Submitted Mail',
+            bcc: new Address('samuarrif@gmail.com', 'Samsul Muarrif'),
+            subject: 'Project Submitted Successfully',
         );
     }
 
