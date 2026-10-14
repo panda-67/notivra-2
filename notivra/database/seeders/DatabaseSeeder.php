@@ -17,14 +17,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Admin',
-            'email' => 'admin@notivra.com',
-            'role' => UserRole::ADMIN_STAFF,
-            'password' => Hash::make('admin123'),
-        ]);
+        User::updateOrCreate(
+            ['email' => 'admin@notivra.id'],
+            [
+                'name' => 'Admin',
+                'role' => UserRole::ADMIN_STAFF,
+                'password' => Hash::make('admin123'),
+            ]
+        );
 
         $this->call([
             ServiceSeeder::class,
