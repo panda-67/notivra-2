@@ -10,12 +10,15 @@ export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, process.cwd(), "");
     const isProduction = env.APP_ENV === "production";
 
+    const publicDirectory = isProduction ? "../../public_html/notivra" : "../public_html";
+    const buildDirectory = isProduction ? "../../public_html/notivra/build" : "../public_html/build";
+
     return {
         plugins: [
             laravel({
                 input: ["resources/css/app.css", "resources/js/app.js", "resources/js/blog.js"],
-                hotFile: "../public_html/hot",
-                publicDirectory: "../public_html",
+                hotFile: `${publicDirectory}/hot`,
+                publicDirectory,
                 refresh: ["resources/views/**/*.blade.php", "routes/**/*.php"],
             }),
             tailwindcss(),
@@ -35,9 +38,7 @@ export default defineConfig(({ mode }) => {
         },
 
         build: {
-            outDir: isProduction
-                ? path.resolve(process.cwd(), "../../public_html/notivra/build")
-                : "../public_html/build",
+            outDir: path.resolve(process.cwd(), buildDirectory),
             emptyOutDir: true,
         },
 
