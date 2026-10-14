@@ -1,0 +1,40 @@
+<?php
+
+namespace App\Content\Controllers;
+
+use App\Content\Repositories\BlogRepository;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
+
+class BlogController extends Controller
+{
+    public function __construct(
+        protected BlogRepository $blogRepository
+    ) {}
+
+    /**
+     * Menampilkan daftar blog
+     */
+    public function index(Request $request): View
+    {
+        $search = $request->input('search');
+        $blogs = $this->blogRepository->paginate(6, $search);
+
+        return view('blog.index', compact('blogs'));
+    }
+
+    /**
+     * Menampilkan isi blog berdasarkan slug
+     */
+    public function show(string $slug): View
+    {
+        $post = $this->blogRepository->find($slug);
+
+        $related = $this->blogRepository->getRelated(
+            $slug,
+            $post['meta']['tags'] ?? []
+        );
+        return view('blog.show', compact('post', 'related'));
+    }
+}
