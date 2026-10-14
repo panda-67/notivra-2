@@ -36,7 +36,7 @@ export default defineConfig(({ mode }) => {
 
         build: {
             outDir: isProduction
-                ? path.resolve(process.cwd(), "../public_html/notivra/build")
+                ? path.resolve(process.cwd(), "../../public_html/notivra/build")
                 : "../public_html/build",
             emptyOutDir: true,
         },
