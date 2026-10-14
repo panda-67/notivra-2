@@ -8,9 +8,6 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 
 return Application::configure(basePath: dirname(__DIR__))
-    ->registered(function ($app) {
-        $app->usePublicPath(path: realpath(base_path('../public_html')));
-    })
     ->withRouting(
         web: __DIR__ . '/../routes/web.php',
         commands: __DIR__ . '/../routes/console.php',
@@ -31,4 +28,15 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
+    })
+    ->registered(function ($app) {
+        if ($app->environment('production')) {
+            $publicPath = realpath(base_path('/../../public_html/notivra'));
+
+            if ($publicPath !== false) {
+                $app->usePublicPath($publicPath . DIRECTORY_SEPARATOR);
+            }
+        }
+
+        $app->usePublicPath(path: realpath(base_path('../public_html')));
     })->create();
