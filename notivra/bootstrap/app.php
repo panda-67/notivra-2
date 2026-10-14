@@ -30,13 +30,11 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->registered(function ($app) {
-        if ($app->environment('production')) {
-            $publicPath = realpath(base_path('/../../public_html/notivra'));
+        $publicPath = $app->environment('production')
+            ? realpath(base_path('/../../public_html/notivra'))
+            : realpath(base_path('../public_html'));
 
-            if ($publicPath !== false) {
-                $app->usePublicPath($publicPath . DIRECTORY_SEPARATOR);
-            }
+        if ($publicPath !== false) {
+            $app->usePublicPath($publicPath . DIRECTORY_SEPARATOR);
         }
-
-        $app->usePublicPath(path: realpath(base_path('../public_html')));
     })->create();
