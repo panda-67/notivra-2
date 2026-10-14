@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 
 class HireDraftController extends Controller
@@ -27,7 +28,6 @@ class HireDraftController extends Controller
      */
     public function create(Request $request)
     {
-        // Jika ada draft_id di URL, ambil datanya untuk melanjutkan
         $draft = null;
         if ($request->has('d')) {
             $draft = HireDraft::find($request->input('d'));
@@ -62,7 +62,6 @@ class HireDraftController extends Controller
         ]);
 
         if (!Auth::check()) {
-            // Simpan tujuan akhir ke session agar setelah login balik lagi ke form
             session(['url.intended' => route('hire.apply', ['d' => $draft->id])]);
 
             return redirect()->route('login', ['d' => $draft->id])
@@ -78,26 +77,56 @@ class HireDraftController extends Controller
     #[Middleware('auth')]
     public function update(ProjectRequest $request, HireDraft $draft)
     {
+        abort_unless(
+            (string) $draft->user_id === (string) Auth::id(),
+            403
+        );
+
         $validated = $request->validated();
-        $currentData = $draft->data;
-        unset($validated['step']);
+
+        $nextStep = (int) ($validated['next_step'] ?? $draft->step);
+        unset($validated['step'], $validated['next_step']);
+
+        $currentData = $draft->data ?? [];
+        $oldFilePath = $currentData['files'] ?? null;
+        $newFilePath = null;
 
         if ($request->hasFile('files')) {
-            if (isset($currentData['files'])) {
-                Storage::disk('local')->delete($currentData['files']);
+            $file = $request->file('files');
+
+            $fileName = $draft->id
+                . '_'
+                . Str::uuid()
+                . '.'
+                . $file->getClientOriginalExtension();
+
+            $newFilePath = $file->storeAs('drafts/attachments', $fileName, 'local');
+
+            if ($newFilePath === false) {
+                return redirect()->back()->withErrors([
+                    'files' => 'File gagal disimpan. Silakan coba kembali.',
+                ]);
             }
 
-            $file = $request->file('files');
-            $fileName = $draft->id . '_' . time() . '.' . $file->getClientOriginalExtension();
-
-            $path = $file->storeAs('drafts/attachments', $fileName, 'local');
-            $validated['files'] = $path;
+            $validated['files'] = $newFilePath;
         }
 
-        $draft->update([
-            'data' => array_merge($draft->data ?? [], $validated),
-            'step' => (int) $request->input('next_step', $draft->step),
-        ]);
+        try {
+            $draft->update([
+                'data' => array_merge($currentData, $validated),
+                'step' => $nextStep,
+            ]);
+        } catch (\Throwable $e) {
+            if ($newFilePath !== null) {
+                Storage::disk('local')->delete($newFilePath);
+            }
+
+            throw $e;
+        }
+
+        if ($newFilePath !== null && $oldFilePath !== null && $oldFilePath !== $newFilePath) {
+            Storage::disk('local')->delete($oldFilePath);
+        }
 
         return redirect()->back()->with('success', 'Progres disimpan.');
     }
@@ -108,6 +137,11 @@ class HireDraftController extends Controller
     #[Middleware('auth')]
     public function submit(ProjectRequest $request, HireDraft $draft)
     {
+        abort_unless(
+            (string) $draft->user_id === (string) Auth::id(),
+            403
+        );
+
         $validated = $request->validated();
         unset($validated['step']);
 
@@ -115,14 +149,33 @@ class HireDraftController extends Controller
             return redirect()->back()->withErrors(['message' => 'Lengkapi semua step sebelum mengirim.']);
         }
 
+        $filePath = $draft->data['files'] ?? null;
+
+        if ($filePath !== null && ! Storage::disk('local')->exists($filePath)) {
+            return redirect()->back()->withErrors([
+                'files' => 'Lampiran tidak ditemukan. Silakan unggah kembali.',
+            ]);
+        }
+
         try {
             /**@var \App\Models\Project $project */
             $project = $this->projectRepo->submitProject($draft, $validated);
 
-            // Kirim Email via Resend
-            Mail::to($project->email)->send(new ProjectSubmittedMail($project));
+            if ($project === null) {
+                return redirect()->route('dashboard')->with('info', 'Draft ini sudah pernah dikirim.');
+            }
 
-            // Redirect ke halaman sukses atau dashboard
+            try {
+                Mail::to($project->email)->queue(new ProjectSubmittedMail($project));
+            } catch (\Throwable $mailException) {
+                report($mailException);
+
+                return redirect()->route('dashboard')->with(
+                    'success',
+                    'Permintaan berhasil dikirim. Notifikasi email belum dapat dikirim.'
+                );
+            }
+
             return redirect()->route('dashboard')->with('success', 'Permintaan berhasil dikirim!');
         } catch (\Exception $e) {
             return redirect()->back()->withErrors([

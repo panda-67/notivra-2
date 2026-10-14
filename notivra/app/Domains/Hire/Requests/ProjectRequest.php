@@ -24,37 +24,37 @@ class ProjectRequest extends FormRequest
     {
         $step = (int) $this->input('step', 1);
 
-        return match ($step) {
-            1 => [
-                'step' => 'required|integer',
-                'service_id' => 'required|uuid|exists:services,id',
-                'topic' => 'required|string|max:500',
-                'name' => 'required|string|max:255',
-                'email' => 'required|email|max:255',
-                'phone' => 'nullable|numeric|max:20',
-                'description' => 'nullable|string',
-            ],
-            2 => [
-                'step' => 'required|integer',
-                'output' => 'required|string|max:125',
-                'field' => 'nullable|string|max:255',
-                'level' => 'nullable|string|max:100',
-                'institution' => 'nullable|string|max:255',
-                'files' => 'nullable|file|mimes:pdf,xlsx,csv,zip|max:2024', // Max 2MB
-            ],
-            3 => [
-                'step' => 'required|integer',
-                'deadline' => 'required|date|after:today',
-                'budget' => 'nullable|numeric|min:0',
-                'willing_dp' => 'nullable|boolean',
-                'address' => 'nullable|string|max:225',
-                'city' => 'nullable|string|max:55',
-                'postal_code' => 'nullable|numeric|max:5',
-            ],
-            default => [
-                'step' => 'required|integer',
-            ],
-        };
+        return [
+            'step' => ['required', 'integer', 'between:1,3'],
+            'next_step' => ['sometimes', 'required', 'integer', 'between:1,3'],
+
+            ...match ($step) {
+                1 => [
+                    'service_id' => 'required|uuid|exists:services,id',
+                    'topic' => 'required|string|max:500',
+                    'name' => 'required|string|max:255',
+                    'email' => 'required|email|max:255',
+                    'phone' => 'nullable|string|max:20|regex:/^\+?[0-9\s().-]+$/',
+                    'description' => 'nullable|string',
+                ],
+                2 => [
+                    'output' => 'required|string|max:125',
+                    'field' => 'nullable|string|max:255',
+                    'level' => 'nullable|string|max:100',
+                    'institution' => 'nullable|string|max:255',
+                    'files' => 'nullable|file|mimes:pdf,xlsx,csv,zip|max:2024', // Max 2MB
+                ],
+                3 => [
+                    'deadline' => 'required|date|after:today',
+                    'budget' => 'nullable|numeric|min:0',
+                    'willing_dp' => 'nullable|boolean',
+                    'address' => 'nullable|string|max:225',
+                    'city' => 'nullable|string|max:55',
+                    'postal_code' => 'nullable|numeric|max:5',
+                ],
+                default => [],
+            },
+        ];
     }
 
     /**

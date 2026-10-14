@@ -12,9 +12,13 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class ProjectSubmittedMail extends Mailable
+class ProjectSubmittedMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
+
+    public int $tries = 3;
+
+    public array $backoff = [10, 30, 60];
 
     /**
      * Create a new message instance.
@@ -30,8 +34,8 @@ class ProjectSubmittedMail extends Mailable
     {
         return new Envelope(
             from: new Address('info@notivra.com', 'Info Notivra'),
-            cc: new Address('admin@notivra.com', 'Admin Notivra'),
-            bcc: new Address('samuarrif@gmail.com', 'Samsul Muarrif'),
+            cc: [new Address('admin@notivra.com', 'Admin Notivra')],
+            bcc: [new Address('samuarrif@gmail.com', 'Samsul Muarrif')],
             subject: 'Project Submitted Successfully',
         );
     }
