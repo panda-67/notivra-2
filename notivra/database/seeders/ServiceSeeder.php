@@ -14,6 +14,10 @@ class ServiceSeeder extends Seeder
      */
     public function run(): void
     {
+        if (Service::query()->exists()) {
+            return;
+        }
+
         Service::insert([
             [
                 'id' => Str::uuid(),
