@@ -4,6 +4,10 @@ use App\Content\Controllers\BlogController;
 use App\Content\Controllers\NewsletterController;
 use App\Domains\Admin\Controllers\DashboardController;
 use App\Domains\Admin\Controllers\ProjectRequestController;
+use App\Domains\Assignments\Controllers\AssignmentGroupController;
+use App\Domains\Assignments\Controllers\AssignmentQuizController;
+use App\Domains\Assignments\Controllers\AssignmentRegistrationController;
+use App\Domains\Assignments\Controllers\AssignmentSubmissionController;
 use App\Domains\Hire\Controllers\FileManagerController;
 use App\Domains\Hire\Controllers\HireDraftController;
 use App\Domains\Hire\Controllers\ProjectController;
@@ -59,6 +63,45 @@ Route::prefix('hire')->controller(HireDraftController::class)->group(function ()
     Route::post('/draft', 'store')->name('hire.draft.store');
     Route::put('/draft/{draft}',  'update')->name('hire.draft.update');
     Route::post('/draft/{draft}/submit',  'submit')->name('hire.draft.submit');
+});
+
+Route::prefix('assignments')->as('assignments.')->group(function () {
+    Route::controller(AssignmentGroupController::class)->group(function () {
+        Route::get('/{slug}/groups', 'index')
+            ->name('groups.index');
+
+        Route::get('/{slug}/groups/{reference_code}', 'show')
+            ->name('groups.show');
+    });
+
+    Route::controller(AssignmentRegistrationController::class)->group(function () {
+        Route::get('/{slug}/register', 'create')
+            ->name('register');
+
+        Route::post('/{slug}/register', 'store')
+            ->middleware('throttle:10,1')
+            ->name('register.store');
+    });
+
+    Route::prefix('quiz')->as('quiz.')->controller(AssignmentQuizController::class)->group(function () {
+        Route::get('/start/{token}', 'showQuiz')->name('page');
+        Route::post('/start', 'start')->middleware('throttle:10,1')->name('start');
+        Route::post('/resume', 'resume')->middleware('throttle:20,1')->name('resume');
+
+        Route::get('/recover/{verification}', 'recoverPage')->whereNumber('verification')->name('recover.page');
+        Route::post('/recover', 'recover')->middleware('throttle:10,1')->name('recover');
+
+        Route::get('/session', 'show')->middleware('throttle:60,1')->name('session');
+
+        Route::put('/answers/{position}', 'answer')->whereNumber('position')
+            ->middleware('throttle:60,1')->name('answers.store');
+
+        Route::post('/complete', 'complete')->middleware('throttle:10,1')->name('complete');
+    });
+
+    Route::post('/{slug}/groups/{reference_code}/submission', [AssignmentSubmissionController::class, 'store'],)
+        ->middleware('throttle:10,1')
+        ->name('submission.store');
 });
 
 Route::controller(RegisterController::class)->group(function () {
