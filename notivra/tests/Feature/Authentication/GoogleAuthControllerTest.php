@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Authentication;
+namespace Tests\Feature\Authentication;
 
 use App\Enums\UserRole;
 use App\Http\Controllers\Auth\GoogleAuthController;

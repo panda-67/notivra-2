@@ -62,23 +62,48 @@ class AssignmentGroupController extends Controller
             ->with([
                 'members.student',
                 'members.verification',
+                'submission',
             ])
             ->firstOrFail();
+
+        $now = now();
+
+        $hasIncompleteMembers = $group->members
+            ->contains(function ($member) {
+                return ! in_array(
+                    $member->verification?->status,
+                    ['completed', 'expired'],
+                    true,
+                );
+            });
+
+        $isOpen = (
+            $assignment->opens_at === null || $assignment->opens_at->lte($now)
+        ) && (
+            $assignment->due_at === null || $assignment->due_at->gt($now)
+        );
+
+        $canUpload = $assignment->status === 'published'
+            && $isOpen
+            && $group->status === 'ready_for_upload'
+            && ! $hasIncompleteMembers
+            && $group->submission === null;
 
         return inertia('Assignments/Groups/Show', [
             'assignment' => [
                 'title' => $assignment->title,
                 'slug' => $assignment->slug,
+                'opens_at' => $assignment->opens_at?->toIso8601String(),
                 'due_at' => $assignment->due_at?->toIso8601String(),
             ],
             'group' => [
                 'group_name' => $group->group_name,
                 'reference_code' => $group->reference_code,
                 'status' => $group->status,
+                'can_upload' => $canUpload,
                 'members' => $group->members
                     ->map(function ($member) {
                         $verification = $member->verification;
-
                         $startToken = $verification?->start_token_encrypted;
 
                         return [
@@ -98,6 +123,14 @@ class AssignmentGroupController extends Controller
                         ];
                     })
                     ->values(),
+                'submission' => $group->submission
+                    ? [
+                        'original_filename' => $group->submission->original_filename,
+                        'file_size' => $group->submission->file_size,
+                        'submitted_at' => $group->submission->submitted_at?->toIso8601String(),
+                        'duplicate_status' => $group->submission->duplicate_status,
+                    ]
+                    : null,
             ],
         ]);
     }

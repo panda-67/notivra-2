@@ -9,3 +9,7 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 Schedule::command('app:generate-sitemap')->daily();
+
+Schedule::command('assignments:expire-quizzes')
+    ->everyMinute()
+    ->withoutOverlapping();

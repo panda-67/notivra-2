@@ -119,7 +119,7 @@ class AssignmentVerificationService
                 $locked->quiz_expires_at !== null &&
                 now()->greaterThanOrEqualTo($locked->quiz_expires_at)
             ) {
-                $this->finalizeLocked($locked);
+                $this->expireLocked($locked);
 
                 return ['expired' => true, 'verification' => null];
             }
@@ -278,8 +278,17 @@ class AssignmentVerificationService
 
             if ($locked->status !== 'in_progress') {
                 throw ValidationException::withMessages([
-                    'verification' => 'Hanya sesi yang sedang berlangsung yang dapat diselesaikan.',
+                    'verification' => 'Sesi kuis tidak sedang berlangsung.',
                 ]);
+            }
+
+            if (
+                $locked->quiz_expires_at !== null &&
+                now()->greaterThanOrEqualTo($locked->quiz_expires_at)
+            ) {
+                $this->expireLocked($locked);
+
+                return;
             }
 
             $this->finalizeLocked($locked);
@@ -384,6 +393,48 @@ class AssignmentVerificationService
         ]);
     }
 
+    public function expireDueQuizzes(): int
+    {
+        $expiredCount = 0;
+
+        AssignmentVerification::query()
+            ->where('status', 'in_progress')
+            ->whereNotNull('quiz_expires_at')
+            ->where('quiz_expires_at', '<=', now())
+            ->select('id')
+            ->chunkById(200, function ($verifications) use (&$expiredCount) {
+                foreach ($verifications as $verification) {
+                    $expired = DB::transaction(function () use ($verification) {
+                        $locked = AssignmentVerification::query()
+                            ->with('member.group')
+                            ->lockForUpdate()
+                            ->find($verification->id);
+
+                        if (! $locked || $locked->status !== 'in_progress') {
+                            return false;
+                        }
+
+                        if (
+                            $locked->quiz_expires_at === null ||
+                            $locked->quiz_expires_at->isFuture()
+                        ) {
+                            return false;
+                        }
+
+                        $this->expireLocked($locked);
+
+                        return true;
+                    });
+
+                    if ($expired) {
+                        $expiredCount++;
+                    }
+                }
+            });
+
+        return $expiredCount;
+    }
+
     /**
      * Finalize a session while its row lock is held.
      */
@@ -401,11 +452,24 @@ class AssignmentVerificationService
 
         $verification->refresh();
 
-        logger()->debug('Finalized quiz verification', [
-            'id' => $verification->id,
-            'status' => $verification->status,
-            'completed_at' => $verification->completed_at?->toDateTimeString(),
-        ]);
+        $group = $verification->member?->group;
+
+        if ($group) {
+            app(AssignmentGroupService::class)
+                ->refreshUploadReadiness($group);
+        }
+    }
+
+    private function expireLocked(AssignmentVerification $verification,): void
+    {
+        if ($verification->status !== 'in_progress') {
+            return;
+        }
+
+        $verification->forceFill([
+            'status' => 'expired',
+            'token_revoked_at' => now(),
+        ])->saveOrFail();
 
         $group = $verification->member?->group;
 

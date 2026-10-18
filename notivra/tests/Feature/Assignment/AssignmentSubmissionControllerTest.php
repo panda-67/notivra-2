@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Assignment;
 
+use App\Domains\Assignments\Jobs\CheckAssignmentDuplicateJob;
 use App\Models\Assignment;
 use App\Models\AssignmentGroup;
 use App\Models\AssignmentGroupMember;
@@ -10,6 +11,7 @@ use App\Models\AssignmentVerification;
 use App\Models\Student;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 use ZipArchive;
@@ -43,6 +45,8 @@ class AssignmentSubmissionControllerTest extends TestCase
 
     public function test_ready_group_can_submit_a_docx_and_group_status_changes(): void
     {
+        Queue::fake();
+
         $assignment = Assignment::factory()->create([
             'status' => 'published',
             'due_at' => now()->addDay(),
@@ -79,6 +83,8 @@ class AssignmentSubmissionControllerTest extends TestCase
 
         $this->assertSame(64, strlen($submission->sha256));
         $this->assertSame('pending', $submission->duplicate_status);
+
+        Queue::assertPushed(CheckAssignmentDuplicateJob::class);
     }
 
     public function test_group_that_is_not_ready_cannot_submit(): void

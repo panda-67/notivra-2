@@ -38,7 +38,10 @@ class AssignmentGroupService
 
             $hasUnverifiedMembers = $lockedGroup->members()
                 ->whereDoesntHave('verification', function ($query) {
-                    $query->where('status', 'completed');
+                    $query->whereIn('status', [
+                        'completed',
+                        'expired',
+                    ]);
                 })
                 ->exists();
 

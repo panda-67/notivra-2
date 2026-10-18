@@ -269,8 +269,7 @@ class AssignmentQuizControllerTest extends TestCase
 
         $verification->refresh();
 
-        $this->assertSame('completed', $verification->status);
-        $this->assertNotNull($verification->completed_at);
+        $this->assertSame('expired', $verification->status);
         $this->assertNotNull($verification->token_revoked_at);
         $this->assertArrayNotHasKey('2', $verification->answers);
 
@@ -534,9 +533,8 @@ class AssignmentQuizControllerTest extends TestCase
         $verificationB->refresh();
         $group->refresh();
 
-        // A harus sudah selesai karena waktu habis.
-        $this->assertSame('completed', $verificationA->status);
-        $this->assertNotNull($verificationA->completed_at);
+        // A harus berstatus expired karena waktu kuis habis.
+        $this->assertSame('expired', $verificationA->status);
         $this->assertNotNull($verificationA->token_revoked_at);
         $this->assertSame(['1' => 'B'], $verificationA->answers);
 

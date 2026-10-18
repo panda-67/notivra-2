@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Hire;
+namespace Tests\Feature\Hire;
 
 use App\Domains\Hire\Repositories\ProjectRepository;
 use App\Enums\UserRole;

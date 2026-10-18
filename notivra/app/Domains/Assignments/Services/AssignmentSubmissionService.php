@@ -2,6 +2,7 @@
 
 namespace App\Domains\Assignments\Services;
 
+use App\Domains\Assignments\Jobs\CheckAssignmentDuplicateJob;
 use App\Models\Assignment;
 use App\Models\AssignmentGroup;
 use App\Models\AssignmentSubmission;
@@ -44,14 +45,7 @@ class AssignmentSubmissionService
         }
 
         try {
-            return DB::transaction(function () use (
-                $assignment,
-                $group,
-                $file,
-                $disk,
-                $path,
-                $sha256,
-            ) {
+            $submission = DB::transaction(function () use ($assignment, $group, $file, $path, $sha256) {
                 // Lock the group to serialize concurrent submissions.
                 $lockedGroup = AssignmentGroup::query()
                     ->where('assignment_id', $assignment->id)
@@ -84,11 +78,16 @@ class AssignmentSubmissionService
                 return $submission;
             });
         } catch (Throwable $exception) {
-            // The database transaction cannot roll back filesystem changes.
+            // Transaksi gagal: hapus berkas yang sudah disimpan.
             $disk->delete($path);
 
             throw $exception;
         }
+
+        // Transaksi sudah berhasil dikomit sebelum job dimasukkan ke queue.
+        CheckAssignmentDuplicateJob::dispatch($submission->id)->afterCommit();
+
+        return $submission;
     }
 
     private function validateEligibility(
@@ -98,6 +97,12 @@ class AssignmentSubmissionService
         if ($assignment->status !== 'published') {
             throw ValidationException::withMessages([
                 'assignment' => 'This assignment is not accepting submissions.',
+            ]);
+        }
+
+        if ($assignment->opens_at && $assignment->opens_at->isFuture()) {
+            throw ValidationException::withMessages([
+                'assignment' => 'Tugas belum dibuka untuk pengumpulan.',
             ]);
         }
 
@@ -127,13 +132,13 @@ class AssignmentSubmissionService
 
         $hasIncompleteMembers = $group->members()
             ->whereDoesntHave('verification', function ($query) {
-                $query->where('status', 'completed');
+                $query->whereIn('status', ['completed', 'expired']);
             })
             ->exists();
 
         if ($hasIncompleteMembers) {
             throw ValidationException::withMessages([
-                'group' => 'All group members must complete verification before submission.',
+                'group' => 'Semua anggota harus menyelesaikan verifikasi sebelum mengumpulkan tugas.',
             ]);
         }
     }

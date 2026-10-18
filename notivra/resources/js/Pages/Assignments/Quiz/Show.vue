@@ -465,8 +465,7 @@ function startTimer() {
       remainingSeconds.value = 0;
       stopTimer();
 
-      errorMessage.value =
-        "Hitungan waktu di halaman telah mencapai nol. Status sesi harus diverifikasi oleh server.";
+      void completeQuiz(true);
     }
   }, 1000);
 }
@@ -501,11 +500,11 @@ async function completeQuiz(autoSubmit = false) {
 
     session.value = {
       ...session.value,
-      status: data.status ?? "completed",
-      completed_at: data.completed_at ?? new Date().toISOString(),
+      status: data.status,
+      completed_at: data.completed_at ?? null,
     };
 
-    successMessage.value = data.message || "Kuis berhasil diselesaikan.";
+    successMessage.value = data.message;
   } catch (error) {
     errorMessage.value = error.message || "Gagal menyelesaikan kuis.";
 

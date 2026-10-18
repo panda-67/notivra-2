@@ -128,13 +128,14 @@ class AssignmentQuizController extends Controller
                 ]);
             }
 
-            if (! $verification->quiz_expires_at) {
-                throw ValidationException::withMessages([
-                    'quiz' => 'Sesi kuis tidak memiliki batas waktu yang valid.',
-                ]);
-            }
-
-            if (now()->greaterThanOrEqualTo($verification->quiz_expires_at)) {
+            /*
+            * Timer belum dimulai jika jawaban pertama belum tersimpan.
+            * Dalam kondisi ini, quiz_expires_at memang boleh null.
+            */
+            if (
+                $verification->quiz_expires_at !== null &&
+                now()->greaterThanOrEqualTo($verification->quiz_expires_at)
+            ) {
                 throw ValidationException::withMessages([
                     'quiz' => 'Waktu kuis telah habis.',
                 ]);
@@ -201,14 +202,43 @@ class AssignmentQuizController extends Controller
 
     public function complete(Request $request): JsonResponse
     {
-        $verification = $this->resolveVerification($request);
+        try {
+            $verification = $this->resolveVerification($request);
+        } catch (ValidationException $exception) {
+            $token = $request->bearerToken();
+
+            if (! $token) {
+                throw $exception;
+            }
+
+            $verification = AssignmentVerification::query()
+                ->where('resume_token_hash', hash('sha256', $token))
+                ->first();
+
+            if (
+                ! $verification ||
+                ! in_array($verification->status, ['completed', 'expired'], true)
+            ) {
+                throw $exception;
+            }
+
+            return response()->json([
+                'message' => $verification->status === 'expired'
+                    ? 'Waktu kuis telah habis. Sesi ditutup secara otomatis.'
+                    : 'Kuis telah diselesaikan.',
+                'status' => $verification->status,
+                'completed_at' => $verification->completed_at,
+            ]);
+        }
 
         $this->verificationService->complete($verification);
 
         $verification->refresh();
 
         return response()->json([
-            'message' => 'Kuis berhasil diselesaikan.',
+            'message' => $verification->status === 'expired'
+                ? 'Waktu kuis telah habis. Sesi ditutup secara otomatis.'
+                : 'Kuis berhasil diselesaikan.',
             'status' => $verification->status,
             'completed_at' => $verification->completed_at,
         ]);
@@ -261,12 +291,18 @@ class AssignmentQuizController extends Controller
         $expiresAt = $verification->quiz_expires_at;
         $student = $verification->member?->student;
 
-        $remainingSeconds = $expiresAt === null
-            ? null
-            : max(
+        $remainingSeconds = match (true) {
+            $expiresAt === null && $verification->status === 'in_progress'
+            => 50 * 60,
+
+            $expiresAt !== null
+            => max(
                 0,
                 (int) $serverTime->diffInSeconds($expiresAt, false)
-            );
+            ),
+
+            default => null,
+        };
 
         return [
             'status' => $verification->status,

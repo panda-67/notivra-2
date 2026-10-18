@@ -27,7 +27,7 @@ class AssignmentQuizQuestionSeeder extends Seeder
                 'question' => 'Apa fungsi utama hipotesis nol (H₀) dalam pengujian hipotesis?',
                 'option_a' => 'Menyatakan bahwa selalu terdapat perbedaan',
                 'option_b' => 'Menyatakan bahwa semua data berdistribusi normal',
-                'option_c' => 'Menjadi pernyataan awal yang diuji menggunakan bukti statistik',
+                'option_c' => 'Menjadi pernyataan awal yang diuji, mengatakan tidak adanya perbedaan',
                 'option_d' => 'Menentukan ukuran sampel secara otomatis',
                 'correct_option' => 'C',
             ],
