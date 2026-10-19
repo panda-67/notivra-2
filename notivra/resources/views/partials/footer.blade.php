@@ -41,7 +41,7 @@
                 <div class="space-y-4 text-sm">
                     <p class="flex items-start gap-3">
                         <span class="text-blue-400">📧</span>
-                        <span>info@notivra.com</span>
+                        <span>info@notivra.id</span>
                     </p>
                     <p class="flex items-start gap-3 leading-relaxed">
                         <span class="text-blue-400">📍</span>

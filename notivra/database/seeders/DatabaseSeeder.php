@@ -28,6 +28,12 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             ServiceSeeder::class,
+            AssignmentSeeder::class,
+            AssignmentQuizQuestionSeeder::class,
         ]);
+
+        if (app()->environment('local')) {
+            $this->call(AssignmentGroupSeeder::class);
+        }
     }
 }
