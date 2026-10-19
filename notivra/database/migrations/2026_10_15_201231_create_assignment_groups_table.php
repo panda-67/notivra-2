@@ -31,6 +31,13 @@ return new class extends Migration
                 'rejected',
             ])->default('draft');
 
+            $table->timestamp('upload_bypassed_at')->nullable();
+
+            $table->foreignId('upload_bypassed_by')
+                ->nullable()
+                ->constrained('users')
+                ->nullOnDelete();
+
             $table->timestamp('submitted_at')->nullable();
 
             $table->timestamps();

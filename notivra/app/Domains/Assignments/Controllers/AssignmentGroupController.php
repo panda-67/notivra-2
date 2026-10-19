@@ -86,7 +86,7 @@ class AssignmentGroupController extends Controller
         $canUpload = $assignment->status === 'published'
             && $isOpen
             && $group->status === 'ready_for_upload'
-            && ! $hasIncompleteMembers
+            && (! $hasIncompleteMembers || $group->upload_bypassed_at !== null)
             && $group->submission === null;
 
         return inertia('Assignments/Groups/Show', [

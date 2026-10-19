@@ -435,6 +435,54 @@ class AssignmentVerificationService
         return $expiredCount;
     }
 
+    public function resetSession(AssignmentVerification $verification): AssignmentVerification
+    {
+        return DB::transaction(function () use ($verification) {
+            $locked = AssignmentVerification::query()
+                ->lockForUpdate()
+                ->findOrFail($verification->id);
+
+            if (! in_array($locked->status, [
+                'pending',
+                'in_progress',
+                'expired',
+            ], true)) {
+                throw ValidationException::withMessages([
+                    'member' => 'Sesi dengan status ini tidak dapat di-reset.',
+                ]);
+            }
+
+            $startToken = bin2hex(random_bytes(32));
+
+            $locked->forceFill([
+                'status' => 'pending',
+                'answers' => [],
+                'resume_token_hash' => null,
+                'token_expires_at' => null,
+                'token_revoked_at' => null,
+                'start_token_hash' => hash('sha256', $startToken),
+                'start_token_encrypted' => $startToken,
+                'start_token_used_at' => null,
+                'started_at' => null,
+                'quiz_expires_at' => null,
+                'last_seen_at' => null,
+                'completed_at' => null,
+            ])->save();
+
+            return $locked->refresh();
+        });
+    }
+
+    public function removeDevice(int $assignmentId, int $studentId): int
+    {
+        return DB::transaction(function () use ($assignmentId, $studentId) {
+            return AssignmentQuizDevice::query()
+                ->where('assignment_id', $assignmentId)
+                ->where('student_id', $studentId)
+                ->delete();
+        });
+    }
+
     /**
      * Finalize a session while its row lock is held.
      */

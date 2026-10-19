@@ -2,6 +2,7 @@
 
 use App\Content\Controllers\BlogController;
 use App\Content\Controllers\NewsletterController;
+use App\Domains\Admin\Controllers\AssignmentGroupController as AdminAssignmentGroupController;
 use App\Domains\Admin\Controllers\DashboardController;
 use App\Domains\Admin\Controllers\ProjectRequestController;
 use App\Domains\Assignments\Controllers\AssignmentGroupController;
@@ -121,9 +122,27 @@ Route::controller(GoogleAuthController::class)->group(function () {
 });
 
 
-Route::prefix('admin')->as('admin.')->middleware('role:super_admin,admin_staff')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::prefix('admin')->as('admin.')->middleware('role:super_admin,admin_staff')
+    ->group(function () {
+        Route::get('/dashboard', [DashboardController::class, 'index'])
+            ->name('dashboard');
+        Route::get('/projects', [ProjectRequestController::class, 'index'])
+            ->name('projects.index');
+        Route::patch('/projects/{id}/update-status', [ProjectRequestController::class, 'updateStatus'])
+            ->name('projects.updateStatus');
 
-    Route::get('/projects', [ProjectRequestController::class, 'index'])->name('projects.index');
-    Route::patch('/projects/{id}/update-status', [ProjectRequestController::class, 'updateStatus'])->name('projects.updateStatus');
-});
+        Route::prefix('/assignments')->name('assignments.')->controller(AdminAssignmentGroupController::class)
+            ->group(function () {
+                Route::get('/{slug}/groups', 'index')->name('groups.index');
+                Route::get('/{slug}/groups/{reference_code}', 'show')->name('groups.show');
+
+                Route::post('/{slug}/groups/{reference_code}/bypass-upload', 'bypassUpload')
+                    ->name('groups.bypass-upload');
+
+                Route::post('/{slug}/groups/{reference_code}/members/{member}/reset-session', 'resetMemberSession')
+                    ->whereNumber('member')->name('groups.members.reset-session');
+
+                Route::delete('/{slug}/groups/{reference_code}/members/{member}/device', 'removeMemberDevice')
+                    ->whereNumber('member')->name('groups.members.remove-device');
+            });
+    });

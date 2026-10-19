@@ -24,6 +24,7 @@ class AssignmentGroup extends Model
     {
         return [
             'submitted_at' => 'datetime',
+            'upload_bypassed_at' => 'datetime',
         ];
     }
 
@@ -40,5 +41,10 @@ class AssignmentGroup extends Model
     public function submission(): HasOne
     {
         return $this->hasOne(AssignmentSubmission::class);
+    }
+
+    public function uploadBypassedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'upload_bypassed_by');
     }
 }

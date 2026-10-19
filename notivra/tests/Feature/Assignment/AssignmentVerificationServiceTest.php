@@ -3,7 +3,10 @@
 namespace Tests\Feature\Assignment;
 
 use App\Domains\Assignments\Services\AssignmentVerificationService;
+use App\Models\Assignment;
+use App\Models\AssignmentQuizDevice;
 use App\Models\AssignmentVerification;
+use App\Models\Student;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
@@ -153,5 +156,128 @@ class AssignmentVerificationServiceTest extends TestCase
         $verification->refresh();
 
         $this->assertNotNull($verification->token_revoked_at);
+    }
+
+    public function test_reset_session_clears_answers_and_issues_new_start_token(): void
+    {
+        $oldStartToken = bin2hex(random_bytes(32));
+        $oldResumeToken = bin2hex(random_bytes(32));
+
+        $verification = AssignmentVerification::factory()->create([
+            'status' => 'in_progress',
+            'answers' => [
+                '1' => 'A',
+                '2' => 'C',
+            ],
+            'start_token_hash' => hash('sha256', $oldStartToken),
+            'start_token_encrypted' => $oldStartToken,
+            'start_token_used_at' => now()->subMinutes(10),
+            'resume_token_hash' => hash('sha256', $oldResumeToken),
+            'token_expires_at' => now()->addHours(12),
+            'token_revoked_at' => null,
+            'started_at' => now()->subMinutes(10),
+            'quiz_expires_at' => now()->addMinutes(40),
+            'last_seen_at' => now(),
+            'completed_at' => null,
+        ]);
+
+        $result = app(AssignmentVerificationService::class)
+            ->resetSession($verification);
+
+        $result->refresh();
+
+        $newStartToken = $result->start_token_encrypted;
+
+        $this->assertSame('pending', $result->status);
+        $this->assertSame([], $result->answers);
+
+        $this->assertNotEmpty($newStartToken);
+        $this->assertNotSame($oldStartToken, $newStartToken);
+        $this->assertSame(
+            hash('sha256', $newStartToken),
+            $result->start_token_hash
+        );
+
+        $this->assertNull($result->start_token_used_at);
+        $this->assertNull($result->resume_token_hash);
+        $this->assertNull($result->token_expires_at);
+        $this->assertNull($result->token_revoked_at);
+        $this->assertNull($result->started_at);
+        $this->assertNull($result->quiz_expires_at);
+        $this->assertNull($result->last_seen_at);
+        $this->assertNull($result->completed_at);
+    }
+
+    public function test_reset_session_rejects_completed_verification(): void
+    {
+        $verification = AssignmentVerification::factory()
+            ->completed()
+            ->create();
+
+        $this->expectException(ValidationException::class);
+
+        app(AssignmentVerificationService::class)
+            ->resetSession($verification);
+    }
+
+    public function test_remove_device_deletes_only_matching_assignment_and_student(): void
+    {
+        $assignment = Assignment::factory()->create();
+        $otherAssignment = Assignment::factory()->create();
+
+        $student = Student::factory()->create();
+        $otherStudent = Student::factory()->create();
+
+        $targetDevice = AssignmentQuizDevice::query()->create([
+            'assignment_id' => $assignment->id,
+            'student_id' => $student->id,
+            'device_token_hash' => hash('sha256', 'target-device'),
+            'first_used_at' => now(),
+            'last_used_at' => now(),
+        ]);
+
+        $otherStudentDevice = AssignmentQuizDevice::query()->create([
+            'assignment_id' => $assignment->id,
+            'student_id' => $otherStudent->id,
+            'device_token_hash' => hash('sha256', 'other-student-device'),
+            'first_used_at' => now(),
+            'last_used_at' => now(),
+        ]);
+
+        $otherAssignmentDevice = AssignmentQuizDevice::query()->create([
+            'assignment_id' => $otherAssignment->id,
+            'student_id' => $student->id,
+            'device_token_hash' => hash('sha256', 'other-assignment-device'),
+            'first_used_at' => now(),
+            'last_used_at' => now(),
+        ]);
+
+        $deleted = app(AssignmentVerificationService::class)
+            ->removeDevice($assignment->id, $student->id);
+
+        $this->assertSame(1, $deleted);
+
+        $this->assertDatabaseMissing('assignment_quiz_devices', [
+            'id' => $targetDevice->id,
+        ]);
+
+        $this->assertDatabaseHas('assignment_quiz_devices', [
+            'id' => $otherStudentDevice->id,
+        ]);
+
+        $this->assertDatabaseHas('assignment_quiz_devices', [
+            'id' => $otherAssignmentDevice->id,
+        ]);
+    }
+
+    public function test_remove_device_returns_zero_when_no_device_exists(): void
+    {
+        $assignment = Assignment::factory()->create();
+        $student = Student::factory()->create();
+
+        $deleted = app(AssignmentVerificationService::class)
+            ->removeDevice($assignment->id, $student->id);
+
+        $this->assertSame(0, $deleted);
     }
 }

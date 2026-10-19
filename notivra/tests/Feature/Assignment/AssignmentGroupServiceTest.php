@@ -8,7 +8,9 @@ use App\Models\AssignmentGroup;
 use App\Models\AssignmentGroupMember;
 use App\Models\AssignmentVerification;
 use App\Models\Student;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
 class AssignmentGroupServiceTest extends TestCase
@@ -102,5 +104,77 @@ class AssignmentGroupServiceTest extends TestCase
             ->refreshUploadReadiness($group);
 
         $this->assertSame('submitted', $result->status);
+    }
+
+    public function test_bypass_upload_sets_group_ready_and_records_admin(): void
+    {
+        $assignment = Assignment::factory()->create();
+
+        $group = AssignmentGroup::factory()->create([
+            'assignment_id' => $assignment->id,
+            'status' => 'verification_in_progress',
+        ]);
+
+        $admin = User::factory()->create();
+
+        $result = app(AssignmentGroupService::class)
+            ->bypassUpload($group, $admin);
+
+        $result->refresh();
+
+        $this->assertSame('ready_for_upload', $result->status);
+        $this->assertNotNull($result->upload_bypassed_at);
+        $this->assertSame($admin->id, $result->upload_bypassed_by);
+    }
+
+    public function test_bypass_upload_rejects_invalid_group_status(): void
+    {
+        $assignment = Assignment::factory()->create();
+
+        $group = AssignmentGroup::factory()->create([
+            'assignment_id' => $assignment->id,
+            'status' => 'submitted',
+        ]);
+
+        $admin = User::factory()->create();
+
+        try {
+            app(AssignmentGroupService::class)
+                ->bypassUpload($group, $admin);
+
+            $this->fail('Bypass harus ditolak untuk grup yang sudah submitted.');
+        } catch (ValidationException) {
+            // Expected.
+        }
+
+        $group->refresh();
+
+        $this->assertSame('submitted', $group->status);
+        $this->assertNull($group->upload_bypassed_at);
+        $this->assertNull($group->upload_bypassed_by);
+    }
+
+    public function test_bypassed_group_remains_ready_after_readiness_refresh(): void
+    {
+        $assignment = Assignment::factory()->create();
+
+        $group = AssignmentGroup::factory()->create([
+            'assignment_id' => $assignment->id,
+            'status' => 'verification_in_progress',
+        ]);
+
+        $admin = User::factory()->create();
+
+        $service = app(AssignmentGroupService::class);
+
+        $service->bypassUpload($group, $admin);
+
+        // Grup memiliki anggota yang belum menyelesaikan verifikasi.
+        $this->createMember($assignment, $group, 'pending');
+
+        $result = $service->refreshUploadReadiness($group);
+
+        $this->assertSame('ready_for_upload', $result->status);
+        $this->assertNotNull($result->upload_bypassed_at);
     }
 }
