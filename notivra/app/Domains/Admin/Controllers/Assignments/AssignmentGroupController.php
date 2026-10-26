@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Admin\Controllers;
+namespace App\Domains\Admin\Controllers\Assignments;
 
 use App\Domains\Assignments\Services\AssignmentGroupService;
 use App\Domains\Assignments\Services\AssignmentVerificationService;

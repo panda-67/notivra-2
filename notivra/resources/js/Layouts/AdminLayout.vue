@@ -32,7 +32,7 @@ const assignmentSlug = "statistika-inferensial-fkip-matematika-usk";
           >
             <span>📊 &nbsp; Dashboard</span>
           </Link>
-          <!-- Menu lain nanti ditambah di sini -->
+
           <Link
             :href="route('admin.projects.index')"
             class="flex items-center space-x-3 px-4 py-2.5 rounded transition"
@@ -44,6 +44,7 @@ const assignmentSlug = "statistika-inferensial-fkip-matematika-usk";
           >
             <span>💼 &nbsp; Layanan & Proyek</span>
           </Link>
+
           <Link
             :href="route('admin.assignments.groups.index', { slug: assignmentSlug })"
             class="flex items-center space-x-3 px-4 py-2.5 rounded transition"
@@ -54,6 +55,30 @@ const assignmentSlug = "statistika-inferensial-fkip-matematika-usk";
             "
           >
             <span>📋 &nbsp; Assignments</span>
+          </Link>
+
+          <Link
+            :href="route('admin.assignments.files.index')"
+            class="flex items-center space-x-3 px-4 py-2.5 rounded transition"
+            :class="
+              route().current('admin.assignments.files.*')
+                ? 'bg-emerald-600 text-white'
+                : 'text-slate-400 hover:bg-slate-800 hover:text-white'
+            "
+          >
+            <span>📁 &nbsp; Berkas Submission</span>
+          </Link>
+
+          <Link
+            :href="route('admin.assignments.quiz-results.index')"
+            class="flex items-center space-x-3 px-4 py-2.5 rounded transition"
+            :class="
+              route().current('admin.assignments.quiz-results.*')
+                ? 'bg-emerald-600 text-white'
+                : 'text-slate-400 hover:bg-slate-800 hover:text-white'
+            "
+          >
+            <span>📝 &nbsp; Hasil Kuis</span>
           </Link>
         </nav>
       </div>
