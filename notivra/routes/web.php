@@ -2,7 +2,9 @@
 
 use App\Content\Controllers\BlogController;
 use App\Content\Controllers\NewsletterController;
-use App\Domains\Admin\Controllers\AssignmentGroupController as AdminAssignmentGroupController;
+use App\Domains\Admin\Controllers\Assignments\AssignmentFileController;
+use App\Domains\Admin\Controllers\Assignments\AssignmentGroupController as AdminAssignmentGroupController;
+use App\Domains\Admin\Controllers\Assignments\AssignmentQuizResultController;
 use App\Domains\Admin\Controllers\DashboardController;
 use App\Domains\Admin\Controllers\ProjectRequestController;
 use App\Domains\Assignments\Controllers\AssignmentGroupController;
@@ -131,6 +133,12 @@ Route::prefix('admin')->as('admin.')->middleware('role:super_admin,admin_staff')
         Route::patch('/projects/{id}/update-status', [ProjectRequestController::class, 'updateStatus'])
             ->name('projects.updateStatus');
 
+        Route::prefix('/assignments')->name('assignments.')->controller(AssignmentQuizResultController::class)
+            ->group(function () {
+                Route::get('/quiz-results', 'index')->name('quiz-results.index');
+                Route::get('/quiz-results/export', 'export')->name('quiz-results.export');
+            });
+
         Route::prefix('/assignments')->name('assignments.')->controller(AdminAssignmentGroupController::class)
             ->group(function () {
                 Route::get('/{slug}/groups', 'index')->name('groups.index');
@@ -144,5 +152,12 @@ Route::prefix('admin')->as('admin.')->middleware('role:super_admin,admin_staff')
 
                 Route::delete('/{slug}/groups/{reference_code}/members/{member}/device', 'removeMemberDevice')
                     ->whereNumber('member')->name('groups.members.remove-device');
+            });
+
+        Route::prefix('/assignments')->name('assignments.')->controller(AssignmentFileController::class)
+            ->group(function () {
+                Route::get('/files', 'index')->name('files.index');
+                Route::get('/files/{submission}/download', 'download')->whereNumber('submission')
+                    ->name('files.download');
             });
     });
