@@ -16,16 +16,37 @@ use Inertia\Response;
 
 class AssignmentGroupController extends Controller
 {
-    public function index(string $slug): Response
+    public function index(Request $request, string $slug): Response
     {
         $assignment = Assignment::query()
             ->where('slug', $slug)
             ->firstOrFail();
 
+        $filters = [
+            'status' => $request->string('status')->trim()->toString(),
+            'search' => $request->string('search')->trim()->toString(),
+        ];
+
         $groups = AssignmentGroup::query()
             ->where('assignment_id', $assignment->id)
             ->with('submission')
             ->withCount('members')
+            ->when(
+                $filters['status'] !== '',
+                fn($query) => $query->where('status', $filters['status'])
+            )
+            ->when(
+                $filters['search'] !== '',
+                function ($query) use ($filters) {
+                    $search = $filters['search'];
+
+                    $query->where(function ($query) use ($search) {
+                        $query
+                            ->where('group_name', 'like', "%{$search}%")
+                            ->orWhere('reference_code', 'like', "%{$search}%");
+                    });
+                }
+            )
             ->orderByDesc('created_at')
             ->paginate(12)
             ->withQueryString()
@@ -83,6 +104,7 @@ class AssignmentGroupController extends Controller
                 'due_at' => $assignment->due_at?->toIso8601String(),
             ],
             'groups' => $groups,
+            'filters' => $filters,
         ]);
     }
 
