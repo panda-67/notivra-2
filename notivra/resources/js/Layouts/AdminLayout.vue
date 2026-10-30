@@ -6,6 +6,7 @@ const props = defineProps({
 });
 
 const assignmentSlug = "statistika-inferensial-fkip-matematika-usk";
+const assignmentIndividualSlug = "kuis-saintek-biologi-unsam";
 </script>
 
 <template>
@@ -13,7 +14,7 @@ const assignmentSlug = "statistika-inferensial-fkip-matematika-usk";
     <Head :title="title ? title : $page.props.title || 'Welcome'" />
 
     <!-- Sidebar -->
-    <aside class="w-64 bg-slate-900 text-white flex-col justify-between hidden md:flex">
+    <aside class="w-72 bg-slate-900 text-white flex-col justify-between hidden md:flex">
       <div>
         <div
           class="p-5 text-xl font-bold tracking-wider border-b border-slate-800 text-emerald-400"
@@ -79,6 +80,32 @@ const assignmentSlug = "statistika-inferensial-fkip-matematika-usk";
             "
           >
             <span>📝 &nbsp; Hasil Kuis</span>
+          </Link>
+          <Link
+            :href="
+              route('admin.assignments.individual-quiz.participants.index', {
+                slug: assignmentIndividualSlug,
+              })
+            "
+            class="flex items-center space-x-3 px-4 py-2.5 rounded transition"
+            :class="
+              route().current('admin.assignments.individual-quiz.participants.index')
+                ? 'bg-emerald-600 text-white'
+                : 'text-slate-400 hover:bg-slate-800 hover:text-white'
+            "
+          >
+            <span>📋 &nbsp; Assignments Individual</span>
+          </Link>
+          <Link
+            :href="route('admin.assignments.individual-quiz-results.index')"
+            class="flex items-center space-x-3 px-4 py-2.5 rounded transition"
+            :class="
+              route().current('admin.assignments.individual-quiz-results.index')
+                ? 'bg-emerald-600 text-white'
+                : 'text-slate-400 hover:bg-slate-800 hover:text-white'
+            "
+          >
+            <span>📝 &nbsp; Hasil Kuis Individual</span>
           </Link>
         </nav>
       </div>

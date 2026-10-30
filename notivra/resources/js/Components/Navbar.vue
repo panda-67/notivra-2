@@ -7,7 +7,7 @@ const page = usePage();
 const user = computed(() => page.props.auth.user);
 const isMenuOpen = ref(false);
 const isDropdownOpen = ref(false);
-const assignmentSlug = "statistika-inferensial-fkip-matematika-usk";
+const assignmentSlug = "kuis-saintek-biologi-unsam";
 
 defineProps({
   user: Object,
@@ -21,7 +21,7 @@ const navigation = [
   { name: "Gallery", href: route("gallery.index"), active: route().current("gallery.*") },
   {
     name: "Assignments",
-    href: route("assignments.groups.index", { slug: assignmentSlug }),
+    href: route("assignments.individual-quiz.show", { slug: assignmentSlug }),
     active: route().current("assignments.*"),
   },
   { name: "About Us", href: route("about"), active: route().current("about") },

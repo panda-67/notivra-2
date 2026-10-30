@@ -52,5 +52,46 @@ class AssignmentSeeder extends Seeder
                 'created_by' => null,
             ],
         );
+
+        $individualAssignment = Assignment::query()->updateOrCreate(
+            [
+                'slug' => 'kuis-saintek-biologi-unsam',
+            ],
+            [
+                'title' => 'Kuis SAINTEK Biologi Unsam',
+                'description' => 'Kuis untuk mahasiswa SAINTEK Program Studi Biologi, Universitas Samudra.',
+                'instructions' => implode("\n\n", [
+                    'A. KETENTUAN KUIS',
+                    '1. Kuis dikerjakan secara individual.',
+                    '2. Peserta harus terdaftar pada sistem sebelum memulai kuis.',
+                    '3. Kuis terdiri atas soal pilihan ganda dengan durasi maksimal 30 menit.',
+                    '4. Waktu dimulai ketika sesi kuis berhasil dibuka.',
+                    '5. Waktu pengerjaan dihitung berdasarkan waktu server.',
+                    '6. Jawaban dapat diubah selama sesi masih berlangsung.',
+                    '7. Jawaban yang tersimpan akan dinilai ketika kuis diselesaikan atau waktu habis.',
+                    '8. Soal yang tidak dijawab tidak memperoleh nilai.',
+                    '',
+                    'B. PERANGKAT DAN SESI',
+                    '1. Gunakan perangkat dan peramban yang sama selama mengerjakan kuis.',
+                    '2. Sesi dapat dilanjutkan selama masih berlaku dan menggunakan perangkat yang sama.',
+                    '3. Sesi yang telah selesai atau kedaluwarsa tidak dapat dimulai ulang.',
+                    '4. Hubungi administrator jika mengalami kendala pada sesi kuis.',
+                ]),
+                'opens_at' => '2026-10-15 00:00:00',
+                'due_at' => '2026-11-15 23:59:59',
+                'published_at' => now(),
+                'status' => 'published',
+                'created_by' => null,
+            ],
+        );
+
+        $individualAssignment->individualQuizSettings()->updateOrCreate(
+            [
+                'assignment_id' => $individualAssignment->id,
+            ],
+            [
+                'duration_minutes' => 30,
+            ],
+        );
     }
 }

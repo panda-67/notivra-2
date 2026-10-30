@@ -4,10 +4,13 @@ use App\Content\Controllers\BlogController;
 use App\Content\Controllers\NewsletterController;
 use App\Domains\Admin\Controllers\Assignments\AssignmentFileController;
 use App\Domains\Admin\Controllers\Assignments\AssignmentGroupController as AdminAssignmentGroupController;
+use App\Domains\Admin\Controllers\Assignments\AssignmentIndividualQuizResultController;
 use App\Domains\Admin\Controllers\Assignments\AssignmentQuizResultController;
+use App\Domains\Admin\Controllers\Assignments\IndividualQuizParticipantController;
 use App\Domains\Admin\Controllers\DashboardController;
 use App\Domains\Admin\Controllers\ProjectRequestController;
 use App\Domains\Assignments\Controllers\AssignmentGroupController;
+use App\Domains\Assignments\Controllers\AssignmentIndividualQuizController;
 use App\Domains\Assignments\Controllers\AssignmentQuizController;
 use App\Domains\Assignments\Controllers\AssignmentRegistrationController;
 use App\Domains\Assignments\Controllers\AssignmentSubmissionController;
@@ -105,6 +108,30 @@ Route::prefix('assignments')->as('assignments.')->group(function () {
     Route::post('/{slug}/groups/{reference_code}/submission', [AssignmentSubmissionController::class, 'store'],)
         ->middleware('throttle:10,1')
         ->name('submission.store');
+
+    Route::prefix('{slug}/individual-quiz')->as('individual-quiz.')
+        ->controller(AssignmentIndividualQuizController::class)
+        ->group(function () {
+            Route::get('/', 'show')
+                ->name('show');
+
+            Route::post('/start', 'start')
+                ->middleware('throttle:10,1')
+                ->name('start');
+
+            Route::get('/session', 'session')
+                ->middleware('throttle:60,1')
+                ->name('session');
+
+            Route::put('/answers/{position}', 'answer')
+                ->whereNumber('position')
+                ->middleware('throttle:60,1')
+                ->name('answers.store');
+
+            Route::post('/complete', 'complete')
+                ->middleware('throttle:10,1')
+                ->name('complete');
+        });
 });
 
 Route::controller(RegisterController::class)->group(function () {
@@ -159,5 +186,26 @@ Route::prefix('admin')->as('admin.')->middleware('role:super_admin,admin_staff')
                 Route::get('/files', 'index')->name('files.index');
                 Route::get('/files/{submission}/download', 'download')->whereNumber('submission')
                     ->name('files.download');
+            });
+
+        Route::prefix('/assignments/{slug}/individual-quiz/participants')->as('assignments.individual-quiz.participants.')
+            ->controller(IndividualQuizParticipantController::class)
+            ->group(function () {
+                Route::get('/', 'index')
+                    ->name('index');
+
+                Route::post('/', 'store')
+                    ->middleware('throttle:30,1')
+                    ->name('store');
+
+                Route::patch('/{participant}/status', 'updateStatus')
+                    ->whereNumber('participant')
+                    ->name('status.update');
+            });
+
+        Route::prefix('/assignments')->name('assignments.')->controller(AssignmentIndividualQuizResultController::class)
+            ->group(function () {
+                Route::get('/individual-quiz-results', 'index')->name('individual-quiz-results.index');
+                Route::get('/individual-quiz-results/export', 'export')->name('individual-quiz-results.export');
             });
     });
