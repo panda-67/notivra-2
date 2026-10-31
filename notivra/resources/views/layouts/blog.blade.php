@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg">
         <title>@yield('title') - Notivra Insight</title>
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -24,7 +25,7 @@
             <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-100">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">
                     <a href="/" class="flex items-center gap-2">
-                        <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold shadow-lg shadow-blue-200">N</div>
+                        <img src="/favicon.svg" alt="Notivra" class="h-6" />
                         <span class="text-xl font-bold tracking-tight uppercase">Notivra <span class="text-blue-600">Insight</span></span>
                     </a>
                     <div class="flex items-center space-x-4">

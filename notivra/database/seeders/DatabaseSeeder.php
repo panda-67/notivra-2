@@ -30,10 +30,12 @@ class DatabaseSeeder extends Seeder
             ServiceSeeder::class,
             AssignmentSeeder::class,
             AssignmentQuizQuestionSeeder::class,
+            AssignmentIndividualQuizQuestionSeeder::class,
         ]);
 
         if (app()->environment('local')) {
             $this->call(AssignmentGroupSeeder::class);
+            $this->call(AssignmentIndividualQuizParticipantSeeder::class);
         }
     }
 }

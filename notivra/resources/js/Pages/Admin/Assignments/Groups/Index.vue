@@ -1,6 +1,7 @@
 <script setup>
-import { Link } from "@inertiajs/vue3";
+import { Link, router } from "@inertiajs/vue3";
 import AdminLayout from "@/Layouts/AdminLayout.vue";
+import { reactive } from "vue";
 
 const props = defineProps({
   assignment: {
@@ -8,6 +9,10 @@ const props = defineProps({
     required: true,
   },
   groups: {
+    type: Object,
+    required: true,
+  },
+  filters: {
     type: Object,
     required: true,
   },
@@ -30,6 +35,57 @@ const statusClasses = {
   under_review: "bg-violet-100 text-violet-800",
   reviewed: "bg-gray-100 text-gray-700",
 };
+
+const statusOptions = [
+  { value: "draft", label: "Draft" },
+  {
+    value: "verification_in_progress",
+    label: "Verifikasi berlangsung",
+  },
+  {
+    value: "ready_for_upload",
+    label: "Siap upload",
+  },
+  {
+    value: "submitted",
+    label: "Sudah dikumpulkan",
+  },
+  {
+    value: "under_review",
+    label: "Dalam pemeriksaan",
+  },
+  {
+    value: "reviewed",
+    label: "Selesai diperiksa",
+  },
+];
+
+const form = reactive({
+  status: props.filters.status ?? "",
+  search: props.filters.search ?? "",
+});
+
+function applyFilters() {
+  router.get(
+    `/admin/assignments/${encodeURIComponent(props.assignment.slug)}/groups`,
+    {
+      status: form.status || undefined,
+      search: form.search.trim() || undefined,
+    },
+    {
+      preserveState: true,
+      preserveScroll: true,
+      replace: true,
+    },
+  );
+}
+
+function resetFilters() {
+  form.status = "";
+  form.search = "";
+
+  applyFilters();
+}
 
 function formatDate(value) {
   if (!value) return "—";
@@ -100,6 +156,56 @@ function detailUrl(group) {
           </p>
         </div>
       </div>
+
+      <form
+        class="mb-5 rounded-xl border border-gray-200 bg-white p-4"
+        @submit.prevent="applyFilters"
+      >
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <label class="block">
+            <span class="mb-1.5 block text-sm font-medium text-gray-700"> Status grup </span>
+
+            <select
+              v-model="form.status"
+              class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-gray-500 focus:outline-none"
+            >
+              <option value="">Semua status</option>
+
+              <option v-for="option in statusOptions" :key="option.value" :value="option.value">
+                {{ option.label }}
+              </option>
+            </select>
+          </label>
+
+          <label class="block">
+            <span class="mb-1.5 block text-sm font-medium text-gray-700"> Pencarian </span>
+
+            <input
+              v-model="form.search"
+              type="search"
+              placeholder="Nama kelompok, kode referensi..."
+              class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-gray-500 focus:outline-none"
+            />
+          </label>
+        </div>
+
+        <div class="mt-4 flex flex-wrap gap-2">
+          <button
+            type="submit"
+            class="rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700"
+          >
+            Terapkan filter
+          </button>
+
+          <button
+            type="button"
+            class="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+            @click="resetFilters"
+          >
+            Reset
+          </button>
+        </div>
+      </form>
 
       <div class="overflow-hidden rounded-xl border border-gray-200 bg-white">
         <div class="flex items-center justify-between border-b border-gray-200 px-5 py-4">
