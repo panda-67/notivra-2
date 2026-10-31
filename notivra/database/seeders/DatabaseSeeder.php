@@ -35,6 +35,7 @@ class DatabaseSeeder extends Seeder
 
         if (app()->environment('local')) {
             $this->call(AssignmentGroupSeeder::class);
+            $this->call(AssignmentIndividualQuizParticipantSeeder::class);
         }
     }
 }

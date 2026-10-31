@@ -30,6 +30,8 @@ class AssignmentIndividualQuizController extends Controller
             'assignment' => [
                 'title' => $assignment->title,
                 'slug' => $assignment->slug,
+                'description' => $assignment->description,
+                'instructions' => $assignment->instructions,
                 'opens_at' => $assignment->opens_at,
                 'due_at' => $assignment->due_at,
             ],

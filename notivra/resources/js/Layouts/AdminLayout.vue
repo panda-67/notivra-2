@@ -6,7 +6,7 @@ const props = defineProps({
 });
 
 const assignmentSlug = "statistika-inferensial-fkip-matematika-usk";
-const assignmentIndividualSlug = "kuis-saintek-biologi-unsam";
+const assignmentIndividualSlug = "uts-saintek-biologi-unsam";
 </script>
 
 <template>

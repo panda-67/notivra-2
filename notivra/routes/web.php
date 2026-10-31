@@ -191,16 +191,32 @@ Route::prefix('admin')->as('admin.')->middleware('role:super_admin,admin_staff')
         Route::prefix('/assignments/{slug}/individual-quiz/participants')->as('assignments.individual-quiz.participants.')
             ->controller(IndividualQuizParticipantController::class)
             ->group(function () {
-                Route::get('/', 'index')
-                    ->name('index');
+                Route::get('/', 'index')->name('index');
 
                 Route::post('/', 'store')
                     ->middleware('throttle:30,1')
                     ->name('store');
 
+                Route::patch('/schedule', 'updateSchedule')->name('schedule.update');
+
                 Route::patch('/{participant}/status', 'updateStatus')
                     ->whereNumber('participant')
                     ->name('status.update');
+
+                Route::post('/{participant}/reset-session', 'resetSession')
+                    ->whereNumber('participant')
+                    ->name('session.reset');
+
+                Route::delete('/{participant}/device', 'removeDevice')
+                    ->whereNumber('participant')
+                    ->name('device.remove');
+
+                Route::get('/template', 'downloadTemplate')
+                    ->name('template');
+
+                Route::post('/import', 'import')
+                    ->middleware('throttle:10,1')
+                    ->name('import');
             });
 
         Route::prefix('/assignments')->name('assignments.')->controller(AssignmentIndividualQuizResultController::class)

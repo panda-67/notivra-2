@@ -27,11 +27,7 @@ class AssignmentIndividualQuizResultService
             ->orderBy('id')
             ->get();
 
-        $questionsByAssignment = [];
-
-        $rows = $participants->map(function ($participant) use (
-            &$questionsByAssignment
-        ) {
+        $rows = $participants->map(function ($participant) {
             $assignment = $participant->assignment;
             $student = $participant->student;
             $attempt = $participant->attempt;
@@ -40,16 +36,31 @@ class AssignmentIndividualQuizResultService
                 return null;
             }
 
-            $assignmentId = $assignment->id;
+            $status = $attempt?->status ?? 'pending';
 
-            if (! isset($questionsByAssignment[$assignmentId])) {
-                $questionsByAssignment[$assignmentId] =
-                    $assignment->quizQuestions
-                    ->sortBy('position')
+            /*
+         * question_ids berisi ID dari 20 soal yang dipilih
+         * ketika attempt dibuat.
+         *
+         * Jangan menggunakan seluruh quizQuestions sebagai
+         * pengganti jika question_ids tidak tersedia.
+         */
+            $questionIds = $attempt?->question_ids ?? [];
+
+            $questions = collect();
+
+            if (is_array($questionIds) && count($questionIds) > 0) {
+                $questions = $assignment->quizQuestions
+                    ->whereIn('id', $questionIds)
+                    ->keyBy('id');
+
+                // Pertahankan urutan soal sesuai question_ids.
+                $questions = collect($questionIds)
+                    ->map(fn($id) => $questions->get($id))
+                    ->filter()
                     ->values();
             }
 
-            $questions = $questionsByAssignment[$assignmentId];
             $answers = $attempt?->answers ?? [];
 
             $total = $questions->count();
@@ -75,13 +86,18 @@ class AssignmentIndividualQuizResultService
                 }
             }
 
-            $status = $attempt?->status ?? 'pending';
-
+            /*
+         * Attempt hanya dapat menghasilkan nilai final jika
+         * memiliki 20 soal terpilih yang valid.
+         *
+         * Attempt lama tanpa question_ids tidak boleh dihitung
+         * menggunakan seluruh bank soal.
+         */
             $isFinal = in_array(
                 $status,
                 ['completed', 'expired'],
                 true
-            ) && $total > 0;
+            ) && $total === 20;
 
             return [
                 'assignment_id' => $assignment->id,
@@ -92,14 +108,18 @@ class AssignmentIndividualQuizResultService
                 'student_number' => $student?->student_number ?? '-',
                 'participant_status' => $participant->status,
                 'quiz_status' => $status,
+
                 'total_questions' => $total,
                 'correct' => $correct,
                 'incorrect' => $incorrect,
                 'unanswered' => $unanswered,
+
                 'score' => $isFinal
-                    ? round(($correct / $total) * 100, 2)
+                    ? round(($correct / 20) * 100, 2)
                     : null,
+
                 'score_is_final' => $isFinal,
+
                 'started_at' => $attempt?->started_at,
                 'expires_at' => $attempt?->expires_at,
                 'completed_at' => $attempt?->completed_at,

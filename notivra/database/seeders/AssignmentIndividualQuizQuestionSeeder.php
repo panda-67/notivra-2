@@ -11,7 +11,7 @@ class AssignmentIndividualQuizQuestionSeeder extends Seeder
     public function run(): void
     {
         $assignment = Assignment::query()
-            ->where('slug', 'kuis-saintek-biologi-unsam')
+            ->where('slug', 'uts-saintek-biologi-unsam')
             ->firstOrFail();
 
         $questions = [
@@ -293,20 +293,20 @@ class AssignmentIndividualQuizQuestionSeeder extends Seeder
                 'correct_option' => 'B',
             ],
             [
-                'question' => 'Pada RBSL dengan lima perlakuan, derajat bebas total adalah ...',
-                'option_a' => '15',
-                'option_b' => '20',
-                'option_c' => '24',
-                'option_d' => '25',
-                'correct_option' => 'C',
+                'question' => 'Dalam RBSL, fungsi utama penggunaan baris dan kolom sebagai faktor pengelompokan adalah ...',
+                'option_a' => 'Mengendalikan dua sumber keragaman lingkungan yang berbeda',
+                'option_b' => 'Menambah jumlah perlakuan yang diuji',
+                'option_c' => 'Mengurangi jumlah ulangan menjadi satu',
+                'option_d' => 'Menghilangkan kebutuhan pengacakan perlakuan',
+                'correct_option' => 'A',
             ],
             [
-                'question' => 'Dalam RBSL berukuran 4 × 4, derajat bebas galat adalah ...',
-                'option_a' => '3',
-                'option_b' => '6',
-                'option_c' => '9',
-                'option_d' => '12',
-                'correct_option' => 'B',
+                'question' => 'Pada RBSL, setiap perlakuan harus muncul ...',
+                'option_a' => 'Satu kali pada setiap baris dan satu kali pada setiap kolom',
+                'option_b' => 'Dua kali pada setiap baris dan satu kali pada setiap kolom',
+                'option_c' => 'Satu kali pada setiap baris dan dua kali pada setiap kolom',
+                'option_d' => 'Hanya satu kali dalam keseluruhan percobaan',
+                'correct_option' => 'A',
             ],
             [
                 'question' => 'Formula R yang sesuai untuk model aditif RBSL dengan respons hasil, perlakuan, baris, dan kolom adalah ...',
@@ -534,7 +534,7 @@ class AssignmentIndividualQuizQuestionSeeder extends Seeder
 
         if (count($questions) !== 60) {
             throw new \RuntimeException(
-                'Bank soal UNSAM harus berjumlah tepat 60 soal.'
+                '   Bank soal UNSAM harus berjumlah tepat 60 soal.'
             );
         }
 

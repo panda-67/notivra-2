@@ -17,7 +17,7 @@ class AssignmentIndividualQuizParticipantSeeder extends Seeder
              * 1. Ambil assignment Individual Quiz.
              */
             $assignment = Assignment::query()
-                ->where('slug', 'kuis-saintek-biologi-unsam')
+                ->where('slug', 'uts-saintek-biologi-unsam')
                 ->first();
 
             if (! $assignment) {

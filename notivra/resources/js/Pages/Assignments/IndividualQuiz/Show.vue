@@ -428,7 +428,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <AppLayout margin="wide">
+  <AppLayout :title="`${assignment.title}`" margin="wide">
     <div class="mx-auto max-w-4xl space-y-3 px-3 py-3 sm:px-5 sm:py-4">
       <!-- Assignment header -->
       <header class="space-y-1">
@@ -436,7 +436,7 @@ onBeforeUnmount(() => {
           <span
             class="rounded-md bg-indigo-50 px-2 py-1 text-[11px] font-semibold uppercase tracking-wide text-indigo-700"
           >
-            Individual Quiz
+            Ujian Tengah Semester (UTS)
           </span>
 
           <span
@@ -455,9 +455,16 @@ onBeforeUnmount(() => {
           {{ assignment.description }}
         </p>
 
-        <div class="flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-gray-500">
+        <div v-if="!session" class="flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-gray-500">
           <span> Dibuka: {{ formatDate(assignment.opens_at) }} </span>
           <span> Ditutup: {{ formatDate(assignment.due_at) }} </span>
+        </div>
+
+        <div v-if="assignment.instructions && !session" class="mt-2 rounded-xl bg-slate-50">
+          <h2 class="font-semibold text-slate-900">Petunjuk</h2>
+          <p class="mt-2 whitespace-pre-line text-sm leading-3.5 text-slate-600">
+            {{ assignment.instructions }}
+          </p>
         </div>
       </header>
 
@@ -567,7 +574,7 @@ onBeforeUnmount(() => {
         <div class="mb-4">
           <h2 class="text-base font-semibold text-gray-900">Identitas Peserta</h2>
           <p class="mt-1 text-xs text-gray-500">
-            Masukkan NIM yang telah didaftarkan pada kuis ini.
+            Masukkan NIM untuk memulai Ujian Tengah Semester.
           </p>
         </div>
 
@@ -593,7 +600,7 @@ onBeforeUnmount(() => {
             :disabled="loading"
             class="w-full rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
           >
-            Mulai Kuis
+            Mulai UTS
           </button>
         </form>
       </section>

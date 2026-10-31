@@ -90,7 +90,7 @@ class AssignmentIndividualQuizService
 
             if ($attempt?->status === 'in_progress') {
                 if (
-                    ! $attempt->device_token_hash ||
+                    $attempt->device_token_hash &&
                     ! hash_equals($attempt->device_token_hash, $deviceHash)
                 ) {
                     throw ValidationException::withMessages([

@@ -7,7 +7,7 @@ const page = usePage();
 const user = computed(() => page.props.auth.user);
 const isMenuOpen = ref(false);
 const isDropdownOpen = ref(false);
-const assignmentSlug = "kuis-saintek-biologi-unsam";
+const assignmentSlug = "uts-saintek-biologi-unsam";
 
 defineProps({
   user: Object,
@@ -41,11 +41,7 @@ const navigation = [
       <div class="flex justify-between h-20">
         <div class="flex items-center">
           <a href="/" class="shrink-0 flex items-center gap-2">
-            <div
-              class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold shadow-blue-200 shadow-lg"
-            >
-              N
-            </div>
+            <img src="/favicon.svg" alt="Notivra" class="h-6" />
             <span class="text-xl font-bold tracking-tight text-slate-900 uppercase">Notivra</span>
           </a>
 
