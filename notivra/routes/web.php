@@ -115,6 +115,10 @@ Route::prefix('assignments')->as('assignments.')->group(function () {
             Route::get('/', 'show')
                 ->name('show');
 
+            Route::post('/verify-student', 'verifyStudent')
+                ->middleware('throttle:30,1')
+                ->name('student.verify');
+
             Route::post('/start', 'start')
                 ->middleware('throttle:10,1')
                 ->name('start');
