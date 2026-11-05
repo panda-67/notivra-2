@@ -50,6 +50,11 @@ const isLastQuestion = computed(() => currentQuestionIndex.value >= totalQuestio
 
 const isActive = computed(() => session.value?.status === "in_progress");
 
+const verifyingStudent = ref(false);
+const showIdentityModal = ref(false);
+
+const verifiedStudent = ref(null);
+
 const isFinished = computed(
   () =>
     session.value?.status === "completed" ||
@@ -200,6 +205,44 @@ function startTimer() {
     stopTimer();
     finishQuiz(true);
   }, 1000);
+}
+
+async function verifyStudent() {
+  const value = studentNumber.value.trim();
+
+  if (!value) {
+    errorMessage.value = "NIM wajib diisi.";
+    return;
+  }
+
+  verifyingStudent.value = true;
+  errorMessage.value = "";
+
+  try {
+    const response = await request("/verify-student", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        student_number: value,
+      }),
+    });
+
+    verifiedStudent.value = response.student;
+    showIdentityModal.value = true;
+  } catch (error) {
+    errorMessage.value =
+      error.data?.errors?.student_number?.[0] || error.message || "NIM tidak dapat diverifikasi.";
+  } finally {
+    verifyingStudent.value = false;
+  }
+}
+
+async function confirmStudentAndStart() {
+  showIdentityModal.value = false;
+
+  await startQuiz();
 }
 
 function applySession(newSession) {
@@ -573,12 +616,13 @@ onBeforeUnmount(() => {
       >
         <div class="mb-4">
           <h2 class="text-base font-semibold text-gray-900">Identitas Peserta</h2>
+
           <p class="mt-1 text-xs text-gray-500">
             Masukkan NIM untuk memulai Ujian Tengah Semester.
           </p>
         </div>
 
-        <form class="space-y-3" @submit.prevent="startQuiz">
+        <form class="space-y-3" @submit.prevent="verifyStudent">
           <div>
             <label for="student-number" class="mb-1 block text-xs font-medium text-gray-700">
               Nomor Induk Mahasiswa (NIM)
@@ -597,10 +641,10 @@ onBeforeUnmount(() => {
 
           <button
             type="submit"
-            :disabled="loading"
+            :disabled="loading || verifyingStudent"
             class="w-full rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
           >
-            Mulai UTS
+            {{ verifyingStudent ? "Memeriksa..." : "Mulai UTS" }}
           </button>
         </form>
       </section>
@@ -873,6 +917,75 @@ onBeforeUnmount(() => {
       </template>
     </div>
 
+    <!-- Confirm Modal -->
+    <Teleport to="body">
+      <div
+        v-if="showIdentityModal && verifiedStudent"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
+      >
+        <div class="w-full max-w-md rounded-2xl bg-white shadow-xl">
+          <div class="border-b border-gray-200 px-5 py-4">
+            <h2 class="text-base font-semibold text-gray-900">Konfirmasi identitas</h2>
+
+            <p class="mt-1 text-sm text-gray-500">
+              Pastikan data berikut adalah data Anda sebelum memulai kuis.
+            </p>
+          </div>
+
+          <div class="space-y-3 px-5 py-5">
+            <div class="rounded-xl bg-gray-50 p-4">
+              <dl class="space-y-3 text-sm">
+                <div class="flex justify-between gap-4">
+                  <dt class="text-gray-500">Nama</dt>
+                  <dd class="text-right font-medium text-gray-900">
+                    {{ verifiedStudent.name }}
+                  </dd>
+                </div>
+
+                <div class="flex justify-between gap-4">
+                  <dt class="text-gray-500">NIM</dt>
+                  <dd class="font-medium text-gray-900">
+                    {{ verifiedStudent.student_number }}
+                  </dd>
+                </div>
+
+                <div class="flex justify-between gap-4">
+                  <dt class="text-gray-500">Program Studi</dt>
+                  <dd class="text-right font-medium text-gray-900">
+                    {{ verifiedStudent.program_study || "-" }}
+                  </dd>
+                </div>
+              </dl>
+            </div>
+
+            <div class="rounded-xl border border-amber-200 bg-amber-50 p-3">
+              <p class="text-xs leading-5 text-amber-800">
+                Pastikan identitas di atas benar. Setelah Anda memulai kuis, sesi pengerjaan akan
+                dimulai dan terikat pada perangkat ini.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex gap-3 border-t border-gray-200 px-5 py-4">
+            <button
+              type="button"
+              class="flex-1 rounded-lg border border-gray-300 px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50"
+              @click="showIdentityModal = false"
+            >
+              Bukan saya
+            </button>
+
+            <button
+              type="button"
+              class="flex-1 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-blue-700"
+              @click="confirmStudentAndStart"
+            >
+              Ya, ini saya
+            </button>
+          </div>
+        </div>
+      </div>
+    </Teleport>
     <!-- Finish confirmation modal -->
     <Teleport to="body">
       <Transition

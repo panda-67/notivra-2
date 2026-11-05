@@ -5,6 +5,8 @@ namespace App\Domains\Assignments\Controllers;
 use App\Domains\Assignments\Services\AssignmentIndividualQuizService;
 use App\Http\Controllers\Controller;
 use App\Models\Assignment;
+use App\Models\AssignmentParticipant;
+use App\Models\Student;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -34,6 +36,68 @@ class AssignmentIndividualQuizController extends Controller
                 'instructions' => $assignment->instructions,
                 'opens_at' => $assignment->opens_at,
                 'due_at' => $assignment->due_at,
+            ],
+        ]);
+    }
+
+    public function verifyStudent(
+        Request $request,
+        string $slug,
+    ): JsonResponse {
+        $assignment = Assignment::query()
+            ->with('individualQuizSettings')
+            ->where('slug', $slug)
+            ->firstOrFail();
+
+        abort_unless($assignment->individualQuizSettings, 404);
+
+        $validated = $request->validate([
+            'student_number' => ['required', 'string', 'max:32'],
+        ]);
+
+        $student = Student::query()
+            ->where('student_number', trim($validated['student_number']))
+            ->first();
+
+        if (! $student) {
+            throw ValidationException::withMessages([
+                'student_number' => 'NIM tidak ditemukan.',
+            ]);
+        }
+
+        if ($student->status !== 'active') {
+            throw ValidationException::withMessages([
+                'student_number' => 'Mahasiswa dengan NIM tersebut tidak aktif.',
+            ]);
+        }
+
+        $participant = AssignmentParticipant::query()
+            ->where('assignment_id', $assignment->id)
+            ->where('student_id', $student->id)
+            ->first();
+
+        if (! $participant) {
+            throw ValidationException::withMessages([
+                'student_number' => 'NIM tersebut belum terdaftar sebagai peserta kuis.',
+            ]);
+        }
+
+        if ($participant->status !== 'registered') {
+            throw ValidationException::withMessages([
+                'student_number' => 'Peserta tersebut sedang dinonaktifkan.',
+            ]);
+        }
+
+        return response()->json([
+            'student' => [
+                'student_number' => $student->student_number,
+                'name' => $student->name,
+                'program_study' => $student->program_study,
+            ],
+            'assignment' => [
+                'title' => $assignment->title,
+                'duration_minutes' =>
+                $assignment->individualQuizSettings->duration_minutes,
             ],
         ]);
     }
