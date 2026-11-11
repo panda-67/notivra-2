@@ -25,10 +25,14 @@ use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
-
+use Inertia\Inertia;
 
 Route::get('/about', AboutController::class)->name('about');
 Route::post('/newsletter/subscribe', NewsletterController::class)->name('newsletter.subscribe');
+
+Route::get('/assignments/rekap-nilai', function () {
+    return Inertia::render('RecapNilai');
+})->name('assignments.recap-nilai');
 
 Route::controller(BlogController::class)->group(function () {
     Route::get('/', 'index')->name('blog.index');
