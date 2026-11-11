@@ -1,0 +1,602 @@
+[
+  {
+    "nama": "Uswatun Hasanah",
+    "nim": "2406103020103",
+    "kuis": 100,
+    "tugas": 77,
+    "nilai": 82.75,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Lisma Wahidah Funna",
+    "nim": "250610302100001",
+    "kuis": 100,
+    "tugas": 76,
+    "nilai": 82,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Luluatul Fuadah",
+    "nim": "250610302100002",
+    "kuis": 100,
+    "tugas": 76,
+    "nilai": 82,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Cut Misna Rahma Sufi",
+    "nim": "250610302100003",
+    "kuis": 100,
+    "tugas": 83,
+    "nilai": 87.25,
+    "nilai_huruf": "A"
+  },
+  {
+    "nama": "Niswatun Zakia",
+    "nim": "250610302100004",
+    "kuis": 100,
+    "tugas": 72,
+    "nilai": 79,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Risa Aulia Bella",
+    "nim": "250610302100005",
+    "kuis": 100,
+    "tugas": 83,
+    "nilai": 87.25,
+    "nilai_huruf": "A"
+  },
+  {
+    "nama": "Reza Rizky Ananda",
+    "nim": "250610302100006",
+    "kuis": 100,
+    "tugas": 82,
+    "nilai": 86.5,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Zahra",
+    "nim": "250610302100007",
+    "kuis": 100,
+    "tugas": 83,
+    "nilai": 87.25,
+    "nilai_huruf": "A"
+  },
+  {
+    "nama": "Raudhi Navis",
+    "nim": "250610302100009",
+    "kuis": 100,
+    "tugas": 82,
+    "nilai": 86.5,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Shelvi Noviawati",
+    "nim": "250610302100011",
+    "kuis": 100,
+    "tugas": 75,
+    "nilai": 81.25,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Naila Zahra",
+    "nim": "250610302100012",
+    "kuis": 100,
+    "tugas": 83,
+    "nilai": 87.25,
+    "nilai_huruf": "A"
+  },
+  {
+    "nama": "Aurora Keysha Afna",
+    "nim": "250610302100013",
+    "kuis": 100,
+    "tugas": 82,
+    "nilai": 86.5,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "M. Syuja Labib",
+    "nim": "250610302100014",
+    "kuis": 100,
+    "tugas": 64,
+    "nilai": 73,
+    "nilai_huruf": "B"
+  },
+  {
+    "nama": "Askiatunnissa",
+    "nim": "250610302100015",
+    "kuis": 100,
+    "tugas": 83,
+    "nilai": 87.25,
+    "nilai_huruf": "A"
+  },
+  {
+    "nama": "Raisha Fahira",
+    "nim": "250610302100016",
+    "kuis": 100,
+    "tugas": 79,
+    "nilai": 84.25,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Aidil tagopa Pratama",
+    "nim": "250610302100017",
+    "kuis": 80,
+    "tugas": 76,
+    "nilai": 77,
+    "nilai_huruf": "B"
+  },
+  {
+    "nama": "Riandi Alpariga",
+    "nim": "250610302100019",
+    "kuis": 100,
+    "tugas": 83,
+    "nilai": 87.25,
+    "nilai_huruf": "A"
+  },
+  {
+    "nama": "Muhammad Hafizul Furqan",
+    "nim": "250610302100020",
+    "kuis": 100,
+    "tugas": 80,
+    "nilai": 85,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Bayu Adi Tiya",
+    "nim": "250610302100021",
+    "kuis": 100,
+    "tugas": 83,
+    "nilai": 87.25,
+    "nilai_huruf": "A"
+  },
+  {
+    "nama": "Ivana Almira Pane",
+    "nim": "250610302100022",
+    "kuis": 100,
+    "tugas": 63,
+    "nilai": 72.25,
+    "nilai_huruf": "B"
+  },
+  {
+    "nama": "Windi Nurwasilah",
+    "nim": "250610302100023",
+    "kuis": 100,
+    "tugas": 80,
+    "nilai": 85,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Muhammad Hamid",
+    "nim": "250610302100024",
+    "kuis": 100,
+    "tugas": 73,
+    "nilai": 79.75,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Sarmilayani",
+    "nim": "250610302100025",
+    "kuis": 100,
+    "tugas": 73,
+    "nilai": 79.75,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Widyatul Ukhra",
+    "nim": "250610302100026",
+    "kuis": 100,
+    "tugas": 80,
+    "nilai": 85,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Raysha Ananda Putri",
+    "nim": "250610302100027",
+    "kuis": 100,
+    "tugas": 82,
+    "nilai": 86.5,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Davila Humaira",
+    "nim": "250610302100028",
+    "kuis": 100,
+    "tugas": 63,
+    "nilai": 72.25,
+    "nilai_huruf": "B"
+  },
+  {
+    "nama": "Juli Sartika",
+    "nim": "250610302100029",
+    "kuis": 90,
+    "tugas": 75,
+    "nilai": 78.75,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Putri Syifa Ulzia",
+    "nim": "250610302100030",
+    "kuis": 90,
+    "tugas": 78,
+    "nilai": 81,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Marini Anggreni",
+    "nim": "250610302100031",
+    "kuis": 100,
+    "tugas": 75,
+    "nilai": 81.25,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Safiratul Moza",
+    "nim": "250610302100032",
+    "kuis": 100,
+    "tugas": 73,
+    "nilai": 79.75,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Putri A'thaya",
+    "nim": "250610302100033",
+    "kuis": 100,
+    "tugas": 77,
+    "nilai": 82.75,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Rafly Dwi Arnanda",
+    "nim": "250610302100035",
+    "kuis": 100,
+    "tugas": 82,
+    "nilai": 86.5,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Rahmatul Hidayah",
+    "nim": "250610302100036",
+    "kuis": 100,
+    "tugas": 64,
+    "nilai": 73,
+    "nilai_huruf": "B"
+  },
+  {
+    "nama": "Nabilla Syakira",
+    "nim": "250610302100037",
+    "kuis": 100,
+    "tugas": 83,
+    "nilai": 87.25,
+    "nilai_huruf": "A"
+  },
+  {
+    "nama": "Qaffar Umam",
+    "nim": "250610302100038",
+    "kuis": 90,
+    "tugas": 73,
+    "nilai": 77.25,
+    "nilai_huruf": "B"
+  },
+  {
+    "nama": "Najwa Ardianza",
+    "nim": "250610302100039",
+    "kuis": 100,
+    "tugas": 76,
+    "nilai": 82,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Fatimah Jamal Husein",
+    "nim": "250610302100040",
+    "kuis": 100,
+    "tugas": 83,
+    "nilai": 87.25,
+    "nilai_huruf": "A"
+  },
+  {
+    "nama": "Rafif Fityanabil",
+    "nim": "250610302100041",
+    "kuis": 100,
+    "tugas": 76,
+    "nilai": 82,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Inayah Nur Mawaddah",
+    "nim": "250610302100042",
+    "kuis": 100,
+    "tugas": 63,
+    "nilai": 72.25,
+    "nilai_huruf": "B"
+  },
+  {
+    "nama": "Gema Maulida Silva",
+    "nim": "250610302100043",
+    "kuis": 100,
+    "tugas": 83,
+    "nilai": 87.25,
+    "nilai_huruf": "A"
+  },
+  {
+    "nama": "Julhijah",
+    "nim": "250610302100044",
+    "kuis": 100,
+    "tugas": 75,
+    "nilai": 81.25,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Zian Alfira",
+    "nim": "250610302100045",
+    "kuis": 100,
+    "tugas": 77,
+    "nilai": 82.75,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Intan Fitria",
+    "nim": "250610302100046",
+    "kuis": 90,
+    "tugas": 77,
+    "nilai": 80.25,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Maulidya Zachrini",
+    "nim": "250610302100047",
+    "kuis": 80,
+    "tugas": 77,
+    "nilai": 77.75,
+    "nilai_huruf": "B"
+  },
+  {
+    "nama": "Dara Nurmuslimah Kluet",
+    "nim": "250610302100048",
+    "kuis": 100,
+    "tugas": 77,
+    "nilai": 82.75,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Hilali Azra",
+    "nim": "250610302100049",
+    "kuis": 100,
+    "tugas": 77,
+    "nilai": 82.75,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Ririn Utami Amhas",
+    "nim": "250610302100050",
+    "kuis": 100,
+    "tugas": 72,
+    "nilai": 79,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Durratul Asna",
+    "nim": "250610302100051",
+    "kuis": 90,
+    "tugas": 83,
+    "nilai": 84.75,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Amira Fatin Hanina",
+    "nim": "250610302100052",
+    "kuis": 100,
+    "tugas": 83,
+    "nilai": 87.25,
+    "nilai_huruf": "A"
+  },
+  {
+    "nama": "Miska Athira",
+    "nim": "250610302100053",
+    "kuis": 100,
+    "tugas": 79,
+    "nilai": 84.25,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Aura Riskina",
+    "nim": "250610302100054",
+    "kuis": 100,
+    "tugas": 76,
+    "nilai": 82,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Zahra Lathifa",
+    "nim": "250610302100055",
+    "kuis": 100,
+    "tugas": 83,
+    "nilai": 87.25,
+    "nilai_huruf": "A"
+  },
+  {
+    "nama": "Azirul Imam",
+    "nim": "250610302100056",
+    "kuis": 100,
+    "tugas": 73,
+    "nilai": 79.75,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Putri Humaira",
+    "nim": "250610302100057",
+    "kuis": 100,
+    "tugas": 72,
+    "nilai": 79,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Vira Shahara",
+    "nim": "250610302100058",
+    "kuis": 90,
+    "tugas": 78,
+    "nilai": 81,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Nabila Zullia Wahid",
+    "nim": "250610302100059",
+    "kuis": 100,
+    "tugas": 75,
+    "nilai": 81.25,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Cut Intan Safira",
+    "nim": "250610302100060",
+    "kuis": 90,
+    "tugas": 78,
+    "nilai": 81,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Raihan Nazila",
+    "nim": "250610302100061",
+    "kuis": 100,
+    "tugas": 80,
+    "nilai": 85,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Aulia Safril",
+    "nim": "250610302100062",
+    "kuis": 100,
+    "tugas": 83,
+    "nilai": 87.25,
+    "nilai_huruf": "A"
+  },
+  {
+    "nama": "Nindrawita Kasmayanti",
+    "nim": "250610302100063",
+    "kuis": 100,
+    "tugas": 73,
+    "nilai": 79.75,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Arel yunia mirza",
+    "nim": "250610302100064",
+    "kuis": 100,
+    "tugas": 72,
+    "nilai": 79,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Nurul Qamari",
+    "nim": "250610302100065",
+    "kuis": 100,
+    "tugas": 63,
+    "nilai": 72.25,
+    "nilai_huruf": "B"
+  },
+  {
+    "nama": "Juharni",
+    "nim": "250610302100066",
+    "kuis": 100,
+    "tugas": 77,
+    "nilai": 82.75,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Rifky Maulana",
+    "nim": "250610302100067",
+    "kuis": 100,
+    "tugas": 73,
+    "nilai": 79.75,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Muammar Khadafi",
+    "nim": "250610302100068",
+    "kuis": 90,
+    "tugas": 73,
+    "nilai": 77.25,
+    "nilai_huruf": "B"
+  },
+  {
+    "nama": "Muhammad Ghazali",
+    "nim": "250610302100069",
+    "kuis": 100,
+    "tugas": 64,
+    "nilai": 73,
+    "nilai_huruf": "B"
+  },
+  {
+    "nama": "Muhammad Idris",
+    "nim": "250610302100070",
+    "kuis": 90,
+    "tugas": 64,
+    "nilai": 70.5,
+    "nilai_huruf": "B"
+  },
+  {
+    "nama": "Sifa Lauta Deska",
+    "nim": "250610302100072",
+    "kuis": 100,
+    "tugas": 83,
+    "nilai": 87.25,
+    "nilai_huruf": "A"
+  },
+  {
+    "nama": "Afifa Adelianda",
+    "nim": "250610302100073",
+    "kuis": 90,
+    "tugas": 80,
+    "nilai": 82.5,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Fitri Shalafina",
+    "nim": "250610302100074",
+    "kuis": 100,
+    "tugas": 78,
+    "nilai": 83.5,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Bilqish Putri Khairi",
+    "nim": "250610302100075",
+    "kuis": 100,
+    "tugas": 83,
+    "nilai": 87.25,
+    "nilai_huruf": "A"
+  },
+  {
+    "nama": "Sherlina",
+    "nim": "250610302100076",
+    "kuis": 100,
+    "tugas": 83,
+    "nilai": 87.25,
+    "nilai_huruf": "A"
+  },
+  {
+    "nama": "Azzahara Tazqia",
+    "nim": "250610302100079",
+    "kuis": 100,
+    "tugas": 79,
+    "nilai": 84.25,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Wirda Izzati",
+    "nim": "250610302100080",
+    "kuis": 90,
+    "tugas": 83,
+    "nilai": 84.75,
+    "nilai_huruf": "AB"
+  },
+  {
+    "nama": "Raisah Nurjannah",
+    "nim": "250610302100082",
+    "kuis": 100,
+    "tugas": 76,
+    "nilai": 82,
+    "nilai_huruf": "AB"
+  }
+]
