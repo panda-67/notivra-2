@@ -276,13 +276,13 @@ async function restoreSession() {
     const response = await request("/session");
 
     applySession(response.session);
-    successMessage.value = "Sesi kuis berhasil dipulihkan.";
+    successMessage.value = "Sesi UTS berhasil dipulihkan.";
   } catch (error) {
     if ([401, 403, 404].includes(error.status)) {
       clearResumeToken();
     }
 
-    errorMessage.value = error.message || "Sesi kuis tidak dapat dipulihkan.";
+    errorMessage.value = error.message || "Sesi UTS tidak dapat dipulihkan.";
   } finally {
     loading.value = false;
   }
@@ -320,7 +320,7 @@ async function startQuiz() {
 
     successMessage.value = response.message;
   } catch (error) {
-    errorMessage.value = error.message || "Kuis tidak dapat dimulai.";
+    errorMessage.value = error.message || "UTS tidak dapat dimulai.";
   } finally {
     loading.value = false;
   }
@@ -428,7 +428,7 @@ async function submitQuiz() {
 
     successMessage.value = response.message;
   } catch (error) {
-    errorMessage.value = error.message || "Kuis gagal diselesaikan.";
+    errorMessage.value = error.message || "UTS gagal diselesaikan.";
   } finally {
     submitting.value = false;
   }
@@ -606,7 +606,7 @@ onBeforeUnmount(() => {
         v-if="loading"
         class="rounded-lg border border-gray-200 bg-white px-4 py-6 text-center text-sm text-gray-500"
       >
-        Memuat sesi kuis...
+        Memuat sesi UTS...
       </div>
 
       <!-- Start screen -->
@@ -822,7 +822,7 @@ onBeforeUnmount(() => {
               class="rounded-lg bg-green-600 px-4 py-2 text-xs font-semibold text-white transition hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-50"
               @click="finishQuiz(false)"
             >
-              {{ submitting ? "Memproses..." : "Selesaikan Kuis" }}
+              {{ submitting ? "Memproses..." : "Selesaikan UTS" }}
             </button>
           </div>
         </section>
@@ -868,11 +868,11 @@ onBeforeUnmount(() => {
             </div>
 
             <h2 class="text-lg font-bold text-gray-900">
-              {{ session.status === "completed" ? "Kuis selesai" : "Waktu kuis habis" }}
+              {{ session.status === "completed" ? "UTS selesai" : "Waktu UTS habis" }}
             </h2>
 
             <p class="mt-1 text-xs text-gray-500">
-              {{ successMessage || "Sesi pengerjaan kuis telah berakhir." }}
+              {{ successMessage || "Sesi pengerjaan UTS telah berakhir." }}
             </p>
           </div>
 
@@ -928,7 +928,7 @@ onBeforeUnmount(() => {
             <h2 class="text-base font-semibold text-gray-900">Konfirmasi identitas</h2>
 
             <p class="mt-1 text-sm text-gray-500">
-              Pastikan data berikut adalah data Anda sebelum memulai kuis.
+              Pastikan data berikut adalah data Anda sebelum memulai UTS.
             </p>
           </div>
 
@@ -960,7 +960,7 @@ onBeforeUnmount(() => {
 
             <div class="rounded-xl border border-amber-200 bg-amber-50 p-3">
               <p class="text-xs leading-5 text-amber-800">
-                Pastikan identitas di atas benar. Setelah Anda memulai kuis, sesi pengerjaan akan
+                Pastikan identitas di atas benar. Setelah Anda memulai UTS, sesi pengerjaan akan
                 dimulai dan terikat pada perangkat ini.
               </p>
             </div>
@@ -1029,7 +1029,7 @@ onBeforeUnmount(() => {
 
               <div>
                 <h2 id="finish-modal-title" class="text-base font-bold text-gray-900">
-                  Selesaikan kuis?
+                  Selesaikan UTS?
                 </h2>
 
                 <p class="mt-1 text-sm leading-relaxed text-gray-500">
@@ -1059,14 +1059,14 @@ onBeforeUnmount(() => {
               class="mb-4 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs leading-relaxed text-amber-800"
             >
               Masih ada {{ unansweredCount }} soal yang belum dijawab. Soal tersebut akan tetap
-              dihitung sebagai jawaban kosong jika Anda menyelesaikan kuis sekarang.
+              dihitung sebagai jawaban kosong jika Anda menyelesaikan UTS sekarang.
             </div>
 
             <p
               v-else
               class="mb-4 rounded-lg border border-green-200 bg-green-50 px-3 py-2 text-xs text-green-800"
             >
-              Seluruh soal sudah dijawab. Anda dapat menyelesaikan kuis.
+              Seluruh soal sudah dijawab. Anda dapat menyelesaikan UTS.
             </p>
 
             <div class="flex justify-end gap-2">
