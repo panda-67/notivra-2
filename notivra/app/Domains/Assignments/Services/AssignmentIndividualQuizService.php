@@ -27,7 +27,7 @@ class AssignmentIndividualQuizService
         $this->assertAccessWindow($assignment);
 
         if (! $assignment->individualQuizSettings) {
-            abort(404, 'Kuis individual belum dikonfigurasi.');
+            abort(404, 'UTS belum dikonfigurasi.');
         }
 
         $student = Student::query()
@@ -84,7 +84,7 @@ class AssignmentIndividualQuizService
                 true,
             )) {
                 throw ValidationException::withMessages([
-                    'quiz' => 'Sesi kuis sudah berakhir dan tidak dapat dimulai ulang.',
+                    'quiz' => 'Sesi UTS sudah berakhir dan tidak dapat dimulai ulang.',
                 ]);
             }
 
@@ -94,7 +94,7 @@ class AssignmentIndividualQuizService
                     ! hash_equals($attempt->device_token_hash, $deviceHash)
                 ) {
                     throw ValidationException::withMessages([
-                        'device_token' => 'Sesi kuis terikat pada perangkat lain.',
+                        'device_token' => 'Sesi UTS terikat pada perangkat lain.',
                     ]);
                 }
 
@@ -168,7 +168,7 @@ class AssignmentIndividualQuizService
 
         if ($result['expired']) {
             throw ValidationException::withMessages([
-                'quiz' => 'Waktu kuis telah habis.',
+                'quiz' => 'Waktu UTS telah habis.',
             ]);
         }
 
@@ -204,7 +204,7 @@ class AssignmentIndividualQuizService
             ! hash_equals($attempt->device_token_hash, $deviceHash)
         ) {
             throw ValidationException::withMessages([
-                'device_token' => 'Perangkat tidak cocok dengan sesi kuis.',
+                'device_token' => 'Perangkat tidak cocok dengan sesi UTS.',
             ]);
         }
 
@@ -249,7 +249,7 @@ class AssignmentIndividualQuizService
 
             if ($locked->status !== 'in_progress') {
                 throw ValidationException::withMessages([
-                    'quiz' => 'Sesi kuis tidak sedang berlangsung.',
+                    'quiz' => 'Sesi UTS tidak sedang berlangsung.',
                 ]);
             }
 
@@ -281,13 +281,13 @@ class AssignmentIndividualQuizService
 
             if (! $questionExists) {
                 throw ValidationException::withMessages([
-                    'position' => 'Nomor soal tidak valid atau tidak termasuk dalam sesi kuis ini.',
+                    'position' => 'Nomor soal tidak valid atau tidak termasuk dalam sesi UTS ini.',
                 ]);
             }
 
             $answers = $locked->answers ?? [];
 
-            // Peserta boleh mengganti jawaban selama waktu kuis aktif.
+            // Peserta boleh mengganti jawaban selama waktu UTS aktif.
             $answers[(string) $position] = $answer;
 
             $locked->forceFill([
@@ -303,7 +303,7 @@ class AssignmentIndividualQuizService
 
         if ($result['expired']) {
             throw ValidationException::withMessages([
-                'quiz' => 'Waktu kuis telah habis.',
+                'quiz' => 'Waktu UTS telah habis.',
             ]);
         }
 
@@ -460,7 +460,7 @@ class AssignmentIndividualQuizService
 
         if (count($questionIds) !== 20 || count(array_unique($questionIds)) !== 20) {
             throw ValidationException::withMessages([
-                'quiz' => 'Snapshot soal pada sesi kuis tidak valid.',
+                'quiz' => 'Snapshot soal pada sesi UTS tidak valid.',
             ]);
         }
 
@@ -471,7 +471,7 @@ class AssignmentIndividualQuizService
 
         if ($questions->count() !== 20) {
             throw ValidationException::withMessages([
-                'quiz' => 'Sebagian soal pada sesi kuis tidak ditemukan.',
+                'quiz' => 'Sebagian soal pada sesi UTS tidak ditemukan.',
             ]);
         }
 
@@ -532,32 +532,13 @@ class AssignmentIndividualQuizService
 
         if ($assignment->opens_at && $now->lessThan($assignment->opens_at)) {
             throw ValidationException::withMessages([
-                'assignment' => 'Kuis belum dibuka.',
+                'assignment' => 'UTS belum dibuka.',
             ]);
         }
 
         if ($assignment->due_at && $now->greaterThanOrEqualTo($assignment->due_at)) {
             throw ValidationException::withMessages([
                 'assignment' => 'Batas waktu pengerjaan telah berakhir.',
-            ]);
-        }
-    }
-
-    private function assertAttemptActive(
-        AssignmentQuizAttempt $attempt,
-    ): void {
-        if ($attempt->status !== 'in_progress') {
-            throw ValidationException::withMessages([
-                'quiz' => 'Sesi kuis tidak sedang berlangsung.',
-            ]);
-        }
-
-        if (
-            $attempt->expires_at &&
-            now()->greaterThanOrEqualTo($attempt->expires_at)
-        ) {
-            throw ValidationException::withMessages([
-                'quiz' => 'Waktu kuis telah habis.',
             ]);
         }
     }
